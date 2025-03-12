@@ -1,4 +1,4 @@
-import { BadRequestException, ConflictException, Injectable } from '@nestjs/common';
+import {BadRequestException, ConflictException, Injectable, UnauthorizedException} from '@nestjs/common';
 import { CreateUserDto } from './dto/create-auth.dto';
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "../database/entities/user.entity";
@@ -6,6 +6,9 @@ import { Repository } from "typeorm";
 import * as bcrypt from 'bcrypt';
 import { SupabaseService } from "../database/supabase.service";
 import { ConfigService } from "@nestjs/config";
+import { JwtService } from '@nestjs/jwt'
+import { RedisService } from '../redis/redis.service';
+import * as process from "node:process";
 
 @Injectable()
 export class AuthService {
@@ -13,6 +16,8 @@ export class AuthService {
       @InjectRepository(User) private readonly userRepository: Repository<User>,
       private readonly supabaseService: SupabaseService,
       private readonly configService: ConfigService,
+      private readonly jwtService: JwtService,
+      private readonly redisService: RedisService,
   ) {}
 
   async signUpUser(dto: CreateUserDto) {
@@ -31,7 +36,11 @@ export class AuthService {
         this.userRepository.create({ ...dto, password })
     );
 
-    return user;
+    const token = await this.CreatingToken(user.id, user.email);
+    await this.storeTokenInRedis(user.id, token);
+
+
+    return { accessToken: token };
   }
 
   async uploadFile(file: Express.Multer.File) {
@@ -52,10 +61,42 @@ export class AuthService {
       throw new BadRequestException('Не вдалося завантажити файл');
     }
 
-    // Формуємо publicURL
     const { data } = supabase.storage.from(bucketName).getPublicUrl(safeFileName);
 
     return { data: { publicUrl: data.publicUrl } };
   }
+
+  async CreatingToken(userID: string, userEmail: string) : Promise<string>{
+    return this.jwtService.sign({id: userID, email: userEmail});
+  }
+
+  private async storeTokenInRedis(UserId:string, token:string): Promise<void>{
+    const redisUserKey = process.env['Redis_UserKey'] || 'user-token';
+    const redisUserTime = process.env['Redis_UserTime']
+        ? parseInt(process.env['Redis_UserTime'], 10): 3600;
+
+    await this.redisService.set(
+        `${redisUserKey}-${UserId}`,
+        token,
+        redisUserTime,
+    );
+  }
+
+  async validateUser (userId: string, userEmail: string): Promise<User>{
+    if (!userId || !userEmail) {
+      throw new BadRequestException('User with this email already exist.');
+    }
+
+    const user = await this.userRepository.findOne({
+      where: { id: userId, email: userEmail },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    return user;
+  }
+
 }
 

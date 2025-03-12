@@ -1,5 +1,5 @@
 import {BadRequestException, ConflictException, Injectable, UnauthorizedException} from '@nestjs/common';
-import { CreateUserDto } from './dto/create-auth.dto';
+import {CreateUserDto, LoginDto, TokenDto} from './dto/create-auth.dto';
 import { InjectRepository } from "@nestjs/typeorm";
 import { User } from "../database/entities/user.entity";
 import { Repository } from "typeorm";
@@ -38,7 +38,6 @@ export class AuthService {
 
     const token = await this.CreatingToken(user.id, user.email);
     await this.storeTokenInRedis(user.id, token);
-
 
     return { accessToken: token };
   }
@@ -98,5 +97,58 @@ export class AuthService {
     return user;
   }
 
+
+
+  async signInUser (Dto: LoginDto): Promise<TokenDto>{
+    if(!Dto.email || !Dto.password){
+      throw new BadRequestException('Email and password are required');
+    }
+
+    const user = await this.userRepository.findOne({
+      where: {email: Dto.email},
+    })
+
+    if (!user){
+      throw new UnauthorizedException('User not found');
+    }
+
+    const isPasswordValid = await bcrypt.compare(
+        Dto.password,
+        user.password
+    );
+
+    if (!isPasswordValid){
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    const token = await this.CreatingToken(user.id, user.email);
+    await this.storeTokenInRedis(user.id, token);
+
+    return {accessToken: token};
+  }
+
+  async logOutUser(authHeader: string){
+    if (!authHeader) {
+      throw new UnauthorizedException('Authorization token is missing');
+    }
+
+    const token = authHeader.split(' ')[1];
+
+    if (!token) {
+      throw new UnauthorizedException('Token is missing');
+    }
+
+    const decodedToken = this.jwtService.verify(token);
+    const userId = decodedToken.id;
+
+    await this.removeTokenFromRedis(userId);
+
+    return { message: 'User logged out successfully' };
+  }
+
+  private async removeTokenFromRedis(userId: string){
+    const redisUserKey = process.env['Redis_UserKey'] || 'user-token'
+    await this.redisService.del(`${redisUserKey}-${userId}`);
+  }
 }
 

@@ -63,3 +63,33 @@ export class CreateUserDto extends ReturnUserDto {
     @ApiProperty({ required: true })
     password: string;
 }
+
+export class TokenDto {
+
+    @ApiProperty()
+    @IsString()
+    accessToken: string
+}
+
+export class LoginDto {
+    @IsString()
+    @IsNotEmpty()
+    @IsEmail()
+    @ApiProperty({ required: true })
+    @Transform(({ value }) => value.trim().toLowerCase())
+    @MaxLength(20, { message: 'Email must not exceed 20 characters' })
+    email: string;
+
+    @IsString()
+    @IsNotEmpty()
+    @MinLength(8, { message: 'Password must be at least 8 characters long' })
+    @Matches(
+        /^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).+$/,
+        {
+            message:
+                'Password must contain at least one uppercase letter, one number, and one special character',
+        },
+    )
+    @ApiProperty({ required: true })
+    password: string;
+}

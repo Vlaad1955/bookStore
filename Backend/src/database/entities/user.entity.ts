@@ -27,6 +27,9 @@ export class User extends BaseEntity {
     @Column('text', { nullable: true, default: 'https://ziqxesyaovpowhccmwiw.supabase.co/storage/v1/object/public/user-covers//Empty_avatar.jpg' })
     image: string;
 
+    @Column({ default: false })
+    isEmailConfirmed: boolean;
+
     @Column({ default: 'User' })
     role: string;
 

@@ -69,6 +69,10 @@ export class TokenDto {
     @ApiProperty()
     @IsString()
     accessToken: string
+
+    @ApiProperty()
+    @IsString()
+    refreshToken: string
 }
 
 export class LoginDto {

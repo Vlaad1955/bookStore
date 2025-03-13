@@ -97,9 +97,6 @@ export class AuthService {
     const redisRefreshTime = process.env['REDIS_REFRESH_TIME']
         ? parseInt(process.env['REDIS_REFRESH_TIME'], 10) : 7 * 24 * 60 * 60;
 
-    console.log('Storing refresh token with key:', `${redisRefreshKey}-${userId}`);
-    console.log('Refresh token:', refreshToken);
-    console.log('Expiration time:', redisRefreshTime);
 
     await this.redisService.set(`${redisRefreshKey}-${userId}`, refreshToken, redisRefreshTime);
   }
@@ -161,7 +158,6 @@ export class AuthService {
       throw new UnauthorizedException('Access token is missing');
     }
 
-    // Верифікація access-токена
     let decodedAccessToken;
     try {
       decodedAccessToken = this.jwtService.verify(accessToken);
@@ -171,47 +167,50 @@ export class AuthService {
 
     const userId = decodedAccessToken.id;
 
-    // Отримання refresh токена з Redis
     const redisRefreshKey = process.env['REDIS_REFRESH_KEY'] || 'refresh-token';
     const refreshToken = await this.redisService.get(`${redisRefreshKey}-${userId}`);
 
+    await this.removeTokenFromRedis(userId, accessToken);
+    await this.removeRefreshTokenFromRedis(userId, refreshToken || undefined);
+
+    return { message: 'User logged out successfully' };
+  }
+
+  private async removeTokenFromRedis(userId: string, token?: string) {
+    const redisUserKey = process.env['REDIS_USER_KEY'] || 'user-token';
     const redisBlacklistKey = process.env['REDIS_BLACKLIST_KEY'] || 'blacklist-token';
 
-    // Додаємо access токен до чорного списку
-    const accessExpiresIn = decodedAccessToken.exp - Math.floor(Date.now() / 1000);
-    console.log(accessExpiresIn);
-    if (accessExpiresIn > 0) {
-      await this.redisService.set(`${redisBlacklistKey}-access-${accessToken}`, 'blacklisted', accessExpiresIn);
+    if (token) {
+      try {
+        const decoded = this.jwtService.verify(token);
+        const expiresIn = decoded.exp - Math.floor(Date.now() / 1000);
+        if (expiresIn > 0) {
+          await this.redisService.set(`${redisBlacklistKey}-access-${token}`, 'blacklisted', expiresIn);
+        }
+      } catch (error) {
+        console.warn('Invalid access token:', error.message);
+      }
     }
 
-    // Якщо refresh токен існує, додаємо його до чорного списку
-    if (refreshToken) {
-      try {
-        const decodedRefreshToken = this.jwtService.verify(refreshToken);
-        const refreshExpiresIn = decodedRefreshToken.exp - Math.floor(Date.now() / 1000);
+    await this.redisService.del(`${redisUserKey}-${userId}`);
+  }
 
-        if (refreshExpiresIn > 0) {
-          await this.redisService.set(`${redisBlacklistKey}-refresh-${refreshToken}`, 'blacklisted', refreshExpiresIn);
+  private async removeRefreshTokenFromRedis(userId: string, token?: string) {
+    const redisRefreshKey = process.env['REDIS_REFRESH_KEY'] || 'refresh-token';
+    const redisBlacklistKey = process.env['REDIS_BLACKLIST_KEY'] || 'blacklist-token';
+
+    if (token) {
+      try {
+        const decoded = this.jwtService.verify(token);
+        const expiresIn = decoded.exp - Math.floor(Date.now() / 1000);
+        if (expiresIn > 0) {
+          await this.redisService.set(`${redisBlacklistKey}-refresh-${token}`, 'blacklisted', expiresIn);
         }
       } catch (error) {
         console.warn('Invalid refresh token:', error.message);
       }
     }
 
-    // Видалення токенів з Redis
-    await this.removeTokenFromRedis(userId);
-    await this.removeRefreshTokenFromRedis(userId);
-
-    return { message: 'User logged out successfully' };
-  }
-
-  private async removeTokenFromRedis(userId: string){
-    const redisUserKey = process.env['REDIS_USER_KEY'] || 'user-token'
-    await this.redisService.del(`${redisUserKey}-${userId}`);
-  }
-
-  private async removeRefreshTokenFromRedis(userId: string) {
-    const redisRefreshKey = process.env['REDIS_REFRESH_KEY'] || 'refresh-token';
     await this.redisService.del(`${redisRefreshKey}-${userId}`);
   }
 
@@ -235,11 +234,14 @@ export class AuthService {
       throw new UnauthorizedException('Refresh token is invalid or expired');
     }
 
+    await this.removeRefreshTokenFromRedis(userId, refreshToken);
+
     const tokens = await this.CreatingToken(decoded.id, decoded.email);
     await this.storeRefreshTokenInRedis(userId, tokens.refreshToken);
     await this.storeTokenInRedis(userId, tokens.accessToken);
 
     return tokens;
   }
+
 }
 

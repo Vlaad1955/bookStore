@@ -4,6 +4,7 @@ import { ConfigService } from '@nestjs/config';
 import { User } from './entities/user.entity';
 import * as path from 'path';
 import * as process from 'process';
+import {Category} from "./entities/category.entity";
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
@@ -14,7 +15,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
         return {
             type: 'postgres',
             url: postgresUrl,
-            entities: [User],
+            entities: [User, Category],
             migrations: [
                 path.join(process.cwd(), 'src', 'database', 'migrations', '*.ts'),
             ],

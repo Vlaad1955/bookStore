@@ -16,7 +16,7 @@ interface AuthState {
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
-  isAuthenticated: false, // Початкове значення для SSR
+  isAuthenticated: false, 
   isLoading: false,
   token: null,
   error: null,

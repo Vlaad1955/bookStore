@@ -6,7 +6,7 @@ import {
   UserSignUpRequestDto,
 } from "../types/authTypes/authTypes";
 
-const API_URL = "https://your-backend.com/api/auth"; // Замініть на URL вашого бекенду
+const API_URL = "http://localhost:4000/auth"; // Замініть на URL вашого бекенду
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -27,7 +27,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   signIn: async (payload) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axios.post(`${API_URL}/login`, payload);
+      const response = await axios.post(`${API_URL}/sign-in`, payload);
       const { token } = response.data;
       localStorage.setItem("token", token);
       set({ isAuthenticated: true, token, isLoading: false });
@@ -40,7 +40,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   signUp: async (payload) => {
     set({ isLoading: true, error: null });
     try {
-      const response = await axios.post(`${API_URL}/register`, payload);
+      const response = await axios.post(`${API_URL}/sign-up`, payload);
       const { token } = response.data;
       localStorage.setItem("token", token);
       set({ isAuthenticated: true, token, isLoading: false });

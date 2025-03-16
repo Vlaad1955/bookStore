@@ -38,7 +38,7 @@ const SignUpForm: React.FC<Properties> = () => {
     }
 
     try {
-      await signUp(formData); // Викликаємо signIn без зайвих обгорток
+      await signUp(formData);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setFormError("Помилка входу. Перевірте дані.");

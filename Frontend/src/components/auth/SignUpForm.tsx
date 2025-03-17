@@ -4,7 +4,7 @@ import { UserSignUpRequestDto } from "@/shared/types/authTypes/authTypes";
 import { useAppForm } from "@/shared/hooks/useAppForm";
 import React, { useState } from "react";
 import { DEFAULT_SIGN_UP_PAYLOAD } from "@/shared/constants/DEFAULT_SIGN_UP_PAYLOAD";
-import { useAuthStore } from "@/shared/store/authStore";
+import { useAuthStore } from "@/shared/api/authApi";
 
 type Properties = {
   onSubmit: (event: UserSignUpRequestDto) => void;
@@ -39,6 +39,7 @@ const SignUpForm: React.FC<Properties> = () => {
 
     try {
       await signUp(formData);
+      console.log(formData);
       // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setFormError("Помилка входу. Перевірте дані.");

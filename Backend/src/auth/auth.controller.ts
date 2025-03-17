@@ -1,6 +1,14 @@
-import {Controller, Post, Body, UseInterceptors, UploadedFile, UnauthorizedException, Headers} from '@nestjs/common';
+import {
+  Controller,
+  Post,
+  Body,
+  UseInterceptors,
+  UploadedFile,
+  UnauthorizedException,
+  Headers,
+} from '@nestjs/common';
 import { AuthService } from './auth.service';
-import {CreateUserDto, LoginDto, TokenDto} from './dto/create-auth.dto';
+import { CreateUserDto, LoginDto, TokenDto } from './dto/create-auth.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 
@@ -10,11 +18,15 @@ export class AuthController {
 
   @Post('/registration')
   @UseInterceptors(FileInterceptor('image'))
-  async create(@Body() Dto: CreateUserDto, @UploadedFile() file: Express.Multer.File): Promise<TokenDto> {
-
+  async create(
+    @Body() Dto: CreateUserDto,
+    @UploadedFile() file: Express.Multer.File,
+  ): Promise<TokenDto> {
     if (file) {
       const uploadResult = await this.authService.uploadFile(file);
-      Dto.image = uploadResult?.data?.publicUrl || "https://ziqxesyaovpowhccmwiw.supabase.co/storage/v1/object/public/user-covers//Empty_avatar.jpg";
+      Dto.image =
+        uploadResult?.data?.publicUrl ||
+        'https://ziqxesyaovpowhccmwiw.supabase.co/storage/v1/object/public/user-covers//Empty_avatar.jpg';
     }
 
     return this.authService.signUpUser(Dto);
@@ -27,10 +39,11 @@ export class AuthController {
 
   @Post(`/logout`)
   async logOutUser(
-      @Headers() headers: Record<string, string>) :Promise<{message:string}> {
+    @Headers() headers: Record<string, string>,
+  ): Promise<{ message: string }> {
     const authHeader = headers['authorization'];
 
-    if (!authHeader){
+    if (!authHeader) {
       throw new UnauthorizedException('Authorization token is missing');
     }
 
@@ -38,8 +51,9 @@ export class AuthController {
   }
 
   @Post(`/refresh`)
-  async refreshToken(@Body('refreshToken') refreshToken: string): Promise<TokenDto> {
+  async refreshToken(
+    @Body('refreshToken') refreshToken: string,
+  ): Promise<TokenDto> {
     return this.authService.refreshToken(refreshToken);
   }
 }
-

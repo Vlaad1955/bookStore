@@ -1,19 +1,23 @@
-import { Injectable } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
-import {InjectRepository} from "@nestjs/typeorm";
-import {Category} from "../database/entities/category.entity";
-import {Repository} from "typeorm";
+import { InjectRepository } from '@nestjs/typeorm';
+import { Category } from '../database/entities/category.entity';
+import { FindOptionsWhere, ILike, IsNull, Repository } from 'typeorm';
+import { CategoryQueryDto } from '../common/validator/category.query.validator';
 
 @Injectable()
 export class CategoryService {
   constructor(
-      @InjectRepository(Category) private readonly categoryRepository: Repository<Category>,
+    @InjectRepository(Category)
+    private readonly categoryRepository: Repository<Category>,
   ) {}
 
-
- async create(Dto: CreateCategoryDto) {
-
+  async create(Dto: CreateCategoryDto) {
     const category = await this.categoryRepository.create(Dto);
 
     const savedCategory = await this.categoryRepository.save(category);
@@ -21,19 +25,84 @@ export class CategoryService {
     return savedCategory;
   }
 
-  findAll() {
-    return `This action returns all category`;
+  async findAll(query: CategoryQueryDto = {} as CategoryQueryDto) {
+    const options = {
+      page: Number(query.page ?? 1),
+      limit: Number(query.limit ?? 10),
+    };
+
+    const filters: FindOptionsWhere<Category> = {};
+
+    if (query.parentId === null || query.parentId === 'null') {
+      filters.parentId = IsNull();
+    } else if (query.parentId) {
+      filters.parentId = ILike(`%${query.parentId}%`);
+    }
+
+    const order = {};
+    if (query.sort) {
+      order[query.sort] = query.order ?? 'ASC';
+    }
+
+    const [entities, total] = await this.categoryRepository.findAndCount({
+      where: filters,
+      select: {
+        id: true,
+        parentId: true,
+        name: true,
+      },
+      order: order,
+      skip: (options.page - 1) * options.limit,
+      take: options.limit,
+    });
+
+    return {
+      page: options.page,
+      pages: Math.ceil(total / options.limit),
+      countItems: total,
+      entities: entities,
+    };
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} category`;
+  async findOne(id: string) {
+    const category = await this.categoryRepository.findOne({
+      where: { id },
+    });
+
+    if (!category) {
+      return null;
+    }
+
+    return category;
   }
 
-  update(id: number, updateCategoryDto: UpdateCategoryDto) {
-    return `This action updates a #${id} category`;
+  async update(id: string, Dto: UpdateCategoryDto) {
+    const category = await this.categoryRepository.findOne({
+      where: { id },
+    });
+
+    if (!category) {
+      throw new NotFoundException('Категорію не знайдено');
+    }
+
+    category.name = Dto.name ?? category.name;
+    category.parentId = Dto.parentId ?? category.parentId;
+
+    await this.categoryRepository.save(category);
+
+    return { message: 'User successfully updated' };
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} category`;
+  async remove(id: string) {
+    const category = await this.categoryRepository.findOne({
+      where: { id: id },
+    });
+
+    if (!category) {
+      throw new UnauthorizedException('Category not found');
+    }
+
+    await this.categoryRepository.delete(id);
+    return { message: 'Category successfully deleted' };
   }
 }

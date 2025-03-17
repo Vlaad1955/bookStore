@@ -4,7 +4,7 @@ import { UserSignInRequestDto } from "@/shared/types/authTypes/authTypes";
 import { useAppForm } from "@/shared/hooks/useAppForm";
 import React, { useState } from "react";
 import { DEFAULT_SIGN_IN_PAYLOAD } from "@/shared/constants/DEFAULT_SIGN_IN_PAYLOAD";
-import { useAuthStore } from "@/shared/store/authStore";
+import { useAuthStore } from "@/shared/api/authApi";
 
 type Properties = {
   onSubmit: (event: UserSignInRequestDto) => void;
@@ -35,10 +35,12 @@ const SignInForm: React.FC<Properties> = () => {
       setFormError("Будь ласка, заповніть усі поля");
       return;
     }
+    console.log({ email, password });
+    console.log({ email, password });
 
     try {
       await signIn({ email, password }); // Викликаємо signIn без зайвих обгорток
-    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+      // eslint-disable-next-line @typescript-eslint/no-unused-vars
     } catch (error) {
       setFormError("Помилка входу. Перевірте дані.");
     }

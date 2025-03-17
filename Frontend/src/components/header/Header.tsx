@@ -2,17 +2,14 @@
 
 import Link from "next/link";
 import styles from "./Header.module.css";
-import { useAuthInit, useAuthStore } from "@/shared/store/authStore";
+import { useAuthStore } from "@/shared/api/authApi";
 
 const Header = () => {
-  const isMounted = useAuthInit(); 
   const { isAuthenticated, logout, token } = useAuthStore();
 
   const handleLogout = () => {
     logout();
   };
-
-  if (!isMounted) return null;
 
   return (
     <header className={styles.header}>

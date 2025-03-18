@@ -1,11 +1,11 @@
 import { Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt } from 'passport-jwt';
-import * as process from 'process';
 import { Strategy } from 'passport-http-bearer';
 import { JwtService } from '@nestjs/jwt';
 import { RedisService } from '../redis/redis.service';
 import { AuthService } from './auth.service';
+import {ConfigService} from "@nestjs/config";
 
 @Injectable()
 export class BearerStrategy extends PassportStrategy(Strategy, `bearer`) {
@@ -13,17 +13,18 @@ export class BearerStrategy extends PassportStrategy(Strategy, `bearer`) {
     private readonly jwtService: JwtService,
     private readonly redisService: RedisService,
     private readonly authService: AuthService,
+    private readonly configService: ConfigService
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       ignoreExpiration: false,
-      secretOrKey: process.env['Jwt_StrategyKey'],
+      secretOrKey: configService.get<string>('config.jwt.strategyKey'),
     });
   }
 
   async validate(token: string) {
     try {
-      const redisUserKey = process.env['Redis_UserKey'];
+      const redisUserKey = this.configService.get<string>('config.redis.userKey')
       const decodedToken: any = this.jwtService.decode(token);
 
       const exists = await this.redisService.exists(
@@ -35,7 +36,7 @@ export class BearerStrategy extends PassportStrategy(Strategy, `bearer`) {
 
       try {
         await this.jwtService.verifyAsync(token, {
-          secret: process.env['Jwt_StrategyKey'],
+          secret: this.configService.get<string>('config.jwt.strategyKey'),
         });
       } catch (e) {
         throw new UnauthorizedException('Invalid or expired token');

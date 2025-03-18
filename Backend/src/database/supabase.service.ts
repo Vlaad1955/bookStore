@@ -8,13 +8,14 @@ export class SupabaseService implements OnModuleInit {
 
   constructor(private readonly configService: ConfigService) {}
 
+
   onModuleInit() {
-    const supabaseUrl = this.configService.get<string>('SUPABASE_URL');
-    const supabaseKey = this.configService.get<string>('SUPABASE_KEY');
+    const supabaseUrl = this.configService.get<string>('config.supabase.url');
+    const supabaseKey = this.configService.get<string>('config.supabase.key');
 
     if (!supabaseUrl || !supabaseKey) {
       throw new Error(
-        'Supabase URL і ключі необхідні для ініціалізації клієнта',
+        'The Supabase URL and keys are required to initialize the client',
       );
     }
 
@@ -23,7 +24,7 @@ export class SupabaseService implements OnModuleInit {
 
   getClient(): SupabaseClient {
     if (!this.supabase) {
-      throw new Error('Supabase клієнт не ініціалізовано');
+      throw new Error('Supabase client is not initialized');
     }
     return this.supabase;
   }

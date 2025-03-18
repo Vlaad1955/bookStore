@@ -82,7 +82,7 @@ export class CategoryService {
     });
 
     if (!category) {
-      throw new NotFoundException('Категорію не знайдено');
+      throw new NotFoundException('Category not found');
     }
 
     category.name = Dto.name ?? category.name;
@@ -90,7 +90,7 @@ export class CategoryService {
 
     await this.categoryRepository.save(category);
 
-    return { message: 'User successfully updated' };
+    return { message: 'Category successfully updated' };
   }
 
   async remove(id: string) {

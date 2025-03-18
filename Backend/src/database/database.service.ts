@@ -11,7 +11,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
   constructor(private readonly configService: ConfigService) {}
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
-    const postgresUrl = this.configService.get<string>('DATABASE_URL'); // Використовуємо змінну середовища для URL
+    const postgresUrl = this.configService.get<string>('config.databaseUrl'); // Використовуємо змінну середовища для URL
     return {
       type: 'postgres',
       url: postgresUrl,

@@ -5,6 +5,7 @@ import { User } from './entities/user.entity';
 import * as path from 'path';
 import * as process from 'process';
 import { Category } from './entities/category.entity';
+import { Book } from './entities/book.entity';
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
@@ -15,7 +16,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
     return {
       type: 'postgres',
       url: postgresUrl,
-      entities: [User, Category],
+      entities: [User, Category, Book],
       migrations: [
         path.join(process.cwd(), 'src', 'database', 'migrations', '*.ts'),
       ],

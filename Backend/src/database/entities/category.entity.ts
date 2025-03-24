@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, ManyToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from './base.entity';
+import { Book } from './book.entity';
 
 @Entity()
 export class Category extends BaseEntity {
@@ -11,4 +12,7 @@ export class Category extends BaseEntity {
 
   @Column('text', { nullable: true })
   parentId: string;
+
+  @ManyToMany(() => Book, (book) => book.categories)
+  books: Book[];
 }

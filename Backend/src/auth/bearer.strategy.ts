@@ -5,7 +5,8 @@ import { Strategy } from 'passport-http-bearer';
 import { JwtService } from '@nestjs/jwt';
 import { RedisService } from '../redis/redis.service';
 import { AuthService } from './auth.service';
-import {ConfigService} from "@nestjs/config";
+import { ConfigService } from '@nestjs/config';
+import { User } from '../database/entities/user.entity';
 
 @Injectable()
 export class BearerStrategy extends PassportStrategy(Strategy, `bearer`) {
@@ -13,7 +14,7 @@ export class BearerStrategy extends PassportStrategy(Strategy, `bearer`) {
     private readonly jwtService: JwtService,
     private readonly redisService: RedisService,
     private readonly authService: AuthService,
-    private readonly configService: ConfigService
+    private readonly configService: ConfigService,
   ) {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
@@ -24,7 +25,9 @@ export class BearerStrategy extends PassportStrategy(Strategy, `bearer`) {
 
   async validate(token: string) {
     try {
-      const redisUserKey = this.configService.get<string>('config.redis.userKey')
+      const redisUserKey = this.configService.get<string>(
+        'config.redis.userKey',
+      );
       const decodedToken: any = this.jwtService.decode(token);
 
       const exists = await this.redisService.exists(

@@ -26,7 +26,7 @@ export class AuthService {
 
   async signUpUser(dto: CreateUserDto): Promise<TokenDto> {
     if (!dto.email || !dto.password) {
-      throw new BadRequestException("Email and password are mandatory");
+      throw new BadRequestException('Email and password are mandatory');
     }
 
     const existingUser = await this.userRepository.findOne({
@@ -49,8 +49,9 @@ export class AuthService {
 
   async uploadFile(file: Express.Multer.File) {
     const supabase = this.supabaseService.getClient();
-    const bucketName = this.configService.get<string>('config.supabase.bucket')!;
-
+    const bucketName = this.configService.get<string>(
+      'config.supabase.bucket',
+    )!;
 
     const safeFileName = `${Date.now()}_${file.originalname.replace(/[^a-zA-Z0-9.\-_]/g, '')}`;
 
@@ -91,7 +92,9 @@ export class AuthService {
     token: string,
   ): Promise<void> {
     const redisUserKey = this.configService.get<string>('config.redis.userKey');
-    const redisUserTime = this.configService.get<number>('config.redis.userTime');
+    const redisUserTime = this.configService.get<number>(
+      'config.redis.userTime',
+    );
 
     await this.redisService.set(
       `${redisUserKey}-${UserId}`,
@@ -104,8 +107,12 @@ export class AuthService {
     userId: string,
     refreshToken: string,
   ): Promise<void> {
-    const redisRefreshKey = this.configService.get<string>('config.redis.refreshKey');
-    const redisRefreshTime = this.configService.get<number>('config.redis.refreshTime');
+    const redisRefreshKey = this.configService.get<string>(
+      'config.redis.refreshKey',
+    );
+    const redisRefreshTime = this.configService.get<number>(
+      'config.redis.refreshTime',
+    );
 
     await this.redisService.set(
       `${redisRefreshKey}-${userId}`,
@@ -175,7 +182,9 @@ export class AuthService {
 
     const userId = decodedAccessToken.id;
 
-    const redisRefreshKey = this.configService.get<string>('config.redis.refreshKey');
+    const redisRefreshKey = this.configService.get<string>(
+      'config.redis.refreshKey',
+    );
     const refreshToken = await this.redisService.get(
       `${redisRefreshKey}-${userId}`,
     );
@@ -188,8 +197,9 @@ export class AuthService {
 
   private async removeTokenFromRedis(userId: string, token?: string) {
     const redisUserKey = this.configService.get<string>('config.redis.userKey');
-    const redisBlacklistKey =
-      this.configService.get<string>('config.redis.blacklistKey');
+    const redisBlacklistKey = this.configService.get<string>(
+      'config.redis.blacklistKey',
+    );
 
     if (token) {
       try {
@@ -211,9 +221,12 @@ export class AuthService {
   }
 
   private async removeRefreshTokenFromRedis(userId: string, token?: string) {
-    const redisRefreshKey = this.configService.get<string>('config.redis.refreshKey');
-    const redisBlacklistKey =
-      this.configService.get<string>('config.redis.black-token');
+    const redisRefreshKey = this.configService.get<string>(
+      'config.redis.refreshKey',
+    );
+    const redisBlacklistKey = this.configService.get<string>(
+      'config.redis.black-token',
+    );
 
     if (token) {
       try {
@@ -247,7 +260,9 @@ export class AuthService {
     }
 
     const userId = decoded.id;
-    const redisRefreshKey = this.configService.get<string>('config.redis.refreshKey');
+    const redisRefreshKey = this.configService.get<string>(
+      'config.redis.refreshKey',
+    );
     const storedToken = await this.redisService.get(
       `${redisRefreshKey}-${userId}`,
     );

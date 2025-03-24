@@ -8,7 +8,6 @@ export class SupabaseService implements OnModuleInit {
 
   constructor(private readonly configService: ConfigService) {}
 
-
   onModuleInit() {
     const supabaseUrl = this.configService.get<string>('config.supabase.url');
     const supabaseKey = this.configService.get<string>('config.supabase.key');

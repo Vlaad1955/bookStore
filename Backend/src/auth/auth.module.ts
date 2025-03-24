@@ -8,7 +8,7 @@ import { SupabaseService } from '../database/supabase.service';
 import { RedisModule } from '../redis/redis.module';
 import { JwtModule } from '@nestjs/jwt';
 import { BearerStrategy } from './bearer.strategy';
-import {ConfigModule, ConfigService} from "@nestjs/config";
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [

@@ -7,7 +7,7 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto, UpdatePublishedDto } from './dto/update-book.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Book } from '../database/entities/book.entity';
-import { FindOptionsWhere, In, Like, Or, Repository } from 'typeorm';
+import { FindOptionsWhere, In, Like, Repository } from 'typeorm';
 import { SupabaseService } from '../database/supabase.service';
 import { ConfigService } from '@nestjs/config';
 import { Category } from '../database/entities/category.entity';
@@ -106,6 +106,7 @@ export class BooksService {
 
     book.published = Dto.published;
     await this.bookRepository.save(book);
+    return `Book published successfully`;
   }
 
   async findAll(query: BookQueryDto = {} as BookQueryDto) {

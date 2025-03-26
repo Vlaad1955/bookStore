@@ -30,6 +30,7 @@ export class BooksController {
   ) {
     if (file) {
       const uploadResult = await this.booksService.uploadFile(file);
+      console.log(uploadResult);
       Dto.image = uploadResult?.data?.publicUrl;
     }
     return this.booksService.create(Dto);

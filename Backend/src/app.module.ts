@@ -4,9 +4,23 @@ import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { DatabaseModule } from './database/database.module';
 import { CategoryModule } from './category/category.module';
+import { ConfigModule } from '@nestjs/config';
+import { BooksModule } from './books/books.module';
+import { CommentsModule } from './comments/comments.module';
+import config from './common/configuration/config';
 
 @Module({
-  imports: [AuthModule, DatabaseModule, CategoryModule],
+  imports: [
+    AuthModule,
+    DatabaseModule,
+    CategoryModule,
+    ConfigModule.forRoot({
+      isGlobal: true,
+      load: [config],
+    }),
+    BooksModule,
+    CommentsModule,
+  ],
   controllers: [AppController],
   providers: [AppService],
 })

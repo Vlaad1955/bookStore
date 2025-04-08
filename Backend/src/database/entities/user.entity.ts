@@ -1,5 +1,6 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from './base.entity';
+import { Comment } from './comment.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -36,4 +37,7 @@ export class User extends BaseEntity {
 
   @Column({ default: 'User' })
   role: string;
+
+  @OneToMany(() => Comment, (comment) => comment.user)
+  comments: Comment[];
 }

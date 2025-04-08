@@ -3,10 +3,12 @@ import {
   Entity,
   JoinTable,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { Category } from './category.entity';
+import { Comment } from './comment.entity';
 
 @Entity()
 export class Book extends BaseEntity {
@@ -48,4 +50,7 @@ export class Book extends BaseEntity {
     inverseJoinColumn: { name: 'category_id', referencedColumnName: 'id' },
   })
   categories: Category[];
+
+  @OneToMany(() => Comment, (comment) => comment.book)
+  comments: Comment[];
 }

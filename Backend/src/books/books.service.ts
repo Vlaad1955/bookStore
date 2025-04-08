@@ -149,7 +149,7 @@ export class BooksService {
 
     const [entities, total] = await this.bookRepository.findAndCount({
       where: filters,
-      relations: ['categories'],
+      relations: ['categories', 'comments'],
       order: order,
       skip: (options.page - 1) * options.limit,
       take: options.limit,

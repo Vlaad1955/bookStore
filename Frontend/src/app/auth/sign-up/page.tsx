@@ -1,8 +1,8 @@
 "use client";
 
 import { AppRoute } from "@/shared/enums/app-route.enums";
-import AuthWrapper from "@/components/auth/AuthWrapper";
-import SignUpForm from "@/components/auth/SignUpForm";
+import AuthWrapper from "@/components/auth/authWrapper/AuthWrapper";
+import SignUpForm from "@/components/auth/sign-up-form/SignUpForm";
 
 export default function SignInPage() {
   return (

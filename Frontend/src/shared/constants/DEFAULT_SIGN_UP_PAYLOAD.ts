@@ -1,4 +1,4 @@
-import { UserSignUpRequestDto } from "../types/authTypes/authTypes";
+import { UserSignUpRequestDto } from "../types/authTypes/user-sign-up-request-dto";
 
 const DEFAULT_SIGN_UP_PAYLOAD: UserSignUpRequestDto = {
   email: "",

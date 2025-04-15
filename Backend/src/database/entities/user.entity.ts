@@ -1,6 +1,7 @@
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
 import { BaseEntity } from './base.entity';
 import { Comment } from './comment.entity';
+import { Exclude } from 'class-transformer';
 
 @Entity()
 export class User extends BaseEntity {
@@ -16,6 +17,7 @@ export class User extends BaseEntity {
   @Column('text', { nullable: false, unique: true })
   email: string;
 
+  @Exclude()
   @Column('text', { nullable: false })
   password: string;
 

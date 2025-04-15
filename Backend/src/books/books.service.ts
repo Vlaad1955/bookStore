@@ -110,54 +110,67 @@ export class BooksService {
   }
 
   async findAll(query: BookQueryDto = {} as BookQueryDto) {
-    const options = {
-      page: Number(query.page ?? 1),
-      limit: Number(query.limit ?? 10),
-    };
+    const page = Number(query.page ?? 1);
+    const limit = Number(query.limit ?? 10);
 
-    const filters: FindOptionsWhere<Book> = {};
-    const order: any = {};
+    const qb = this.bookRepository
+      .createQueryBuilder('book')
+      .leftJoinAndSelect('book.categories', 'category')
+      .leftJoinAndSelect('book.comments', 'comment')
+      .where('book.published = :published', {
+        published: query.published ?? true,
+      });
 
     if (query.price !== undefined) {
-      filters.price = query.price;
+      qb.andWhere('book.price = :price', { price: query.price });
     }
+
     if (query.author) {
-      filters.author = Like(`%${query.author}%`);
+      qb.andWhere('book.author ILIKE :author', { author: `%${query.author}%` });
     }
+
     if (query.cover) {
-      filters.cover = query.cover;
+      qb.andWhere('book.cover = :cover', { cover: query.cover });
     }
+
     if (query.title) {
-      filters.title = Like(`%${query.title}%`);
-    }
-    if (query.gift !== undefined) {
-      filters.gift = query.gift;
-    }
-    if (query.id) {
-      filters.id = query.id;
+      qb.andWhere('book.title ILIKE :title', { title: `%${query.title}%` });
     }
 
     if (query.search) {
-      filters.title = Like(`%${query.search}%`);
+      qb.andWhere('book.title ILIKE :search', { search: `%${query.search}%` });
     }
 
-    filters.published = query.published ?? true;
+    if (query.gift !== undefined) {
+      qb.andWhere('book.gift = :gift', { gift: query.gift });
+    }
+
+    if (query.id) {
+      qb.andWhere('book.id = :id', { id: query.id });
+    }
+
+    if (query.categories) {
+      const categoryIds = Array.isArray(query.categories)
+        ? query.categories
+        : [query.categories];
+
+      qb.andWhere('category.id IN (:...categoryIds)', { categoryIds });
+    }
 
     if (query.sort) {
-      order[query.sort] = query.order ?? 'ASC';
+      qb.orderBy(
+        `book.${query.sort}`,
+        (query.order ?? 'ASC') as 'ASC' | 'DESC',
+      );
     }
 
-    const [entities, total] = await this.bookRepository.findAndCount({
-      where: filters,
-      relations: ['categories', 'comments'],
-      order: order,
-      skip: (options.page - 1) * options.limit,
-      take: options.limit,
-    });
+    qb.skip((page - 1) * limit).take(limit);
+
+    const [entities, total] = await qb.getManyAndCount();
 
     return {
-      page: options.page,
-      pages: Math.ceil(total / options.limit),
+      page,
+      pages: Math.ceil(total / limit),
       countItems: total,
       entities,
     };

@@ -26,6 +26,11 @@ export class UsersController {
     return this.usersService.findOne(id);
   }
 
+  @Get('find')
+  findOneToToken(@Headers('Authorization') authHeader: string) {
+    return this.usersService.findOneTo(authHeader);
+  }
+
   @Patch('update/:id')
   update(
     @Param('id') id: string,

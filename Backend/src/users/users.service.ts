@@ -10,6 +10,7 @@ import { User } from '../database/entities/user.entity';
 import { FindOptionsWhere, Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { UsersQueryDto } from '../common/validator/users.query.validator';
+import { plainToClass } from 'class-transformer';
 
 @Injectable()
 export class UsersService {
@@ -81,11 +82,15 @@ export class UsersService {
       take: options.limit,
     });
 
+    const usersWithoutPassword = plainToClass(User, entities, {
+      excludeExtraneousValues: false,
+    });
+
     return {
       page: options.page,
       pages: Math.ceil(total / options.limit),
       countItems: total,
-      entities,
+      entities: usersWithoutPassword,
     };
   }
 
@@ -99,7 +104,9 @@ export class UsersService {
       throw new NotFoundException('User not found');
     }
 
-    return user;
+    const usersWithoutPassword = plainToClass(User, user, { excludeExtraneousValues: false });
+
+    return usersWithoutPassword;
   }
 
   async update(id: string, Dto: UpdateUserDto, authHeader: string) {
@@ -133,5 +140,22 @@ export class UsersService {
     await this.userRepository.delete(id);
 
     return 'Account successfully deleted';
+  }
+
+  async findOneTo(authHeader: string) {
+    const userId = await this.getUserIdFromAuthHeader(authHeader);
+
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+      relations: ['comments'],
+    });
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    const usersWithoutPassword = plainToClass(User, user, { excludeExtraneousValues: false });
+
+    return usersWithoutPassword;
   }
 }

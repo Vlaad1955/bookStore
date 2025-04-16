@@ -76,7 +76,7 @@ export class UsersService {
 
     const [entities, total] = await this.userRepository.findAndCount({
       where: filters,
-      relations: ['comments'],
+      relations: ['comments', 'basket'],
       order: order,
       skip: (options.page - 1) * options.limit,
       take: options.limit,
@@ -97,14 +97,16 @@ export class UsersService {
   async findOne(id: string) {
     const user = await this.userRepository.findOne({
       where: { id: id },
-      relations: ['comments'],
+      relations: ['comments', 'basket'],
     });
 
     if (!user) {
       throw new NotFoundException('User not found');
     }
 
-    const usersWithoutPassword = plainToClass(User, user, { excludeExtraneousValues: false });
+    const usersWithoutPassword = plainToClass(User, user, {
+      excludeExtraneousValues: false,
+    });
 
     return usersWithoutPassword;
   }
@@ -147,14 +149,16 @@ export class UsersService {
 
     const user = await this.userRepository.findOne({
       where: { id: userId },
-      relations: ['comments'],
+      relations: ['comments', 'basket'],
     });
 
     if (!user) {
       throw new NotFoundException('User not found');
     }
 
-    const usersWithoutPassword = plainToClass(User, user, { excludeExtraneousValues: false });
+    const usersWithoutPassword = plainToClass(User, user, {
+      excludeExtraneousValues: false,
+    });
 
     return usersWithoutPassword;
   }

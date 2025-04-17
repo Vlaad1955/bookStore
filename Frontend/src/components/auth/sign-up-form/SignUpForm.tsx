@@ -11,6 +11,7 @@ import { InputType } from "@/shared/enums/users/input-type.enum";
 import styles from "./styles.module.scss";
 import { Button } from "@/components/ui/button/Button";
 import { ButtonType } from "@/shared/enums/button/button-type.enum";
+import Form from "next/form";
 
 type Properties = {
   onSubmit: (event: UserSignUpRequestDto) => void;
@@ -42,7 +43,11 @@ const SignUpForm: React.FC<Properties> = () => {
   };
 
   return (
-    <form className={styles.form} onSubmit={handleSubmit(handleFormSubmit)}>
+    <Form
+      className={styles.form}
+      onSubmit={handleSubmit(handleFormSubmit)}
+      action={""}
+    >
       {formError && <p style={{ color: "red" }}>{formError}</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
       <p className={styles.inputWrapper}>
@@ -113,7 +118,7 @@ const SignUpForm: React.FC<Properties> = () => {
       </p>
       <p className={styles.inputWrapper}>
         <Input
-          name="file"
+          name="image"
           type={InputType.FILE}
           label="Image"
           placeholder="Image"
@@ -129,7 +134,7 @@ const SignUpForm: React.FC<Properties> = () => {
       >
         {isLoading ? "Loading..." : "Sign Up"}
       </Button>
-    </form>
+    </Form>
   );
 };
 

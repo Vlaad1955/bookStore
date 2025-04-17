@@ -10,7 +10,7 @@ import mockUser from "@/shared/mock/mock-user";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isAuthenticated, logout, token } = useAuthStore();
+  const { isAuthenticated, logout } = useAuthStore();
   // const { user } = useUserStore();
 
   // console.log(user);

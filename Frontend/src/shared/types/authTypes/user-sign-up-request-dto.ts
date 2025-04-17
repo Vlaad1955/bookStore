@@ -3,9 +3,9 @@ type UserSignUpRequestDto = {
   password: string;
   firstName: string;
   lastName: string;
-  age: number;
-  phoneNumber: number;
-  file: File | null;
+  age: string;
+  phoneNumber: string;
+  image?: File;
 };
 
 export { type UserSignUpRequestDto };

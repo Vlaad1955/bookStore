@@ -74,25 +74,21 @@ const userSignUp = joi.object<UserSignUpRequestDto, true>({
     "string.min": "Last name must be at least 2 characters",
     "string.max": "Last name must be at most 30 characters",
   }),
-  age: joi.number().min(8).max(100).required().messages({
-    "number.base": "Age must be a number",
-    "number.min": "Age must be at least 8",
-    "number.max": "Age must be at most 120",
+  age: joi.string().pattern(/^\d+$/).min(1).max(3).required().messages({
+    "string.pattern.base": "Age must be a number",
+    "string.min": "Age must be at least 1 digit",
+    "string.max": "Age must be at most 3 digits",
     "any.required": "Age is required",
   }),
-  phoneNumber: joi.number().min(8).max(15).required().messages({
-    "string.empty": "Phone number is required",
-    "string.min": "Phone number must be at least 8 digits",
-    "string.max": "Phone number must be at most 15 digits",
-  }),
-  file: joi
+  phoneNumber: joi
     .string()
-    .pattern(/\.(svg|png|jpg|jpeg)$/i)
+    .pattern(/^\d{8,15}$/)
     .required()
     .messages({
-      "string.empty": "File is required",
-      "string.pattern.base": "Only SVG, PNG, and JPEG files are allowed",
+      "string.empty": "Phone number is required",
+      "string.pattern.base": "Phone number must be between 8 and 15 digits",
     }),
+  image: joi.any().optional(),
 });
 
 export { userSignUp };

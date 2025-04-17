@@ -40,8 +40,7 @@ const Input = <T extends FieldValues>({
   inputClassName = "",
   labelClassName = "",
   isDisabled = false,
-  onChange,
-  value,
+  // onChange,
   maxLength,
   minLength,
   max,
@@ -59,25 +58,40 @@ const Input = <T extends FieldValues>({
   );
 
   const inputClassesWithError = classNames(inputClasses, styles.hasError);
+  const isFileInput = type === InputType.FILE;
 
   return (
     <label className={labelClasses}>
       <span className={styles.inputLabel}>{label}</span>
-      {onChange && (
+      {/* {onChange && ( */}
+      {isFileInput ? (
+        <input
+          type="file"
+          name={name}
+          placeholder={placeholder}
+          disabled={isDisabled}
+          className={`${hasError ? inputClassesWithError : inputClasses}`}
+          onChange={(e) => {
+            const file = e.target.files?.[0] || null;
+            field.onChange?.(file);
+          }}
+        />
+      ) : (
         <input
           {...field}
           type={type || InputType.TEXT}
           placeholder={placeholder}
           disabled={isDisabled}
           className={`${hasError ? inputClassesWithError : inputClasses}`}
-          onChange={onChange}
-          value={value}
+          // onChange={onChange}
           maxLength={maxLength}
           minLength={minLength}
           max={max}
         />
       )}
-      {!onChange && (
+
+      {/* )} */}
+      {/* {!onChange && (
         <input
           {...field}
           type={type || InputType.TEXT}
@@ -85,7 +99,7 @@ const Input = <T extends FieldValues>({
           disabled={isDisabled}
           className={`${hasError ? inputClassesWithError : inputClasses}`}
         />
-      )}
+      )} */}
 
       {hasError && <span className={styles.inputError}>{error as string}</span>}
     </label>

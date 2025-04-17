@@ -1,17 +1,14 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
-  IsArray,
-  IsBoolean,
   IsEnum,
   IsNumber,
   IsNumberString,
   IsOptional,
   IsString,
-  IsUUID,
 } from 'class-validator';
-import { Transform, Type } from 'class-transformer';
+import { Type } from 'class-transformer';
 
-export class BookQueryDto {
+export class UsersQueryDto {
   @ApiProperty({ required: false })
   @IsOptional()
   @IsString()
@@ -32,52 +29,30 @@ export class BookQueryDto {
   @IsNumberString()
   limit: string;
 
-  @ApiProperty({ required: false, default: true })
+  @ApiProperty({ required: false })
   @IsOptional()
-  @IsBoolean()
-  published?: boolean;
+  @IsString()
+  firstName?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  lastName?: string;
+
+  @ApiProperty({ required: false })
+  @IsOptional()
+  @IsString()
+  email?: string;
 
   @ApiProperty({ required: false })
   @IsOptional()
   @Type(() => Number)
   @IsNumber()
-  price?: number;
+  phone?: number;
 
   @ApiProperty({ required: false })
   @IsOptional()
-  @IsString()
-  search: string;
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  @IsString()
-  author?: string;
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  @IsEnum(['soft', 'firm'])
-  cover?: 'soft' | 'firm';
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  @IsString()
-  title?: string;
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  @IsString()
-  id?: string;
-
-  @ApiProperty({ required: false })
-  @IsOptional()
-  @Transform(({ value }) => value === 'true')
-  @IsBoolean()
-  gift?: boolean;
-
-  @ApiProperty({ required: false, type: [String] })
-  @IsOptional()
-  @Transform(({ value }) => (Array.isArray(value) ? value : [value]))
-  @IsArray()
-  @IsUUID('all', { each: true })
-  categories?: string[];
+  @Type(() => Number)
+  @IsNumber()
+  age?: number;
 }

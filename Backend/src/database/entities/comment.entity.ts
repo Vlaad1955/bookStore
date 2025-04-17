@@ -17,11 +17,17 @@ export class Comment extends BaseEntity {
   @Column('text', { nullable: false })
   text: string;
 
-  @ManyToOne(() => Book, (book) => book.comments, { nullable: false })
+  @ManyToOne(() => Book, (book) => book.comments, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'book_id' })
   book: Book;
 
-  @ManyToOne(() => User, (user) => user.comments, { nullable: false })
+  @ManyToOne(() => User, (user) => user.comments, {
+    nullable: false,
+    onDelete: 'CASCADE',
+  })
   @JoinColumn({ name: 'user_id' })
   user: User;
 }

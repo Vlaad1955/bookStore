@@ -7,6 +7,8 @@ import { CategoryModule } from './category/category.module';
 import { ConfigModule } from '@nestjs/config';
 import { BooksModule } from './books/books.module';
 import { CommentsModule } from './comments/comments.module';
+import { UsersModule } from './users/users.module';
+import { BasketModule } from './basket/basket.module';
 import config from './common/configuration/config';
 
 @Module({
@@ -20,6 +22,8 @@ import config from './common/configuration/config';
     }),
     BooksModule,
     CommentsModule,
+    UsersModule,
+    BasketModule,
   ],
   controllers: [AppController],
   providers: [AppService],

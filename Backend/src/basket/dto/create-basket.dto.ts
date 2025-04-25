@@ -1,4 +1,4 @@
-import { IsInt, IsOptional, IsString, Min } from 'class-validator';
+import { IsInt, IsOptional, IsString } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class CreateBasketDto {
@@ -8,7 +8,6 @@ export class CreateBasketDto {
 
   @IsOptional()
   @IsInt()
-  @Min(1)
   @ApiProperty({ description: 'Кількість (за замовчуванням 1)', default: 1 })
   quantity?: number;
 }

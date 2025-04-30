@@ -6,9 +6,13 @@ import { Book } from '../database/entities/book.entity';
 import { User } from '../database/entities/user.entity';
 import { Comment } from '../database/entities/comment.entity';
 import { AuthModule } from '../auth/auth.module';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
+    PassportModule.register({
+      defaultStrategy: `bearer`,
+    }),
     TypeOrmModule.forFeature([Comment, Book, User]),
     forwardRef(() => AuthModule),
   ],

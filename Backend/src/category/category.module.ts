@@ -5,9 +5,13 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { Category } from '../database/entities/category.entity';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from '../auth/auth.module';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
+    PassportModule.register({
+      defaultStrategy: `bearer`,
+    }),
     TypeOrmModule.forFeature([Category]),
     ConfigModule.forRoot({
       isGlobal: true,

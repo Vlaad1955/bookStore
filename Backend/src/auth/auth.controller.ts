@@ -6,11 +6,13 @@ import {
   UploadedFile,
   UnauthorizedException,
   Headers,
+  UseGuards,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
 import { CreateUserDto, LoginDto, TokenDto } from './dto/create-auth.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('auth')
 export class AuthController {
@@ -37,6 +39,7 @@ export class AuthController {
     return this.authService.signInUser(Dto);
   }
 
+  @UseGuards(AuthGuard())
   @Post(`/logout`)
   async logOutUser(
     @Headers() headers: Record<string, string>,
@@ -50,6 +53,7 @@ export class AuthController {
     return this.authService.logOutUser(authHeader);
   }
 
+  @UseGuards(AuthGuard())
   @Post(`/refresh`)
   async refreshToken(
     @Body('refreshToken') refreshToken: string,

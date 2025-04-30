@@ -7,9 +7,13 @@ import { AuthModule } from '../auth/auth.module';
 import { Basket } from '../database/entities/basket.entity';
 import { BasketItem } from '../database/entities/basket.item.entity';
 import { Book } from '../database/entities/book.entity';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
+    PassportModule.register({
+      defaultStrategy: `bearer`,
+    }),
     TypeOrmModule.forFeature([User, Basket, BasketItem, Book]),
     forwardRef(() => AuthModule),
   ],

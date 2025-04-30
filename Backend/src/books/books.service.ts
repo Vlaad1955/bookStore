@@ -67,14 +67,7 @@ export class BooksService {
   }
 
   async update(id: string, Dto: UpdateBookDto) {
-    const book = await this.bookRepository.findOne({
-      where: { id },
-      relations: ['categories'],
-    });
-
-    if (!book) {
-      throw new Error('Book not found');
-    }
+    const book = await this.findOne(id);
 
     if (Dto.categories) {
       const categories = await this.categoryRepository.find({
@@ -96,13 +89,7 @@ export class BooksService {
   }
 
   async published(id: string, Dto: UpdatePublishedDto) {
-    const book = await this.bookRepository.findOne({
-      where: { id },
-    });
-
-    if (!book) {
-      throw new Error('Book not found');
-    }
+    const book = await this.findOne(id);
 
     book.published = Dto.published;
     await this.bookRepository.save(book);
@@ -190,15 +177,8 @@ export class BooksService {
   }
 
   async remove(id: string) {
-    const book = await this.bookRepository.findOne({
-      where: { id: id },
-    });
-
-    if (!book) {
-      throw new UnauthorizedException('Book not found');
-    }
-
+    await this.findOne(id);
     await this.bookRepository.delete(id);
-    return { message: 'Book successfully deleted' };
+    return 'Book successfully deleted';
   }
 }

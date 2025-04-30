@@ -13,6 +13,8 @@ import { SupabaseService } from '../database/supabase.service';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { RedisService } from '../redis/redis.service';
+import { EmailService } from '../email/email.service';
+import { EmailTypeEnum } from '../common/enums/email-type.enum';
 
 @Injectable()
 export class AuthService {
@@ -22,6 +24,7 @@ export class AuthService {
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
     private readonly redisService: RedisService,
+    private readonly emailService: EmailService,
   ) {}
 
   async signUpUser(dto: CreateUserDto): Promise<TokenDto> {
@@ -44,6 +47,11 @@ export class AuthService {
     await this.storeTokenInRedis(user.id, token.accessToken);
     await this.storeRefreshTokenInRedis(user.id, token.refreshToken);
 
+    await this.emailService.sendEmail(EmailTypeEnum.WELCOME, user.email, {
+      name: user.firstName || 'користувачу',
+      frontUrl: 'config.frontUrl',
+      actionToken: token.accessToken,
+    });
     return token;
   }
 

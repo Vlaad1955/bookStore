@@ -13,32 +13,33 @@ import {
 import { Transform } from 'class-transformer';
 
 export class ReturnUserDto {
+  @IsOptional()
   @ApiProperty()
-  id: string;
+  id?: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty({ required: false })
-  firstName: string;
+  firstName?: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty({ required: false })
-  lastName: string;
+  lastName?: string;
 
   @IsNumber()
   @IsOptional()
   @ApiProperty()
-  age: number;
+  age?: number;
 
-  @IsNumber()
+  @IsString()
   @ApiProperty()
-  phone: number;
+  phone?: string;
 
   @IsOptional()
   @IsString()
   @ApiProperty({ required: false })
-  image: string;
+  image?: string;
 }
 
 export class CreateUserDto extends ReturnUserDto {

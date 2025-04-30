@@ -6,9 +6,13 @@ import { News } from '../database/entities/news.entity';
 import { ConfigModule } from '@nestjs/config';
 import { AuthModule } from '../auth/auth.module';
 import { SupabaseService } from '../database/supabase.service';
+import { PassportModule } from '@nestjs/passport';
 
 @Module({
   imports: [
+    PassportModule.register({
+      defaultStrategy: `bearer`,
+    }),
     TypeOrmModule.forFeature([News]),
     ConfigModule.forRoot({
       isGlobal: true,

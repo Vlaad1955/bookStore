@@ -8,16 +8,19 @@ import {
   Delete,
   Headers,
   Query,
+  UseGuards,
 } from '@nestjs/common';
 import { CommentsService } from './comments.service';
 import { CreateCommentDto, UpdateCommentDto } from './dto/create-comment.dto';
 import { Comment } from '../database/entities/comment.entity';
 import { CommentQueryDto } from '../common/validator/comment.query.validator';
+import { AuthGuard } from '@nestjs/passport';
 
 @Controller('comments')
 export class CommentsController {
   constructor(private readonly commentsService: CommentsService) {}
 
+  @UseGuards(AuthGuard())
   @Post('/create-comment')
   create(
     @Body() Dto: CreateCommentDto,
@@ -36,6 +39,7 @@ export class CommentsController {
     return this.commentsService.findOne(id);
   }
 
+  @UseGuards(AuthGuard())
   @Patch('update/:id')
   update(
     @Param('id') id: string,
@@ -45,6 +49,7 @@ export class CommentsController {
     return this.commentsService.update(id, Dto, authHeader);
   }
 
+  @UseGuards(AuthGuard())
   @Delete('delete/:id')
   remove(
     @Param('id') id: string,

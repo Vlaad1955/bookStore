@@ -24,4 +24,8 @@ export default registerAs('config', () => ({
   jwt: {
     strategyKey: process.env.JWT_STRATEGY_KEY ?? 'secret',
   },
+  smtp: {
+    smtpEmail: process.env.SMTP_EMAIL,
+    smtpPassword: process.env.SMTP_PASSWORD,
+  },
 }));

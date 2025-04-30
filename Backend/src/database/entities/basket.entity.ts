@@ -14,7 +14,9 @@ export class Basket extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id: string;
 
-  @OneToOne(() => User, (user) => user.basket)
+  @OneToOne(() => User, (user) => user.basket, {
+    onDelete: 'CASCADE',
+  })
   @JoinColumn()
   user: User;
 

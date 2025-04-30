@@ -28,8 +28,8 @@ export class User extends BaseEntity {
   @Column('text', { nullable: false })
   password: string;
 
-  @Column('integer', { nullable: true })
-  phone: number;
+  @Column('text', { nullable: true })
+  phone: string;
 
   @Column('integer', { nullable: true })
   age: number;
@@ -47,7 +47,7 @@ export class User extends BaseEntity {
   @Column({ default: 'User' })
   role: string;
 
-  @OneToMany(() => Comment, (comment) => comment.user)
+  @OneToMany(() => Comment, (comment) => comment.user, { cascade: true })
   comments: Comment[];
 
   @OneToOne(() => Basket, (basket) => basket.user, { cascade: true })

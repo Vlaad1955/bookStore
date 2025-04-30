@@ -1,12 +1,12 @@
 import { Injectable } from '@nestjs/common';
 import * as nodemailer from 'nodemailer';
-import * as fs from 'fs';
+import { ConfigService } from '@nestjs/config';
+import { readFileSync } from 'fs';
 import * as path from 'path';
 import * as handlebars from 'handlebars';
-import { ConfigService } from '@nestjs/config';
-import { emailConstants } from '../common/constants/email.constants';
 import { EmailTypeEnum } from '../common/enums/email-type.enum';
 import { EmailTypeToPayloadType } from '../common/types/email-type-to-payload.type';
+import { emailConstants } from '../common/constants/email.constants';
 
 @Injectable()
 export class EmailService {
@@ -20,37 +20,60 @@ export class EmailService {
         pass: this.configService.get<string>('config.smtp.smtpPassword'),
       },
     });
+
+    this.registerPartials();
   }
 
-  private compileTemplate(templateName: string, context: any): string {
-    const filePath = path.join(
+  private registerPartials() {
+    const partialsDir = path.join(
       process.cwd(),
       'src',
       'templates',
-      'views',
-      `${templateName}.hbs`,
+      'partials',
     );
-    const source = fs.readFileSync(filePath, 'utf-8');
-    const template = handlebars.compile(source);
-    return template(context);
+    handlebars.registerPartial(
+      'header',
+      readFileSync(path.join(partialsDir, 'header.hbs'), 'utf8'),
+    );
+    handlebars.registerPartial(
+      'footer',
+      readFileSync(path.join(partialsDir, 'footer.hbs'), 'utf8'),
+    );
+  }
+
+  private compileTemplate(templateName: string, context: any): string {
+    const viewsDir = path.join(process.cwd(), 'src', 'templates', 'views');
+    const layoutDir = path.join(process.cwd(), 'src', 'templates', 'layouts');
+
+    const templateContent = readFileSync(
+      path.join(viewsDir, `${templateName}.hbs`),
+      'utf8',
+    );
+    const layoutContent = readFileSync(
+      path.join(layoutDir, 'main.hbs'),
+      'utf8',
+    );
+
+    const template = handlebars.compile(templateContent);
+    const compiledBody = template(context);
+
+    const layout = handlebars.compile(layoutContent);
+    return layout({ body: compiledBody });
   }
 
   public async sendEmail<T extends EmailTypeEnum>(
     type: T,
-    to: string,
+    email: string,
     context: EmailTypeToPayloadType[T],
   ): Promise<void> {
-    const { subject, template } = emailConstants[type]; // Ось тут отримуємо шаблон і тему
-
-    // Компілюємо шаблон з контекстом
+    const { subject, template } = emailConstants[type];
     const html = this.compileTemplate(template, context);
 
-    // Відправка email
     await this.transporter.sendMail({
-      from: this.configService.get<string>('smtp.smtpEmail'),
-      to,
+      to: email,
       subject,
       html,
+      from: this.configService.get<string>('config.smtp.smtpEmail'),
     });
   }
 }

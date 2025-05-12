@@ -14,7 +14,7 @@ import { InputType } from "@/shared/enums/users/input-type.enum";
 
 type Properties<T extends FieldValues> = {
   control?: Control<T, null>;
-  errors: FieldErrors<T>;
+  errors?: FieldErrors<T>;
   label?: string;
   placeholder?: string;
   name: FieldPath<T>;
@@ -47,7 +47,7 @@ const Input = <T extends FieldValues>({
 }: Properties<T>): JSX.Element => {
   const { field } = useFormController({ name, control });
 
-  const error = errors[name]?.message;
+  const error = errors?.[name]?.message;
   const hasError = Boolean(error);
 
   const labelClasses = classNames(styles.label, labelClassName);

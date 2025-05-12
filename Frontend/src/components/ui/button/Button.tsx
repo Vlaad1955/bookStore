@@ -36,6 +36,7 @@ const Button: React.FC<Properties> = ({
     variant === "primary" && size === "small" ? styles.primarySmall : "",
     variant === "primary" && size === "medium" ? styles.primaryMedium : "",
     variant === "delete" && size === "small" ? styles.deleteSmall : "",
+    variant === "transparent" ? styles.transparent : "",
     styles[variant + (disabled ? "Disabled" : "")],
     className
   );

@@ -1,25 +1,22 @@
 "use client";
 
-import axiosInstance from "@/shared/auth/auth-axios-instance/axiosInstance";
 import React, { useState, useEffect } from "react";
-import Image from "next/image";
-import { Button } from "@/components/ui/button/Button";
-import { useRouter } from "next/navigation";
-
-interface Book {
-  id: number;
-  image: string;
-  title: string;
-  author: string;
-  price: number;
-}
+import { useRouter, useSearchParams } from "next/navigation";
+import { useBookStore } from "@/shared/store/UseBookStore";
+import { getBooksInOneCategory } from "@/shared/api/books/books-api";
+import { cleanParams } from "@/shared/utils/cleanParams";
+import { Book } from "@/shared/types/bookTypes/bookTypes";
+import BookItem from "@/components/books/BookItem";
 
 const BookList: React.FC = () => {
+  const { selectedCategories } = useBookStore();
+
   const router = useRouter();
+  const searchParams = useSearchParams();
   const [books, setBooks] = useState<Book[]>([]);
   const [filters, setFilters] = useState({
     page: 1,
-    limit: 10,
+    limit: 20,
     title: "",
     author: "",
     price: "",
@@ -27,19 +24,20 @@ const BookList: React.FC = () => {
     cover: "",
     sort: "title",
     order: "ASC",
+    categories: "",
   });
 
   useEffect(() => {
+    const categories = searchParams.get("categories");
+
     const fetchBooks = async () => {
       try {
-        const cleanParams = Object.fromEntries(
-          Object.entries(filters).filter(([_, value]) => value !== "")
-        );
+        const rawParams = {
+          ...filters,
+          categories: categories || "",
+        };
 
-        const { data } = await axiosInstance.get("/books/list", {
-          params: cleanParams,
-        });
-
+        const data = await getBooksInOneCategory(cleanParams(rawParams));
         setBooks(data.entities);
       } catch (error) {
         console.error("Помилка завантаження книг", error);
@@ -47,7 +45,7 @@ const BookList: React.FC = () => {
     };
 
     fetchBooks();
-  }, [filters]);
+  }, [filters, searchParams]);
 
   const handleInputChange = (
     e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>
@@ -62,6 +60,7 @@ const BookList: React.FC = () => {
   return (
     <div>
       <h1>Список книг</h1>
+      <h2>{selectedCategories.join(", ")}</h2>
 
       {/* Фільтри */}
       <input
@@ -78,13 +77,7 @@ const BookList: React.FC = () => {
       {/* Книги */}
       <ul>
         {books.map((book) => (
-          <li key={book.id}>
-            <Image src={book.image} alt={book.title} width={50} height={50} />
-            <strong>{book.title}</strong> — {book.author} — {book.price} грн
-            <Button onClick={() => handleClick(book.id.toString())}>
-              Go to Book
-            </Button>
-          </li>
+          <BookItem key={book.id} book={book} onClick={handleClick} />
         ))}
       </ul>
     </div>

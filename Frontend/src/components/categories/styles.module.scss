@@ -1,0 +1,122 @@
+.book-menu_wrapper {
+  width: 350px;
+  height: 100vh;
+  overflow-y: visible;
+  overflow-x: visible;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  background-color: #cdddba;
+  font-family: sans-serif;
+  background-color: #ffffff;
+  border-right: 1px solid #b7b7b8;
+}
+
+.book-menu_top {
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  color: black;
+  padding: 15px 15px 0 15px;
+}
+
+.book-menu_title {
+  font-size: 18px;
+  line-height: 1;
+  font-weight: 400;
+  color: #222;
+  font-family: "Mabry Pro", sans-serif;
+  font-weight: 700;
+  text-align: center;
+}
+
+.book-main_menu {
+  list-style: none;
+  width: 100%;
+  padding-top: 20px;
+}
+
+.category-item {
+  width: 100%;
+}
+
+.category-item::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #b7b7b8;
+}
+
+.category-item:last-child::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #b7b7b8;
+}
+
+.category-item_list {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px 20px 0;
+}
+
+.category-item_list:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.category-title {
+  cursor: pointer;
+  color: #5b636f;
+  font-size: 15px;
+  line-height: 1;
+  padding: 0 0 0 15px;
+}
+
+.category-sub_menu {
+  list-style: none;
+  margin-left: 0.5px;
+  position: absolute;
+  top: 0;
+  left: 100%;
+  background-color: #fff;
+  width: 250px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+
+  opacity: 0;
+  transform: translateX(10px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.category-item:hover .category-sub_menu {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.ui-btn-close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  background: inherit;
+}
+
+.ui-btn-close:hover {
+  background-color: #b7b7b8;
+  transition: all 0.5s ease;
+}

@@ -1,3 +1,4 @@
+import { getOneBook } from "@/shared/api/books/books-api";
 import axiosInstance from "@/shared/auth/auth-axios-instance/axiosInstance";
 import Image from "next/image";
 
@@ -8,11 +9,6 @@ export async function generateStaticParams() {
   return data.map((list: { id: string }) => ({
     id: list.id.toString(),
   }));
-}
-
-async function getOneBook(id: string) {
-  const response = await axiosInstance.get(`/books/find/${id}`);
-  return response.data;
 }
 
 export default async function BookFindOne({

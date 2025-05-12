@@ -1,0 +1,164 @@
+@import url(../../shared/assets/variables/variables.scss);
+
+.header {
+  width: 100%;
+  background: #ffffff;
+  color: black;
+  padding: 14px 16px;
+  /* display: flex;
+  justify-content: space-between;
+  align-items: center; */
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border: 1px solid #eaeaea;
+}
+
+.header__container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 28px;
+}
+
+.header__logo {
+  width: 100%;
+  max-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.header__logo a {
+  color: black;
+  text-decoration: none;
+}
+
+.header__category {
+  max-width: 200px;
+  width: 100%;
+  height: 44px;
+  margin-right: 15px;
+}
+
+.header__search {
+  display: flex;
+  flex-grow: 1;
+  max-width: 776px;
+  border-radius: 4px;
+  color: black;
+  position: relative;
+}
+
+.header__search input {
+  border: 2px solid hsl(255, 65%, 47%);
+  outline: none;
+  color: #222;
+  font-family: "Mabry Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1;
+  font-style: normal;
+  padding-left: 38px;
+  padding-right: 48px;
+  width: 100%;
+  height: 44px;
+  caret-color: initial;
+  outline: none !important;
+  border-radius: 100px;
+  -webkit-transition: background-color 120ms ease;
+  -o-transition: background-color 120ms ease;
+  transition: background-color 120ms ease;
+  cursor: text;
+}
+
+.header__search svg {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.header__search button {
+  border-radius: 0 100px 100px 0;
+  position: absolute;
+  right: 0;
+  width: 90px;
+  height: 44px;
+  font-size: 17px;
+}
+
+.header__about {
+  display: flex;
+  flex-direction: column;
+  max-width: 150px;
+}
+
+.header__about span {
+  font-size: 15px;
+  color: #666;
+  cursor: pointer;
+
+  &:hover {
+    color: #000;
+  }
+}
+
+.header__about_phone {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.header__about_phone ~ span {
+  font-size: 14px;
+  color: #666;
+}
+
+.header__about,
+.header__cart,
+.header__login {
+  margin-left: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.header__cart span,
+.header__login a {
+  font-size: 17px;
+  text-decoration: none;
+  color: #000;
+}
+
+.header__user {
+  position: absolute;
+  top: 60px;
+  right: 24px;
+  background-color: white;
+  color: black;
+  padding: 12px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1001;
+}
+
+.title {
+  font-size: 24px;
+}
+
+.loginButton {
+  background: black;
+  color: #007bff;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}

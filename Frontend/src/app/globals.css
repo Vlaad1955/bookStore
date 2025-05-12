@@ -40,3 +40,25 @@ a {
     color-scheme: dark;
   }
 }
+
+.container {
+  display: flex;
+  width: 1600px;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0 auto;
+}
+
+.layout-container {
+  width: 100%;
+  position: relative;
+  height: 100vh;
+}
+
+.category-list-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

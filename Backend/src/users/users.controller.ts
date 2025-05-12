@@ -13,6 +13,7 @@ import { UsersService } from './users.service';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersQueryDto } from '../common/validator/users.query.validator';
 import { AuthGuard } from '@nestjs/passport';
+import { User } from '../common/decorator/user.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -30,8 +31,8 @@ export class UsersController {
 
   @UseGuards(AuthGuard())
   @Get('find')
-  findOneToToken(@Headers('Authorization') authHeader: string) {
-    return this.usersService.findOneTo(authHeader);
+  findOneToToken(@User('id') userId: string) {
+    return this.usersService.findOneTo(userId);
   }
 
   @UseGuards(AuthGuard())
@@ -39,17 +40,14 @@ export class UsersController {
   update(
     @Param('id') id: string,
     @Body() Dto: UpdateUserDto,
-    @Headers('Authorization') authHeader: string,
+    @User('id') userId: string,
   ) {
-    return this.usersService.update(id, Dto, authHeader);
+    return this.usersService.update(id, Dto, userId);
   }
 
   @UseGuards(AuthGuard())
   @Delete('delete/:id')
-  remove(
-    @Param('id') id: string,
-    @Headers('Authorization') authHeader: string,
-  ) {
-    return this.usersService.remove(id, authHeader);
+  remove(@Param('id') id: string, @User('id') userId: string) {
+    return this.usersService.remove(id, userId);
   }
 }

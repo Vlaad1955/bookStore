@@ -6,7 +6,6 @@ import {
   Patch,
   Param,
   Delete,
-  Headers,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -15,6 +14,7 @@ import { CreateCommentDto, UpdateCommentDto } from './dto/create-comment.dto';
 import { Comment } from '../database/entities/comment.entity';
 import { CommentQueryDto } from '../common/validator/comment.query.validator';
 import { AuthGuard } from '@nestjs/passport';
+import { User } from '../common/decorator/user.decorator';
 
 @Controller('comments')
 export class CommentsController {
@@ -22,11 +22,11 @@ export class CommentsController {
 
   @UseGuards(AuthGuard())
   @Post('/create-comment')
-  create(
+  async create(
     @Body() Dto: CreateCommentDto,
-    @Headers('Authorization') authHeader: string,
+    @User('id') userId: string,
   ): Promise<Comment> {
-    return this.commentsService.create(Dto, authHeader);
+    return this.commentsService.create(Dto, userId);
   }
 
   @Get('/list')
@@ -41,20 +41,20 @@ export class CommentsController {
 
   @UseGuards(AuthGuard())
   @Patch('update/:id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() Dto: UpdateCommentDto,
-    @Headers('Authorization') authHeader: string,
+    @User('id') userId: string,
   ): Promise<string> {
-    return this.commentsService.update(id, Dto, authHeader);
+    return this.commentsService.update(id, Dto, userId);
   }
 
   @UseGuards(AuthGuard())
   @Delete('delete/:id')
-  remove(
+  async remove(
     @Param('id') id: string,
-    @Headers('Authorization') authHeader: string,
+    @User('id') userId: string,
   ): Promise<string> {
-    return this.commentsService.remove(id, authHeader);
+    return this.commentsService.remove(id, userId);
   }
 }

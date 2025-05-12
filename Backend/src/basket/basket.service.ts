@@ -1,14 +1,8 @@
-import {
-  ForbiddenException,
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateBasketDto } from './dto/create-basket.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../database/entities/user.entity';
 import { Repository } from 'typeorm';
-import { JwtService } from '@nestjs/jwt';
 import { Book } from '../database/entities/book.entity';
 import { Basket } from '../database/entities/basket.entity';
 import { BasketItem } from '../database/entities/basket.item.entity';
@@ -27,33 +21,9 @@ export class BasketService {
 
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
-    private readonly jwtService: JwtService,
   ) {}
 
-  private extractUserIdFromToken(authHeader: string): string | null {
-    if (!authHeader) {
-      throw new ForbiddenException('Authorization header is missing');
-    }
-    try {
-      const token = authHeader.replace('Bearer ', '');
-      const decoded = this.jwtService.verify(token);
-      return String(decoded.id);
-    } catch (error) {
-      throw new UnauthorizedException('Invalid token');
-    }
-  }
-
-  private async getUserIdFromAuthHeader(authHeader: string): Promise<string> {
-    const userId = this.extractUserIdFromToken(authHeader);
-    if (!userId) {
-      throw new UnauthorizedException('User ID is missing from token');
-    }
-    return userId;
-  }
-
-  async create(Dto: CreateBasketDto, authHeader: string) {
-    const userId = await this.getUserIdFromAuthHeader(authHeader);
-
+  async create(Dto: CreateBasketDto, userId: string) {
     const user = await this.userRepository.findOne({
       where: { id: userId },
     });
@@ -68,7 +38,7 @@ export class BasketService {
 
     let basket = await this.basketRepository.findOne({
       where: { user: { id: userId } },
-      relations: ['items', 'items.book'], // ➕ підвантажуємо звʼязані записи
+      relations: ['items', 'items.book'],
     });
 
     if (!basket) {
@@ -92,9 +62,7 @@ export class BasketService {
     return this.basketRepository.save(basket);
   }
 
-  async getUserBasket(authHeader: string) {
-    const userId = await this.getUserIdFromAuthHeader(authHeader);
-
+  async getUserBasket(userId: string) {
     const basket = await this.basketRepository.findOne({
       where: { user: { id: userId } },
       relations: ['items', 'items.book'],
@@ -104,8 +72,8 @@ export class BasketService {
     return basket;
   }
 
-  async remove(id: string, authHeader: string) {
-    const basket = await this.getUserBasket(authHeader);
+  async remove(id: string, userId: string) {
+    const basket = await this.getUserBasket(userId);
     const item = basket.items.find((item) => item.book.id === id);
 
     if (!item) throw new NotFoundException('Book not in basket');
@@ -115,8 +83,8 @@ export class BasketService {
     return this.basketRepository.save(basket);
   }
 
-  async clear(authHeader: string) {
-    const basket = await this.getUserBasket(authHeader);
+  async clear(userId: string) {
+    const basket = await this.getUserBasket(userId);
     await this.basketItemRepository.remove(basket.items);
     basket.items = [];
     return this.basketRepository.save(basket);

@@ -1,5 +1,4 @@
 import {
-  ForbiddenException,
   Injectable,
   InternalServerErrorException,
   NotFoundException,
@@ -28,30 +27,7 @@ export class CommentsService {
     private readonly jwtService: JwtService,
   ) {}
 
-  private extractUserIdFromToken(authHeader: string): string | null {
-    if (!authHeader) {
-      throw new ForbiddenException('Authorization header is missing');
-    }
-    try {
-      const token = authHeader.replace('Bearer ', '');
-      const decoded = this.jwtService.verify(token);
-      return String(decoded.id);
-    } catch (error) {
-      throw new ForbiddenException('Invalid token');
-    }
-  }
-
-  private async getUserIdFromAuthHeader(authHeader: string): Promise<string> {
-    const userId = this.extractUserIdFromToken(authHeader);
-    if (!userId) {
-      throw new UnauthorizedException('User ID is missing from token');
-    }
-    return userId;
-  }
-
-  async create(Dto: CreateCommentDto, authHeader: string) {
-    const userId = await this.getUserIdFromAuthHeader(authHeader);
-
+  async create(Dto: CreateCommentDto, userId: string) {
     const book = await this.bookRepository.findOne({
       where: { id: Dto.book_id },
     });
@@ -122,22 +98,20 @@ export class CommentsService {
     });
 
     if (!comment) {
-      throw new UnauthorizedException('Comment not found');
+      throw new NotFoundException('Comment not found');
     }
 
     return comment;
   }
 
-  async update(id: string, Dto: UpdateCommentDto, authHeader: string) {
-    const userId = await this.getUserIdFromAuthHeader(authHeader);
-
+  async update(id: string, Dto: UpdateCommentDto, userId: string) {
     const comment = await this.commentRepository.findOne({
       where: { id: id },
       relations: ['book', 'user'],
     });
 
     if (!comment) {
-      throw new UnauthorizedException('Comment not found');
+      throw new NotFoundException('Comment not found');
     }
 
     if (comment?.user.id !== userId) {
@@ -150,16 +124,14 @@ export class CommentsService {
     return 'Comment updated successfully';
   }
 
-  async remove(id: string, authHeader: string) {
-    const userId = await this.getUserIdFromAuthHeader(authHeader);
-
+  async remove(id: string, userId: string) {
     const comment = await this.commentRepository.findOne({
       where: { id: id },
       relations: ['book', 'user'],
     });
 
     if (!comment) {
-      throw new UnauthorizedException('Comment not found');
+      throw new NotFoundException('Comment not found');
     }
 
     if (comment?.user.id !== userId) {
@@ -168,6 +140,6 @@ export class CommentsService {
 
     await this.commentRepository.delete(id);
 
-    return 'Comment delete successfully';
+    return 'Comment deleted successfully';
   }
 }

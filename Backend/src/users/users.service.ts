@@ -1,5 +1,4 @@
 import {
-  ForbiddenException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -19,27 +18,6 @@ export class UsersService {
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
   ) {}
-
-  private extractUserIdFromToken(authHeader: string): string | null {
-    if (!authHeader) {
-      throw new ForbiddenException('Authorization header is missing');
-    }
-    try {
-      const token = authHeader.replace('Bearer ', '');
-      const decoded = this.jwtService.verify(token);
-      return String(decoded.id);
-    } catch (error) {
-      throw new UnauthorizedException('Invalid token');
-    }
-  }
-
-  private async getUserIdFromAuthHeader(authHeader: string): Promise<string> {
-    const userId = this.extractUserIdFromToken(authHeader);
-    if (!userId) {
-      throw new UnauthorizedException('User ID is missing from token');
-    }
-    return userId;
-  }
 
   async findAll(query: UsersQueryDto = {} as UsersQueryDto) {
     const options = {
@@ -111,10 +89,8 @@ export class UsersService {
     return usersWithoutPassword;
   }
 
-  async update(id: string, Dto: UpdateUserDto, authHeader: string) {
+  async update(id: string, Dto: UpdateUserDto, userId: string) {
     const user = await this.findOne(id);
-
-    const userId = await this.getUserIdFromAuthHeader(authHeader);
 
     if (user.id !== userId) {
       throw new UnauthorizedException('Only the user can update his account');
@@ -130,10 +106,8 @@ export class UsersService {
     return 'Account updated successfully';
   }
 
-  async remove(id: string, authHeader: string) {
+  async remove(id: string, userId: string) {
     const user = await this.findOne(id);
-
-    const userId = await this.getUserIdFromAuthHeader(authHeader);
 
     if (user.id !== userId) {
       throw new UnauthorizedException('Only the user can delete his account');
@@ -144,9 +118,7 @@ export class UsersService {
     return 'Account successfully deleted';
   }
 
-  async findOneTo(authHeader: string) {
-    const userId = await this.getUserIdFromAuthHeader(authHeader);
-
+  async findOneTo(userId: string) {
     const user = await this.userRepository.findOne({
       where: { id: userId },
       relations: ['comments', 'basket'],

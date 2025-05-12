@@ -46,9 +46,8 @@ export class UsersQueryDto {
 
   @ApiProperty({ required: false })
   @IsOptional()
-  @Type(() => Number)
   @IsNumber()
-  phone?: number;
+  phone?: string;
 
   @ApiProperty({ required: false })
   @IsOptional()

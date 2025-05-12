@@ -12,6 +12,7 @@ export default registerAs('config', () => ({
       'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InppcXhlc3lhb3Zwb3doY2Ntd2l3Iiwicm9sZSI6ImFub24iLCJpYXQiOjE3NDE2MTA2MzksImV4cCI6MjA1NzE4NjYzOX0.bf_Pi9ZMeeXkfBnpQh4gQeq9hDbt-Rs9W9Y2M47HUjc',
     bucket: process.env.SUPABASE_BUCKET ?? 'user-covers',
     bucketBook: process.env.SUPABASE_BUCKET_BOOK ?? 'book-covers',
+    bucketNews: process.env.SUPABASE_BUCKET_NEWS ?? 'news-covers',
   },
   redis: {
     userKey: process.env.REDIS_USER_KEY ?? 'user-token',
@@ -22,5 +23,9 @@ export default registerAs('config', () => ({
   },
   jwt: {
     strategyKey: process.env.JWT_STRATEGY_KEY ?? 'secret',
+  },
+  smtp: {
+    smtpEmail: process.env.SMTP_EMAIL,
+    smtpPassword: process.env.SMTP_PASSWORD,
   },
 }));

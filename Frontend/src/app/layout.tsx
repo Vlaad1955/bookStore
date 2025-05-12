@@ -4,6 +4,7 @@ import "./globals.css";
 import Header from "@/components/header/Header";
 import { ToastContainer } from "react-toastify";
 import CategoryList from "@/components/categories/CategoryList";
+// import { AuthInit } from "@/components/auth/authInit/authinit";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -28,6 +29,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
+        {/* <AuthInit /> */}
         <div className="container">
           <Header />
 

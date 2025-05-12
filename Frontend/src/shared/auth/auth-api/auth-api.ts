@@ -11,7 +11,7 @@ export const authApi = {
     formData.append("password", payload.password);
     formData.append("firstName", payload.firstName);
     formData.append("lastName", payload.lastName);
-    formData.append("age", String(payload.age));
+    // formData.append("age", payload.age);
     formData.append("phoneNumber", String(payload.phoneNumber));
     if (payload.image instanceof File) {
       formData.append("image", payload.image);
@@ -22,5 +22,5 @@ export const authApi = {
     });
   },
   logout: () => axiosInstance.post("/auth/logout"),
-  fetchCurrentUser: () => axiosInstance.get("/auth/me"),
+  fetchCurrentUser: () => axiosInstance.get("/users/find"),
 };

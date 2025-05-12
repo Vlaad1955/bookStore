@@ -26,6 +26,7 @@ export const useAuthStore = create<AuthState>((set) => ({
     set(authService.getState());
   },
   signUp: async (payload) => {
+    console.log(typeof payload.phoneNumber);
     await authService.signUp(payload);
     set(authService.getState());
   },

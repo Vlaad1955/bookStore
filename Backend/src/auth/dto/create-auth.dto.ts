@@ -34,7 +34,7 @@ export class ReturnUserDto {
 
   @IsString()
   @ApiProperty()
-  phone?: string;
+  phoneNumber?: string;
 
   @IsOptional()
   @IsString()

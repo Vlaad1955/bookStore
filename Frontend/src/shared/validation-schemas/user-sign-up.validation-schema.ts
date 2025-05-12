@@ -74,7 +74,7 @@ const userSignUp = joi.object<UserSignUpRequestDto, true>({
     "string.min": "Last name must be at least 2 characters",
     "string.max": "Last name must be at most 30 characters",
   }),
-  age: joi.string().pattern(/^\d+$/).min(1).max(3).required().messages({
+  age: joi.number().required().messages({
     "string.pattern.base": "Age must be a number",
     "string.min": "Age must be at least 1 digit",
     "string.max": "Age must be at most 3 digits",
@@ -82,7 +82,7 @@ const userSignUp = joi.object<UserSignUpRequestDto, true>({
   }),
   phoneNumber: joi
     .string()
-    .pattern(/^\d{8,15}$/)
+    // .pattern(/^\d{8,15}$/)
     .required()
     .messages({
       "string.empty": "Phone number is required",

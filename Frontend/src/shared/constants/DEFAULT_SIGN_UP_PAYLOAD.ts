@@ -5,7 +5,7 @@ const DEFAULT_SIGN_UP_PAYLOAD: UserSignUpRequestDto = {
   password: "",
   firstName: "",
   lastName: "",
-  age: "",
+  age: 18,
   phoneNumber: "",
   image: undefined,
 };

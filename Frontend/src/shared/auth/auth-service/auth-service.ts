@@ -30,9 +30,13 @@ class AuthService {
       const { accessToken } = response.data;
       if (!isTokenValid(accessToken)) throw new Error("Invalid token");
 
-      this.isAuthenticated = true;
       this.token = accessToken;
       axiosInstance.defaults.headers.Authorization = `Bearer ${accessToken}`;
+
+      const { data } = await authApi.fetchCurrentUser();
+      this.user = data;
+
+      this.isAuthenticated = true;
     } catch (error) {
       this.error = "Помилка входу";
       throw error;
@@ -49,9 +53,15 @@ class AuthService {
       const { accessToken } = response.data;
       if (!isTokenValid(accessToken)) throw new Error("Invalid token");
 
-      this.isAuthenticated = true;
       this.token = accessToken;
       axiosInstance.defaults.headers.Authorization = `Bearer ${accessToken}`;
+
+      const { data } = await authApi.fetchCurrentUser();
+      this.user = data;
+
+      console.log(data);
+
+      this.isAuthenticated = true;
     } catch (error) {
       this.error = "Помилка реєстрації";
       throw error;

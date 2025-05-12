@@ -20,8 +20,10 @@ import SearchBar from "../search/SearchBar";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
-  const { isAuthenticated, logout } = useAuthStore();
+  const { isAuthenticated, user, logout } = useAuthStore();
   const [searchTerm, setSearchTerm] = useState("");
+
+  console.log("Header user", user);
 
   const toggleList = useCategoryListStore((state) => state.toggleList);
 
@@ -68,13 +70,13 @@ const Header = () => {
         {isAuthenticated ? (
           <>
             <Button onClick={() => setIsOpen(!isOpen)}>
-              {mockUser?.firstName} {mockUser?.lastName} хахахаха
+              {user?.firstName} {user?.lastName}
             </Button>
             {isOpen && (
               <aside className={styles.header__user}>
                 {" "}
                 <p>
-                  {mockUser?.firstName} {mockUser?.lastName}
+                  {user?.firstName} {user?.lastName}
                 </p>
                 <Button onClick={() => setIsOpen(false)}>Закрити</Button>
                 <Button onClick={handleLogout}>Вийти</Button>

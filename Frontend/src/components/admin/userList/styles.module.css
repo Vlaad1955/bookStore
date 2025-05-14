@@ -1,0 +1,50 @@
+.menu ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    max-height: 450px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255, 255, 255, 0.4) transparent;
+}
+
+
+.menu ul::-webkit-scrollbar {
+    width: 10px;
+    background: transparent;
+}
+
+.menu ul::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.menu ul::-webkit-scrollbar-thumb {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 5px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+    transition: background 0.3s ease;
+}
+
+.menu ul::-webkit-scrollbar-thumb:hover {
+    background: rgba(255, 255, 255, 0.6); /* Більш яскравий колір при наведенні */
+}
+
+
+.menu ul {
+    scroll-behavior: smooth;
+}
+
+.menu ul li {
+    margin-bottom: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-size: 14px;
+    padding: 8px 10px;
+    border-radius: 4px;
+    position: relative;
+}
+
+.menu ul li:hover {
+    transform: scale(1.03) translateX(10px);
+}

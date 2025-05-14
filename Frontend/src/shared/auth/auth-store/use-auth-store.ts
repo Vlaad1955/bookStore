@@ -7,9 +7,9 @@ interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   token: string | null;
-  user: unknown | null;
+  // user: unknown | null;
   error: string | null;
-  checkAuth: () => Promise<void>;
+  // checkAuth: () => Promise<void>;
   signIn: (payload: UserSignInRequestDto) => Promise<void>;
   signUp: (payload: UserSignUpRequestDto) => Promise<void>;
   logout: () => Promise<void>;
@@ -17,10 +17,10 @@ interface AuthState {
 
 export const useAuthStore = create<AuthState>((set) => ({
   ...authService.getState(),
-  checkAuth: async () => {
-    await authService.checkAuth();
-    set(authService.getState());
-  },
+  // checkAuth: async () => {
+  //   await authService.checkAuth();
+  //   set(authService.getState());
+  // },
   signIn: async (payload) => {
     await authService.signIn(payload);
     set(authService.getState());

@@ -1,0 +1,16 @@
+import { User } from "../store/UseUserStore";
+import { userApi } from "../user-api/user-api";
+
+class UserService {
+  async getCurrentUser(): Promise<User | undefined> {
+    const response = await userApi.fetchCurrentUser();
+    return response.data;
+  }
+
+  //   async updateUser(id: string, payload: Partial<User>) {
+  //     const response = await axiosInstance.patch(`/users/update/${id}`, payload);
+  //     return response.data;
+  //   }
+}
+
+export const userService = new UserService();

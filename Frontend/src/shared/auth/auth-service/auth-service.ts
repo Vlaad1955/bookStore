@@ -3,6 +3,8 @@ import { isTokenValid } from "@/shared/hooks/decodeToken";
 import { UserSignInRequestDto } from "@/shared/types/authTypes/user-sign-in-request-dto";
 import { UserSignUpRequestDto } from "@/shared/types/authTypes/user-sign-up-request-dto";
 import axiosInstance from "../auth-axios-instance/axiosInstance";
+import { useUserStore } from "@/shared/user/store/UseUserStore";
+import { userApi } from "@/shared/user/user-api/user-api";
 
 class AuthService {
   private token: string | null = null;
@@ -11,16 +13,16 @@ class AuthService {
   private isLoading = false;
   private error: string | null = null;
 
-  async checkAuth() {
-    try {
-      const { data } = await authApi.fetchCurrentUser();
-      this.isAuthenticated = true;
-      this.user = data;
-    } catch {
-      this.isAuthenticated = false;
-      this.user = null;
-    }
-  }
+  // async checkAuth() {
+  //   try {
+  //     const { data } = await authApi.fetchCurrentUser();
+  //     this.isAuthenticated = true;
+  //     this.user = data;
+  //   } catch {
+  //     this.isAuthenticated = false;
+  //     this.user = null;
+  //   }
+  // }
 
   async signIn(payload: UserSignInRequestDto) {
     this.isLoading = true;
@@ -33,8 +35,9 @@ class AuthService {
       this.token = accessToken;
       axiosInstance.defaults.headers.Authorization = `Bearer ${accessToken}`;
 
-      const { data } = await authApi.fetchCurrentUser();
-      this.user = data;
+      // const { data } = await userApi.fetchCurrentUser();
+      // useUserStore.getState().setUser(data);
+      // this.user = data;
 
       this.isAuthenticated = true;
     } catch (error) {
@@ -56,10 +59,10 @@ class AuthService {
       this.token = accessToken;
       axiosInstance.defaults.headers.Authorization = `Bearer ${accessToken}`;
 
-      const { data } = await authApi.fetchCurrentUser();
+      const { data } = await userApi.fetchCurrentUser();
+      useUserStore.getState().setUser(data);
       this.user = data;
-
-      console.log(data);
+      // console.log(data);
 
       this.isAuthenticated = true;
     } catch (error) {
@@ -78,6 +81,7 @@ class AuthService {
     } finally {
       this.isAuthenticated = false;
       this.token = null;
+      useUserStore.getState().setUser(null);
       this.user = null;
       delete axiosInstance.defaults.headers.Authorization;
     }
@@ -88,7 +92,7 @@ class AuthService {
       isAuthenticated: this.isAuthenticated,
       isLoading: this.isLoading,
       token: this.token,
-      user: this.user,
+      // user: this.user,
       error: this.error,
     };
   }

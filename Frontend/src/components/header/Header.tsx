@@ -3,10 +3,9 @@
 import Link from "next/link";
 import styles from "./styles.module.css";
 import { useAuthStore } from "@/shared/auth/auth-store/use-auth-store";
-// import { useUserStore } from "@/shared/store/useUserStore";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { AppRoute } from "@/shared/enums/app-route.enums";
-import mockUser from "@/shared/mock/mock-user";
+// import mockUser from "@/shared/mock/mock-user";
 import { useCategoryListStore } from "@/shared/store/UseCategoryStore";
 import MenuIcon from "@/shared/assets/icons/menuIcon";
 import CategoriesIcon from "@/shared/assets/icons/categoriesIcon";
@@ -17,11 +16,14 @@ import { Button } from "../ui/button/Button";
 import { ButtonVariant } from "@/shared/enums/button/button-variant.enum";
 import { ButtonSize } from "@/shared/enums/button/button-size.enum";
 import SearchBar from "../search/SearchBar";
+import { useUserStore } from "@/shared/user/store/UseUserStore";
 
 const Header = () => {
-  const [isOpen, setIsOpen] = useState(false);
-  const { isAuthenticated, user, logout } = useAuthStore();
+  const { isAuthenticated, logout } = useAuthStore();
+  const user = useUserStore((state) => state.user);
+  const loadUser = useUserStore((state) => state.loadUser);
   const [searchTerm, setSearchTerm] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
 
   console.log("Header user", user);
 
@@ -30,6 +32,14 @@ const Header = () => {
   const handleLogout = () => {
     logout();
   };
+
+  useEffect(() => {
+    if (isAuthenticated && !user) {
+      loadUser();
+      // useUserStore.getState().loadUser();
+      // setUser(null);
+    }
+  }, [isAuthenticated, user]);
 
   return (
     <header className={styles.header}>
@@ -83,6 +93,7 @@ const Header = () => {
                 <Link href={AppRoute.EXPECTEDGOODS}>Expected Goods</Link>
                 <Link href={AppRoute.FAVORITE}>My Favorite</Link>
                 <Link href={AppRoute.ORDERS}>Orders</Link>
+                <Link href={AppRoute.CHANGE_ACCOUNT}>Change Account</Link>
               </aside>
             )}
           </>

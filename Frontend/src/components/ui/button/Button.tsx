@@ -17,6 +17,7 @@ type Properties = {
   variant?: ButtonVariant;
   size?: ButtonSize;
   disabled?: boolean;
+  unstyled?: boolean;
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
@@ -27,19 +28,23 @@ const Button: React.FC<Properties> = ({
   variant = "primary",
   size = "medium",
   disabled = false,
+  unstyled = false,
   onClick,
   name = "",
 }) => {
-  const buttonClasses = classNames(
-    styles.button,
-    variant === "round" ? styles.equalRounded : styles[size],
-    variant === "primary" && size === "small" ? styles.primarySmall : "",
-    variant === "primary" && size === "medium" ? styles.primaryMedium : "",
-    variant === "delete" && size === "small" ? styles.deleteSmall : "",
-    variant === "transparent" ? styles.transparent : "",
-    styles[variant + (disabled ? "Disabled" : "")],
-    className
-  );
+  const buttonClasses = !unstyled
+    ? classNames(
+        styles.button,
+        variant === "round" ? styles.equalRounded : styles[size],
+        variant === "primary" && size === "small" ? styles.primarySmall : "",
+        variant === "primary" && size === "medium" ? styles.primaryMedium : "",
+        variant === "delete" && size === "small" ? styles.deleteSmall : "",
+        variant === "transparent" ? styles.transparent : "",
+        variant === "free" ? styles.free : "",
+        styles[variant + (disabled ? "Disabled" : "")],
+        className
+      )
+    : className;
 
   return (
     <button

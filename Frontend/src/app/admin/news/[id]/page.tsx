@@ -1,16 +1,31 @@
 import Pagination from "@/components/admin/pagination/Pagination";
 import NewsList from "@/components/admin/newsList/NewsList";
-import {getAllNews} from "@/shared/api/news/news-api";
+import NewsHeader from "@/components/admin/newsHeader/NewsHeader"; // <== додай цей імпорт
+import { getAllNews } from "@/shared/admin/news/news-api";
 
 type Params = { id: string };
+type SearchParams = { title?: string; category?: string };
 
-export default async function NewsPage({ params }: { params: Params }) {
-    const page = parseInt(params.id, 10) || 1;
+export default async function NewsPage({
+                                           params,
+                                           searchParams,
+                                       }: {
+    params: Params;
+    searchParams: SearchParams;
+}) {
+    const {id} = await params;
+    const {title, category} = await searchParams
+    const page = parseInt(id, 10) || 1;
 
-    const data = await getAllNews({ page });
+    const data = await getAllNews({
+        page,
+        title: title,
+        category: category,
+    });
 
     return (
         <div>
+            <NewsHeader />
             <NewsList news={data.entities} />
             <Pagination currentPage={data.page} totalPages={data.pages} />
         </div>

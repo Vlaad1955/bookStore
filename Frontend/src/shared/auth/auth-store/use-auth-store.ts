@@ -13,6 +13,7 @@ interface AuthState {
   signIn: (payload: UserSignInRequestDto) => Promise<void>;
   signUp: (payload: UserSignUpRequestDto) => Promise<void>;
   logout: () => Promise<void>;
+  setToken: (token: string | null) => void;
 }
 
 export const useAuthStore = create<AuthState>((set) => ({
@@ -34,4 +35,5 @@ export const useAuthStore = create<AuthState>((set) => ({
     await authService.logout();
     set(authService.getState());
   },
+  setToken: (token: string | null) => set({ token, isAuthenticated: !!token }),
 }));

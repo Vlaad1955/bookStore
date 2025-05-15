@@ -5,7 +5,6 @@ import styles from "./styles.module.css";
 import { useAuthStore } from "@/shared/auth/auth-store/use-auth-store";
 import { useEffect, useState } from "react";
 import { AppRoute } from "@/shared/enums/app-route.enums";
-// import mockUser from "@/shared/mock/mock-user";
 import { useCategoryListStore } from "@/shared/store/UseCategoryStore";
 import MenuIcon from "@/shared/assets/icons/menuIcon";
 import CategoriesIcon from "@/shared/assets/icons/categoriesIcon";

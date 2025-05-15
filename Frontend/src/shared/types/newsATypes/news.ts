@@ -5,3 +5,9 @@ export type News = {
     image:string;
     category:string;
 };
+
+export type UpdateNewsDto = {
+    title:string;
+    content:string;
+    category: "general" | "event" | "promotion";
+}

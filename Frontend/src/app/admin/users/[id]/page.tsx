@@ -8,7 +8,7 @@ export default async function UsersPage({ params }: { params: Params }) {
     const page = Number(params.id) || 1;
 
     const res = await fetch(`http://localhost:4000/users/list?page=${page}`, {
-        cache: "no-store", // щоб не кешувався запит
+        cache: "no-store",
     });
 
     const data = await res.json();

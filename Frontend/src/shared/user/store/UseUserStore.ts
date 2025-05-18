@@ -12,6 +12,7 @@ export interface User {
   isEmailConfirmed: boolean;
   role: string;
   comments: unknown[];
+  basket: null;
 }
 
 interface UserState {

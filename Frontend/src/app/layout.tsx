@@ -5,7 +5,7 @@ import Header from "@/components/header/Header";
 import { ToastContainer } from "react-toastify";
 import CategoryList from "@/components/categories/CategoryList";
 // import { AuthInit } from "@/components/auth/authInit/authinit";
-import TokenInit from "@/shared/utils/toke";
+import TokenInit from "@/shared/token/token";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",

@@ -1,6 +1,6 @@
 "use client";
 import { useEffect } from "react";
-import { tokenStorage } from "../user/store/UseTokenStore";
+import { tokenStorage } from "./UseTokenStore";
 import { useAuthStore } from "../auth/auth-store/use-auth-store";
 
 const TokenInit = () => {

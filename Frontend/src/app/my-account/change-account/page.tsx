@@ -5,6 +5,7 @@ import { useUserStore } from "@/shared/user/store/UseUserStore";
 import { authApi } from "@/shared/auth/auth-api/auth-api";
 import { useRouter } from "next/navigation";
 import { userApi } from "@/shared/user/user-api/user-api";
+import { userService } from "@/shared/user/user-service/user-service";
 
 const ChangeAccount = () => {
   const router = useRouter();
@@ -15,7 +16,6 @@ const ChangeAccount = () => {
   const [form, setForm] = useState({
     firstName: "",
     lastName: "",
-    email: "",
     phone: "",
     age: "",
   });
@@ -25,7 +25,6 @@ const ChangeAccount = () => {
       setForm({
         firstName: user.firstName,
         lastName: user.lastName,
-        email: user.email,
         phone: user.phone ?? "",
         age: String(user.age),
       });
@@ -46,12 +45,11 @@ const ChangeAccount = () => {
       const payload = {
         firstName: form.firstName,
         lastName: form.lastName,
-        // email: form.email,
         phone: form.phone,
         age: Number(form.age),
       };
 
-      await userApi.updateUser(user.id, payload);
+      await userService.updateUser(user.id, payload);
       updateUserFields(payload);
 
       alert("Дані користувача оновлено");
@@ -70,9 +68,9 @@ const ChangeAccount = () => {
       );
       if (!confirmed) return;
 
+      resetUser();
+      router.push("/");
       await userApi.deleteUser(user.id);
-      resetUser(); // скидаємо стан
-      router.push("/"); // редирект на головну
       authApi.logout();
     } catch (error) {
       console.error("Помилка при видаленні акаунта:", error);
@@ -99,13 +97,7 @@ const ChangeAccount = () => {
             value={form.lastName}
             onChange={handleChange}
           />
-          <input
-            type="email"
-            name="email"
-            placeholder="Email"
-            value={form.email}
-            onChange={handleChange}
-          />
+
           <input
             type="text"
             name="phone"

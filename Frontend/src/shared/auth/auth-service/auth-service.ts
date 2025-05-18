@@ -5,7 +5,7 @@ import { UserSignUpRequestDto } from "@/shared/types/authTypes/user-sign-up-requ
 import axiosInstance from "../auth-axios-instance/axiosInstance";
 import { useUserStore } from "@/shared/user/store/UseUserStore";
 // import { userApi } from "@/shared/user/user-api/user-api";
-import { tokenStorage } from "@/shared/user/store/UseTokenStore";
+import { tokenStorage } from "@/shared/token/UseTokenStore";
 
 class AuthService {
   private token: string | null = null;

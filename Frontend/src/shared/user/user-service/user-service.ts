@@ -7,10 +7,10 @@ class UserService {
     return response.data;
   }
 
-  //   async updateUser(id: string, payload: Partial<User>) {
-  //     const response = await axiosInstance.patch(`/users/update/${id}`, payload);
-  //     return response.data;
-  //   }
+  async updateUser(id: string, payload: Partial<User>) {
+    const response = await userApi.updateUser(id, payload);
+    return response.data;
+  }
 }
 
 export const userService = new UserService();

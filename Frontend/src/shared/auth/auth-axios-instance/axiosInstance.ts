@@ -1,6 +1,6 @@
 import axios from "axios";
 import { useAuthStore } from "../auth-store/use-auth-store";
-import { tokenStorage } from "@/shared/user/store/UseTokenStore";
+import { tokenStorage } from "@/shared/token/UseTokenStore";
 
 const API_URL = "http://localhost:4000"; // Заміни на свій бекенд URL
 

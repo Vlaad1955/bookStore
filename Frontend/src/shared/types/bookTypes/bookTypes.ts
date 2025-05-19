@@ -8,10 +8,13 @@ export interface Book {
   gift: boolean;
   cover: 'soft' | 'firm';
   published: boolean;
+  categories: CategoryDto[];
 }
 
 export interface FetchBooksOptions {
-  categories?: string;
+  page?: number;
+  title?: string;
+  published?: string; // важливо: string, не boolean
   [key: string]: string | number | boolean | undefined;
 }
 

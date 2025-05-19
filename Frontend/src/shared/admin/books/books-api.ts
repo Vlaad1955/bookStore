@@ -2,10 +2,15 @@ import axiosInstance from "@/shared/auth/auth-axios-instance/axiosInstance";
 import {Book, CreateBookDto, UpdateBookDto, UpdatePublishedDto} from "@/shared/types/bookTypes/bookTypes";
 
 
-export async function getAllBooks(queryParams: unknown) {
+export async function getAllBooks(queryParams: Record<string, unknown>) {
+    const cleanedParams = Object.fromEntries(
+        Object.entries(queryParams).filter(([, v]) => v !== undefined)
+    );
+
     const response = await axiosInstance.get("/books/list", {
-        params: queryParams,
+        params: cleanedParams,
     });
+
     return response.data;
 }
 

@@ -1,0 +1,53 @@
+.header {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    background: var(--color-purple-500);
+    border-radius: 12px;
+    margin-bottom: 24px;
+    color: white;
+    gap: 16px;
+}
+
+.createButton {
+    flex-shrink: 0;
+    min-width: 140px;
+    font-weight: 600;
+}
+
+.controls {
+    display: flex;
+    gap: 12px;
+    flex-wrap: wrap;
+    align-items: center;
+    flex-grow: 1;
+    min-width: 250px;
+}
+
+.searchInput {
+    flex-grow: 1;
+    min-width: 180px;
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    outline: none;
+    color: #333;
+}
+
+.select {
+    padding: 8px 12px;
+    border-radius: 8px;
+    border: none;
+    font-size: 14px;
+    background-color: white;
+    color: #333;
+    min-width: 140px;
+}
+
+.applyButton {
+    min-width: 100px;
+    font-weight: 600;
+}

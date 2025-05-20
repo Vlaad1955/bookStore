@@ -51,7 +51,7 @@ const BookCard = ({ book }: { book: Book }) => {
             </div>
 
             <div className={styles.buttonSection}>
-                <Link href={`/admin/news/edit/${book.id}`}>
+                <Link href={`/admin/books/edit/${book.id}`}>
                     <Button variant="edit">Редагувати</Button>
                 </Link>
                 <Button variant="delete" onClick={handleDelete} disabled={isDeleting}>

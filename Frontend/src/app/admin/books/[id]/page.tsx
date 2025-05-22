@@ -6,7 +6,7 @@ import {getAllBooks} from "@/shared/admin/books/books-api";
 type Params = { id: string };
 type SearchParams = { title?: string; published?: string };
 
-export default async function NewsPage({
+export default async function BooksPage({
                                            params,
                                            searchParams,
                                        }: {

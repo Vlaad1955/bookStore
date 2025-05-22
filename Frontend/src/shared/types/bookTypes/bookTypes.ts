@@ -37,7 +37,6 @@ export interface UpdateBookDto {
   price?: number;
   description?: string;
   author?: string;
-  image?: string;
   gift?: boolean;
   cover?: 'soft' | 'firm';
   categories?: string[];

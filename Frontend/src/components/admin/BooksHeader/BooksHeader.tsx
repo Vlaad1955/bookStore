@@ -22,7 +22,7 @@ export default function BooksHeader() {
   };
 
   const handleCreate = () => {
-    router.push("/admin/news/create");
+    router.push("/admin/books/create");
   };
 
   return (

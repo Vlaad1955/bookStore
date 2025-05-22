@@ -6,7 +6,7 @@ export const metadata: Metadata = {
     description: "Page about the books",
 }
 type Props = { children: React.ReactNode }
-const NewsLayout = ({children}: Props) => {
+const BooksLayout = ({children}: Props) => {
     return (
         <div>
                 {children}
@@ -14,4 +14,4 @@ const NewsLayout = ({children}: Props) => {
     );
 };
 
-export default NewsLayout;
+export default BooksLayout;

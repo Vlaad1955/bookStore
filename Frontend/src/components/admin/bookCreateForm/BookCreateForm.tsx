@@ -2,9 +2,9 @@
 
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
-import { createBook } from '@/shared/admin/books/books-api';
 import { CreateBookDto } from '@/shared/types/bookTypes/bookTypes';
 import styles from '@/components/admin/bookForm/EditBookForm.module.css';
+import {createBook} from "@/shared/admin/books/books-api";
 
 const EditBookForm = ({ categories }: { categories: { id: string; name: string }[] }) => {
     const router = useRouter();
@@ -23,23 +23,25 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
     const [preview, setPreview] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
+    const handleChange = (
+        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+    ) => {
         const { name, value, type, checked } = e.target;
 
         if (type === 'checkbox' && name === 'gift') {
-            setForm({ ...form, gift: checked });
+            setForm((prev) => ({ ...prev, gift: checked }));
         } else if (name === 'price') {
-            setForm({ ...form, price: parseFloat(value) });
+            setForm((prev) => ({ ...prev, price: parseFloat(value) || 0 }));
         } else {
-            setForm({ ...form, [name]: value });
+            setForm((prev) => ({ ...prev, [name]: value }));
         }
     };
 
     const handleCategoryChange = (id: string) => {
-        setForm(prev => {
+        setForm((prev) => {
             const exists = prev.categories.includes(id);
             const newCategories = exists
-                ? prev.categories.filter(cat => cat !== id)
+                ? prev.categories.filter((cat) => cat !== id)
                 : [...prev.categories, id];
             return { ...prev, categories: newCategories };
         });
@@ -55,14 +57,32 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-        if (!imageFile) return;
+
+        if (!form.title.trim() || !form.author.trim()) {
+            alert('Заповніть назву та автора');
+            return;
+        }
+
+        if (!imageFile) {
+            alert('Оберіть зображення');
+            return;
+        }
 
         try {
             setIsSubmitting(true);
-            await createBook(form, imageFile);
+
+            const dto: CreateBookDto = {
+                ...form,
+                price: Number(form.price),
+                gift: Boolean(form.gift),
+                categories: form.categories.map(String),
+            };
+
+            await createBook(dto, imageFile);
             router.push('/admin/books');
         } catch (error) {
             console.error('Помилка створення книги:', error);
+            alert('Не вдалося створити книгу. Спробуйте ще раз.');
         } finally {
             setIsSubmitting(false);
         }
@@ -74,7 +94,9 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
 
             <div className={styles.row}>
                 <div className={styles.col}>
-                    <label htmlFor="title" className={styles.label}>Назва</label>
+                    <label htmlFor="title" className={styles.label}>
+                        Назва
+                    </label>
                     <input
                         type="text"
                         id="title"
@@ -87,7 +109,9 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
                 </div>
 
                 <div className={styles.col}>
-                    <label htmlFor="author" className={styles.label}>Автор</label>
+                    <label htmlFor="author" className={styles.label}>
+                        Автор
+                    </label>
                     <input
                         type="text"
                         id="author"
@@ -100,7 +124,9 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
                 </div>
 
                 <div className={styles.col}>
-                    <label htmlFor="price" className={styles.label}>Ціна</label>
+                    <label htmlFor="price" className={styles.label}>
+                        Ціна
+                    </label>
                     <input
                         type="number"
                         id="price"
@@ -109,15 +135,17 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
                         value={form.price}
                         onChange={handleChange}
                         className={styles.input}
+                        min="0"
+                        step="0.01"
                     />
                 </div>
-
             </div>
 
             <div className={styles.row}>
-
                 <div className={styles.col}>
-                    <label htmlFor="cover" className={styles.label}>Тип обкладинки</label>
+                    <label htmlFor="cover" className={styles.label}>
+                        Тип обкладинки
+                    </label>
                     <select
                         id="cover"
                         name="cover"
@@ -126,7 +154,7 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
                         className={styles.select}
                     >
                         <option value="soft">М’яка</option>
-                        <option value="hard">Тверда</option>
+                        <option value="firm">Тверда</option>
                     </select>
                 </div>
 
@@ -139,15 +167,18 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
                         onChange={handleChange}
                         className={styles.checkbox}
                     />
-                    <label htmlFor="gift" className={styles.checkboxLabel}>Подарункове видання</label>
+                    <label htmlFor="gift" className={styles.checkboxLabel}>
+                        Подарункове видання
+                    </label>
                 </div>
-
             </div>
 
             <div className={styles.fieldGroupFull}>
-                <label htmlFor="categories" className={styles.label}>Категорії</label>
+                <label htmlFor="categories" className={styles.label}>
+                    Категорії
+                </label>
                 <div className={styles.checkboxList}>
-                    {categories.map(cat => (
+                    {categories.map((cat) => (
                         <div key={cat.id} className={styles.checkboxItem}>
                             <input
                                 type="checkbox"
@@ -156,14 +187,18 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
                                 onChange={() => handleCategoryChange(cat.id)}
                                 className={styles.checkbox}
                             />
-                            <label htmlFor={cat.id} className={styles.checkboxLabel}>{cat.name}</label>
+                            <label htmlFor={cat.id} className={styles.checkboxLabel}>
+                                {cat.name}
+                            </label>
                         </div>
                     ))}
                 </div>
             </div>
 
             <div className={styles.fieldGroupFull}>
-                <label htmlFor="description" className={styles.label}>Опис</label>
+                <label htmlFor="description" className={styles.label}>
+                    Опис
+                </label>
                 <textarea
                     id="description"
                     name="description"
@@ -176,7 +211,9 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
 
             <div className={styles.rowLarge}>
                 <div className={styles.colLarge}>
-                    <label htmlFor="image" className={styles.label}>Зображення</label>
+                    <label htmlFor="image" className={styles.label}>
+                        Зображення
+                    </label>
                     <input
                         type="file"
                         id="image"

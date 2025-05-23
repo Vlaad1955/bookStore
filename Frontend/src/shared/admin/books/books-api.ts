@@ -23,29 +23,34 @@ export async function getOneBook(id: string): Promise<Book> {
 // Створити книгу з обкладинкою
 export async function createBook(bookData: CreateBookDto, imageFile: File) {
     const formData = new FormData();
-    formData.append("image", imageFile);
-    formData.append("title", bookData.title);
-    formData.append("price", bookData.price.toString());
-    formData.append("gift", String(bookData.gift));
-    formData.append("cover", bookData.cover);
-    formData.append("categories", JSON.stringify(bookData.categories));
+    formData.append('image', imageFile);
+    formData.append('title', bookData.title);
+    formData.append('price', bookData.price.toString());
+    formData.append('gift', String(bookData.gift));
+    formData.append('cover', bookData.cover);
 
-    // Не обов’язкові поля
+    // Додаємо кожну категорію окремим полем
+    bookData.categories.forEach((categoryId) => {
+        formData.append('categories', categoryId);
+    });
+
     if (bookData.description) {
-        formData.append("description", bookData.description);
+        formData.append('description', bookData.description);
     }
     if (bookData.author) {
-        formData.append("author", bookData.author);
+        formData.append('author', bookData.author);
     }
 
-    const response = await axiosInstance.post("/books/create-book", formData, {
+    // axiosInstance може бути імпортований або замінений на axios
+    const response = await axiosInstance.post('/books/create-book', formData, {
         headers: {
-            "Content-Type": "multipart/form-data",
+            'Content-Type': 'multipart/form-data',
         },
     });
 
     return response.data;
 }
+
 
 // Оновити книгу (без зображення)
 export async function updateBook(id: string, bookData: UpdateBookDto) {

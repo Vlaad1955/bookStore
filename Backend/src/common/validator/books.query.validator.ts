@@ -34,6 +34,7 @@ export class BookQueryDto {
 
   @ApiProperty({ required: false, default: true })
   @IsOptional()
+  @Transform(({ value }) => value === 'true' || value === true)
   @IsBoolean()
   published?: boolean;
 

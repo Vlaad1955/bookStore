@@ -1,21 +1,19 @@
 import axiosInstance from "@/shared/auth/auth-axios-instance/axiosInstance";
+import {News, UpdateNewsDto} from "@/shared/types/newsATypes/news";
 
-// Отримати всі новини з фільтрацією (через параметри)
-export async function getAllNews(queryParams: any) {
+export async function getAllNews(queryParams: unknown) {
     const response = await axiosInstance.get("/news/list", {
         params: queryParams,
     });
     return response.data;
 }
 
-// Отримати одну новину за ID
 export async function getOneNews(id: string) {
     const response = await axiosInstance.get(`/news/find/id/${id}`);
     return response.data;
 }
 
-// Створити новину
-export async function createNews(newsData, imageFile: File) {
+export async function createNews(newsData: News, imageFile: File) {
     const formData = new FormData();
     formData.append("image", imageFile);
     formData.append("title", newsData.title);
@@ -30,13 +28,11 @@ export async function createNews(newsData, imageFile: File) {
     return response.data;
 }
 
-// Оновити новину
-export async function updateNews(id: string, newsData) {
+export async function updateNews(id: string, newsData:UpdateNewsDto) {
     const response = await axiosInstance.patch(`/news/update/${id}`, newsData);
     return response.data;
 }
 
-// Видалити новину
 export async function removeNews(id: string) {
     const response = await axiosInstance.delete(`/news/delete/${id}`);
     return response.data;

@@ -8,6 +8,12 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
+import {Transform, Type} from "class-transformer";
+
+export enum CoverType {
+  SOFT = 'soft',
+  FIRM = 'firm',
+}
 
 class CategoryDto {
   @IsUUID('4')
@@ -25,6 +31,7 @@ export class CreateBookDto {
   title: string;
 
   @IsNumber()
+  @Type(() => Number)
   @IsNotEmpty()
   price: number;
 
@@ -42,11 +49,12 @@ export class CreateBookDto {
 
   @IsBoolean()
   @IsNotEmpty()
+  @Transform(({ value }) => value === 'true' || value === true)
   gift: boolean;
 
-  @IsEnum(['soft', 'firm'])
+  @IsEnum(CoverType)
   @IsNotEmpty()
-  cover: 'soft' | 'firm';
+  cover: CoverType;
 
   @IsUUID('4', { each: true })
   @ArrayNotEmpty()

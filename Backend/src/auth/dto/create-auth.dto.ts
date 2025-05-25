@@ -27,14 +27,15 @@ export class ReturnUserDto {
   @ApiProperty({ required: false })
   lastName?: string;
 
+  @Transform(({ value }: { value: string }) => parseInt(value, 10))
   @IsNumber()
   @IsOptional()
-  @ApiProperty()
+  @ApiProperty({ required: false, type: Number })
   age?: number;
 
   @IsString()
   @ApiProperty()
-  phoneNumber?: string;
+  phone?: string;
 
   @IsOptional()
   @IsString()

@@ -1,7 +1,9 @@
+import StartBook from "@/components/start/start";
+
 export default function Home() {
   return (
     <>
-      <div>Home</div>
+      <StartBook />
       {/* <CategoryList /> */}
       {/* <Link href={"/dashboard/categories"}>Category</Link> */}
       <br />

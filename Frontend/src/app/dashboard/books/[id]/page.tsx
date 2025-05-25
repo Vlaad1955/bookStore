@@ -1,15 +1,5 @@
+import BookItem from "@/components/books/BookItem";
 import { getOneBook } from "@/shared/api/books/books-api";
-import axiosInstance from "@/shared/auth/auth-axios-instance/axiosInstance";
-import Image from "next/image";
-
-export async function generateStaticParams() {
-  const response = await axiosInstance.get(`/books/list`);
-  const data: { id: string }[] = response.data.entities;
-
-  return data.map((list: { id: string }) => ({
-    id: list.id.toString(),
-  }));
-}
 
 export default async function BookFindOne({
   params,
@@ -19,12 +9,5 @@ export default async function BookFindOne({
   const { id } = await params;
   const book = await getOneBook(id);
   console.log(book);
-  return (
-    <>
-      <div>HI One Book</div>
-      <div>{book.title}</div>
-      <Image src={book.image} alt={book.title} width={500} height={500} />
-      <div>{book.description}</div>
-    </>
-  );
+  return <BookItem book={book} />; // Assuming BookItem takes a book prop
 }

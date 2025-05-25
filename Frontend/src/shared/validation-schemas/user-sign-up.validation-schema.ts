@@ -80,7 +80,7 @@ const userSignUp = joi.object<UserSignUpRequestDto, true>({
     "string.max": "Age must be at most 3 digits",
     "any.required": "Age is required",
   }),
-  phoneNumber: joi
+  phone: joi
     .string()
     // .pattern(/^\d{8,15}$/)
     .required()

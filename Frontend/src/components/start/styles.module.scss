@@ -1,0 +1,17 @@
+.home_grid {
+  display: flex;
+  gap: 20px;
+  //   padding: 16px 0 32px;
+  width: 100%;
+}
+
+.side_bar {
+  width: 205px;
+  display: block;
+  position: sticky;
+  top: 15px;
+}
+
+.home_main {
+  width: calc(100% - 205px);
+}

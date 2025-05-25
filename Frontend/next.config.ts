@@ -4,6 +4,9 @@ const nextConfig: NextConfig = {
   reactStrictMode: true,
   env: { SERVER_URL: process.env.SERVER_URL },
   images: {
+    domains: [
+      "ziqxesyaovpowhccmwiw.supabase.co", // 👈 додай сюди хост Supabase
+    ],
     disableStaticImages: true,
     remotePatterns: [
       {

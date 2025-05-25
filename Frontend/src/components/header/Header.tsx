@@ -79,7 +79,8 @@ const Header = () => {
         {isAuthenticated ? (
           <>
             <Button onClick={() => setIsOpen(!isOpen)}>
-              {user?.firstName} {user?.lastName}
+              {user?.firstName[0].toUpperCase()}
+              {user?.lastName[0].toUpperCase()}
             </Button>
             {isOpen && (
               <aside className={styles.header__user}>
@@ -90,9 +91,10 @@ const Header = () => {
                 <Button onClick={() => setIsOpen(false)}>Закрити</Button>
                 <Button onClick={handleLogout}>Вийти</Button>
                 <Link href={AppRoute.EXPECTEDGOODS}>Expected Goods</Link>
-                <Link href={AppRoute.FAVORITE}>My Favorite</Link>
+                <Link href={AppRoute.NEWS}>NEWS</Link>
                 <Link href={AppRoute.ORDERS}>Orders</Link>
                 <Link href={AppRoute.CHANGE_ACCOUNT}>Change Account</Link>
+                <Link href={AppRoute.BASKET}>Basket</Link>
               </aside>
             )}
           </>

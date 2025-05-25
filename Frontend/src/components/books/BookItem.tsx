@@ -3,18 +3,20 @@ import { Button } from "../ui/button/Button";
 import Image from "next/image";
 import { Book } from "@/shared/types/bookTypes/bookTypes";
 
-type BookItemProps = {
+interface BooksItemProps {
   book: Book;
-  onClick: (id: string) => void;
-};
+}
 
-const BookItem = ({ book, onClick }: BookItemProps) => {
+const BookItem: React.FC<BooksItemProps> = ({ book }) => {
   return (
-    <li>
-      <Image src={book.image} alt={book.title} width={50} height={50} />
-      <strong>{book.title}</strong> — {book.author} — {book.price} грн
-      <Button onClick={() => onClick(book.id.toString())}>Go to Book</Button>
-    </li>
+    <div>
+      <div>HI One Book</div>
+      <div>{book.title}</div>
+      <Button>Added to Basket</Button>
+
+      <Image src={book.image} alt={book.title} width={500} height={500} />
+      <div>{book.description}</div>
+    </div>
   );
 };
 

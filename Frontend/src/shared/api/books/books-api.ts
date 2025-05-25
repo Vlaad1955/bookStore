@@ -7,7 +7,6 @@ export async function getAllBooks() {
 }
 
 export async function getBooksInOneCategory(cleanParams: FetchBooksOptions) {
-  console.log("cleanParams", cleanParams);
   const response = await axiosInstance.get("/books/list", {
     params: cleanParams,
   });

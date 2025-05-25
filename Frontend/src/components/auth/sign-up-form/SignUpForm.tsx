@@ -12,18 +12,18 @@ import styles from "./styles.module.scss";
 import { Button } from "@/components/ui/button/Button";
 import { ButtonType } from "@/shared/enums/button/button-type.enum";
 import Form from "next/form";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
-type Properties = {
-  onSubmit: (event: UserSignUpRequestDto) => void;
-};
+const SignUpForm = () => {
+  const router = useRouter();
 
-const SignUpForm: React.FC<Properties> = () => {
   const { signUp, isLoading, error } = useAuthStore();
   const [formError, setFormError] = useState<string | null>(null);
 
   const { control, handleSubmit, errors } = useAppForm<UserSignUpRequestDto>({
     defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
-    validationSchema: userSignUpValidationSchema,
+    // validationSchema: userSignUpValidationSchema,
     mode: "onBlur",
   });
 
@@ -36,8 +36,14 @@ const SignUpForm: React.FC<Properties> = () => {
 
     try {
       await signUp(user);
+      if (useAuthStore.getState().isAuthenticated) {
+        toast.success("you are register successfully");
+        router.push("/");
+      }
       console.log(user);
     } catch (error) {
+      toast.error(error.message || "you are not login");
+
       setFormError("Помилка входу. Перевірте дані.");
     }
   };
@@ -107,7 +113,7 @@ const SignUpForm: React.FC<Properties> = () => {
       </p>
       <p className={styles.inputWrapper}>
         <Input
-          name="phoneNumber"
+          name="phone"
           type={InputType.TEXT}
           label="Number"
           placeholder="Number"

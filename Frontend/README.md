@@ -140,4 +140,117 @@ return (
 
 ....................
 
+SSSRRRR
+
+Дуже важливе уточнення — ти використовуєш Next.js App Router (директорія /app/), а getServerSideProps працює тільки з Pages Router (директорія /pages/).
+
+❌ Проблема
+getServerSideProps не можна використовувати в App Router, тобто у файлах типу:
+
+swift
+Copy
+Edit
+src/app/my-account/news/page.tsx
+Тому помилка:
+
+latex
+Copy
+Edit
+Ecmascript file had an error
+export const getServerSideProps ...
+^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+✅ Рішення: Як робити SSR у App Router
+У App Router SSR виконується автоматично — треба лише зробити компонент асинхронним і зробити fetch або запит в API у самому компоненті.
+
+🔧 Як переписати page.tsx для SSR у App Router
+tsx
+Copy
+Edit
+// src/app/my-account/news/page.tsx
+
+import { newsApi } from "@/shared/api/news/news-api";
+import React from "react";
+import { notFound } from "next/navigation";
+
+type NewsItem = {
+id: string;
+title: string;
+content: string;
+category: "general" | "promotion" | "event";
+image?: string;
+};
+
+type NewsData = {
+page: number;
+pages: number;
+countItems: number;
+entities: NewsItem[];
+};
+
+export default async function NewsPage({ searchParams }: {
+searchParams: {
+title?: string;
+category?: "general" | "promotion" | "event";
+sort?: string;
+order?: "ASC" | "DESC";
+page?: string;
+limit?: string;
+};
+}) {
+try {
+const res = await newsApi.getNewsList({
+title: searchParams.title,
+category: searchParams.category,
+sort: searchParams.sort,
+order: searchParams.order,
+page: Number(searchParams.page) || 1,
+limit: Number(searchParams.limit) || 10,
+});
+
+    const newsData: NewsData = res.data;
+
+    return (
+      <div>
+        <h1>Список новин</h1>
+        {newsData.entities.map((item) => (
+          <div key={item.id}>
+            <h3>{item.title}</h3>
+            <p>{item.content}</p>
+            <p>Категорія: {item.category}</p>
+          </div>
+        ))}
+      </div>
+    );
+
+} catch (error) {
+console.error("❌ Failed to fetch news:", error);
+return notFound();
+}
+}
+✅ І ще:
+У App Router SSR працює автоматично, якщо компонент page.tsx є async і не використовує use client.
+
+Не використовуй use client на початку файлу!
+
+Дані будуть завантажені на сервері перед рендером — тобто це і є SSR в App Router.
+
+🧩 Твій файл news-api.ts лишається таким же:
+ts
+Copy
+Edit
+// shared/api/news/news-api.ts
+
+import axiosInstance from "@/shared/auth/auth-axios-instance/axiosInstance";
+
+export const newsApi = {
+getNewsList: (params: {
+title?: string;
+category?: "general" | "promotion" | "event";
+sort?: string;
+order?: "ASC" | "DESC";
+page?: number;
+limit?: number;
+}) => axiosInstance.get("/news/list", { params }),
+};
+🔄 Хочеш — можу допомогти додати фільтри, пагінацію або зберігати стейт у Zustand після SSR.
 W

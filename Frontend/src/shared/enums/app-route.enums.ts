@@ -3,10 +3,11 @@ const AppRoute = {
   SIGN_IN: "/auth/sign-in",
   SIGN_UP: "/auth/sign-up",
   ORDERS: "/my-account/orders",
-  FAVORITE: "/my-account/my-library",
-  LIBRARY: "/my-account/favorite-books",
+  NEWS: "/my-account/news",
+  LIBRARY: "/my-account/my-library",
   EXPECTEDGOODS: "/my-account/expected-goods",
   CHANGE_ACCOUNT: "/my-account/change-account",
+  BASKET: "/my-account/basket",
 } as const;
 
 export { AppRoute };

@@ -166,6 +166,7 @@ a.secondary {
 
 .layout-container {
   display: flex;
+  margin-top: 20px;
 }
 
 .page-content {

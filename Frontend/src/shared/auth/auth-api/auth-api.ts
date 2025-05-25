@@ -11,8 +11,8 @@ export const authApi = {
     formData.append("password", payload.password);
     formData.append("firstName", payload.firstName);
     formData.append("lastName", payload.lastName);
-    // formData.append("age", payload.age);
-    formData.append("phoneNumber", String(payload.phoneNumber));
+    formData.append("age", String(payload.age));
+    formData.append("phone", payload.phone);
     if (payload.image instanceof File) {
       formData.append("image", payload.image);
     }

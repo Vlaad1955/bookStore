@@ -4,7 +4,7 @@ type UserSignUpRequestDto = {
   firstName: string;
   lastName: string;
   age: number;
-  phoneNumber: string;
+  phone: string;
   image?: File;
 };
 

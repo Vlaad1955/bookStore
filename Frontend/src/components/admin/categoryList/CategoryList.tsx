@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import CategoryCard from "@/components/admin/categoryCard/CategoryCard";
 
 interface Category {
@@ -10,35 +10,42 @@ interface Category {
 }
 
 interface CategoryListProps {
-    category: Category[];    // Всі категорії
-    main: Category[];        // Головні категорії
+    category: Category[];
+    main: Category[];
 }
 
 const CategoryList: React.FC<CategoryListProps> = ({ category, main }) => {
     const [categories, setCategories] = useState<Category[]>(category);
 
-    // Оновлення категорії у списку
+    useEffect(() => {
+        setCategories(category);
+    }, [category]);
+
     const handleUpdateCategory = (updatedCategory: Category) => {
-        setCategories(prev =>
-            prev.map(cat => (cat.id === updatedCategory.id ? updatedCategory : cat))
+        setCategories((prev) =>
+            prev.map((cat) => (cat.id === updatedCategory.id ? updatedCategory : cat))
         );
     };
 
-    // Видалення категорії зі списку
     const handleDeleteCategory = (id: string) => {
-        setCategories(prev => prev.filter(cat => cat.id !== id));
+        setCategories((prev) => prev.filter((cat) => cat.id !== id));
+    };
+
+    const handleAddSubCategory = (newCategory: Category) => {
+        setCategories((prev) => [...prev, newCategory]);
     };
 
     return (
         <div>
-            {categories.map(cat => (
+            {categories.map((cat) => (
                 <CategoryCard
                     key={cat.id}
                     category={cat}
                     type={cat.parentId ? "sub" : "main"}
                     main={main}
                     onUpdateCategory={handleUpdateCategory}
-                    onDeleteCategory={handleDeleteCategory}  // Додали функцію видалення
+                    onDeleteCategory={handleDeleteCategory}
+                    onAddSubCategory={handleAddSubCategory}
                 />
             ))}
         </div>

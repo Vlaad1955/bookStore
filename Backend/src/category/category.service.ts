@@ -88,4 +88,12 @@ export class CategoryService {
     await this.categoryRepository.delete(id);
     return 'Category successfully deleted';
   }
+
+  async findMainCategories() {
+    return await this.categoryRepository.find({
+      where: {
+        parentId: IsNull(),
+      },
+    });
+  }
 }

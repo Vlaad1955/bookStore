@@ -14,7 +14,7 @@ const AsideComponent =  () =>{
                 <h4>Адімінстративна панель</h4>
                <Button onClick={() => router.push("/admin/users/1")} >Керування користувачами</Button>
                 <Button onClick={() => router.push("/admin/news/1")}>Керування новинами</Button>
-                <Button >Керування категоріями</Button>
+                <Button onClick={() => router.push("/admin/category/1")} >Керування категоріями</Button>
                 <Button onClick={() => router.push("/admin/books/1")} >Керування товаром</Button>
             </div>
             <button className={styles.sign_out}>Вийти</button>

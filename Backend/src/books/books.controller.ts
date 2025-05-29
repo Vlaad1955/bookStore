@@ -38,6 +38,8 @@ export class BooksController {
       const uploadResult = await this.booksService.uploadFile(file);
       console.log(uploadResult);
       Dto.image = uploadResult?.data?.publicUrl;
+    } else {
+      Dto.image = `https://ziqxesyaovpowhccmwiw.supabase.co/storage/v1/object/public/book-covers//Empty_book.jpg`;
     }
     return this.booksService.create(Dto);
   }

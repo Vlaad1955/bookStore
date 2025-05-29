@@ -63,11 +63,6 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
             return;
         }
 
-        if (!imageFile) {
-            alert('Оберіть зображення');
-            return;
-        }
-
         try {
             setIsSubmitting(true);
 
@@ -79,7 +74,7 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
             };
 
             await createBook(dto, imageFile);
-            router.push('/admin/books');
+            router.push('/admin/books/1');
         } catch (error) {
             console.error('Помилка створення книги:', error);
             alert('Не вдалося створити книгу. Спробуйте ще раз.');

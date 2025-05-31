@@ -17,7 +17,7 @@ const BookCard = ({ book }: { book: Book }) => {
 
         try {
             setIsDeleting(true);
-            await removeBook(book.id);
+            await removeBook(book.id.toString());
             setIsVisible(false);
         } catch (error) {
             console.error("Помилка при видаленні книги:", error);

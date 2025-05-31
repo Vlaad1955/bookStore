@@ -8,7 +8,7 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
-import {Transform, Type} from "class-transformer";
+import { Transform, Type } from 'class-transformer';
 
 export enum CoverType {
   SOFT = 'soft',

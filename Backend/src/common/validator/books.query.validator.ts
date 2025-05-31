@@ -49,10 +49,12 @@ export class BookQueryDto {
   @IsString()
   search: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: false, type: [String] })
   @IsOptional()
-  @IsString()
-  author?: string;
+  @Transform(({ value }) => (Array.isArray(value) ? value : [value]))
+  @IsArray()
+  @IsString({ each: true })
+  author?: string[];
 
   @ApiProperty({ required: false })
   @IsOptional()

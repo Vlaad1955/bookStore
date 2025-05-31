@@ -112,8 +112,19 @@ export class BooksService {
       qb.andWhere('book.price = :price', { price: query.price });
     }
 
-    if (query.author) {
-      qb.andWhere('book.author ILIKE :author', { author: `%${query.author}%` });
+    if (query.author?.length) {
+      qb.andWhere(
+        query.author
+          .map((_, i) => `book.author ILIKE :author${i}`)
+          .join(' OR '),
+        query.author.reduce(
+          (params, author, i) => {
+            params[`author${i}`] = `%${author}%`;
+            return params;
+          },
+          {} as Record<string, string>,
+        ),
+      );
     }
 
     if (query.cover) {

@@ -38,6 +38,11 @@ export class CategoryController {
     return this.categoryService.findAll(query);
   }
 
+  @Get(`/mainCategories/list`)
+  findMainCategories() {
+    return this.categoryService.findMainCategories();
+  }
+
   @Get('find/id/:id')
   findOne(@Param('id') id: string) {
     return this.categoryService.findOne(id);

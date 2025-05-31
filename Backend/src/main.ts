@@ -1,6 +1,10 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from './app.module';
-import {BadRequestException, ValidationError, ValidationPipe} from '@nestjs/common';
+import {
+  BadRequestException,
+  ValidationError,
+  ValidationPipe,
+} from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
@@ -17,10 +21,10 @@ async function bootstrap() {
       whitelist: true,
       forbidNonWhitelisted: true,
       disableErrorMessages: false,
-        exceptionFactory: (errors: ValidationError[]) => {
-            console.error('🛑 Validation failed:', JSON.stringify(errors, null, 2));
-            throw new BadRequestException(errors);
-        },
+      exceptionFactory: (errors: ValidationError[]) => {
+        console.error('🛑 Validation failed:', JSON.stringify(errors, null, 2));
+        throw new BadRequestException(errors);
+      },
     }),
   );
 

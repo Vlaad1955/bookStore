@@ -51,10 +51,18 @@ export class BasketService {
 
     if (existingItem) {
       existingItem.quantity += Dto.quantity ?? 1;
+
+      if (existingItem.quantity < 0) {
+        existingItem.quantity = 0;
+      }
     } else {
+      const newQuantity = Dto.quantity ?? 1;
+
+      const finalQuantity = newQuantity < 0 ? 0 : newQuantity;
+
       const newItem = this.basketItemRepository.create({
         book,
-        quantity: Dto.quantity ?? 1,
+        quantity: finalQuantity,
       });
       basket.items.push(newItem);
     }

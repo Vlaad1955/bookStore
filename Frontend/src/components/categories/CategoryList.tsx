@@ -36,7 +36,7 @@ export default function CategoryList() {
   ) => {
     e.preventDefault();
     e.stopPropagation();
-    setSelectedCategories([name]);
+    setSelectedCategories([name, id]);
     router.push(`/dashboard/books?categories=${id}`);
     closeList();
   };

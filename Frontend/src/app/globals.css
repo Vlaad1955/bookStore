@@ -1,5 +1,5 @@
 :root {
-  --background: #ffffff;
+  --background: #f2f3f6;
   --foreground: #171717;
 }
 
@@ -58,10 +58,11 @@ a {
 }
 
 .page-content {
-  margin-top: 40px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  border: 1px solid #eaeaea;
-  background: #ffffff;
+  margin-top: 20px;
+  /* box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); */
+  /* border-radius: 8px; */
+  /* border: 1px solid #eaeaea; */
+  /* background: #ffffff; */
 }
 
 .category-list-container {

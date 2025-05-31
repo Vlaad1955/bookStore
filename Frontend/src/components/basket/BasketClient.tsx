@@ -5,12 +5,15 @@ import ProtectedRoute from "@/shared/protected-route/protected-route";
 import { useUserStore } from "@/shared/user/store/UseUserStore";
 import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
+import styles from "./styles.module.scss";
+import Image from "next/image";
+import { ButtonVariant } from "@/shared/enums/button/button-variant.enum";
 
 const BasketClient = () => {
   const user = useUserStore((state) => state.user);
   const [loading, setLoading] = useState(false);
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
-  const { basket, fetchBasket, removeFromBasket, clearBasket } =
+  const { basket, fetchBasket, removeFromBasket, clearBasket, addToBasket } =
     useBasketStore();
 
   useEffect(() => {
@@ -56,39 +59,89 @@ const BasketClient = () => {
   return (
     <>
       <ProtectedRoute>
-        <br />
+        <div className={styles.basket_container}>
+          <div className={styles.basket_title}>Кошик</div>
+          <Button
+            className={styles.basket_button_delete}
+            onClick={handleClear}
+            disabled={loading}
+          >
+            Очистити корзину повністю
+          </Button>
+        </div>
 
-        <h1>hi {user?.firstName}</h1>
-        <br />
-
-        <Button onClick={handleClear} disabled={loading}>
-          Очистити корзину повністю
-        </Button>
-        <div>
+        <div className={styles.basket_items}>
           {" "}
-          <h2 className="text-xl font-bold mb-4">Ваша корзина</h2>
           {!basket?.items?.length && <p>Корзина порожня</p>}
-          <ul className="space-y-4">
+          <div className={styles.basket_items_list}>
             {basket?.items?.map((item) => (
-              <li key={item.id} className="flex items-center justify-between">
-                <div>
-                  <p className="font-semibold">{item.book.title}</p>
-                  <p>Автор: {item.book.author}</p>
-                  <p>Кількість: {item.quantity}</p>
-                  <p>Ціна: {item.book.price} грн</p>
+              <div key={item.id} className={styles.basket_item}>
+                <div className={styles.basket_item_content}>
+                  <Image
+                    className={styles.book_item_image}
+                    src={item.book.image}
+                    alt={item.book.title}
+                    width={500}
+                    height={500}
+                  />
+
+                  <div className={styles.book_item_details}>
+                    <div className={styles.basket_item_title}>
+                      {item.book.title}
+                    </div>
+
+                    <div className={styles.basket_item_author}>
+                      Автор: {item.book.author}
+                    </div>
+
+                    <div className={styles.basket_item_isbn}>
+                      <div>Ціна: {item.book.price} грн</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className={styles.basket_item_button_container}>
+                  <div className={styles.basket_item_quantity}>
+                    <Button
+                      className={styles.basket_item_quantity_button}
+                      onClick={() => addToBasket(item.book.id.toString(), 1)}
+                    >
+                      +
+                    </Button>
+                    <div className={styles.basket_item_quantity_value}>
+                      {item.quantity}
+                    </div>
+                    <Button
+                      className={styles.basket_item_quantity_button}
+                      onClick={() => addToBasket(item.book.id.toString(), -1)}
+                    >
+                      -
+                    </Button>
+                  </div>
+
                   <Button
+                    variant={ButtonVariant.DELETE}
+                    className={styles.basket_item_remove}
                     onClick={() => handleRemove(item.book.id.toString())}
                     disabled={actionLoadingId === item.book.id.toString()}
                   >
                     {actionLoadingId === item.book.id.toString()
                       ? "Видаляю..."
-                      : "Видалити книгу з корзини"}
+                      : "Видалити з корзини"}
                   </Button>
                 </div>
-                <br />
-              </li>
+
+                {/* <Button
+                  onClick={() => handleRemove(item.book.id.toString())}
+                  disabled={actionLoadingId === item.book.id.toString()}
+                >
+                  {actionLoadingId === item.book.id.toString()
+                    ? "Видаляю..."
+                    : "Видалити книгу з корзини"}
+                </Button> */}
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       </ProtectedRoute>
     </>

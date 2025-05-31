@@ -1,0 +1,134 @@
+.basket_container {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 15px;
+
+  width: 100%;
+  height: auto;
+  font-size: 24px;
+  line-height: 100%;
+  color: #5b636f;
+  font-family: Mabry Pro, sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #222;
+  padding-top: 10px;
+  align-items: center;
+}
+
+.basket_items {
+  min-width: 0;
+  display: block;
+  margin: 0 auto;
+  padding: 0;
+  -webkit-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 1px 3px #0000001f, 0 1px 2px #0000003d;
+}
+
+.basket_items_list {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  padding: 20px 16px;
+}
+
+.basket_item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+}
+
+.basket_item_content {
+  display: flex;
+}
+
+.book_item_image {
+  width: 150px;
+  min-width: 150px;
+  height: calc(150px * 1.4);
+  min-height: calc(150px * 1.4);
+  overflow: hidden;
+  border-radius: 8px;
+  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
+    rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+}
+
+.book_item_details {
+  padding-left: 15px;
+}
+
+.basket_item_title {
+  font-size: 24px;
+  color: #222;
+  font-weight: 400;
+  line-height: 120%;
+  font-style: normal;
+}
+
+.basket_item_author {
+  color: #626b77;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 120%;
+  font-style: normal;
+  margin-bottom: 15px;
+}
+
+.basket_item_isbn {
+  display: flex;
+  width: 140px;
+  flex-direction: column;
+  border: 2px solid #7a5fcc;
+  background-color: #7a5fcc33;
+  margin: 10px 0 5px;
+  border-radius: 8px;
+  padding: 5px;
+  font-size: 20px;
+}
+
+.basket_item_button_container {
+  display: flex;
+  gap: 15px;
+  margin-right: 15px;
+}
+
+.basket_item_quantity {
+  display: flex;
+  //   justify-content: center;
+  //   align-items: center;
+  height: 50px;
+}
+
+.basket_item_quantity_value {
+  width: 50px;
+  height: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 8px;
+  background-color: #7a5fcc33;
+  font-size: 20px;
+  margin: 0 5px;
+}
+
+.basket_item_quantity_button {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+}
+
+.basket_item_remove {
+  height: 50px;
+
+  &:hover {
+    background: red;
+    color: white;
+  }
+}

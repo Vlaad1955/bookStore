@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import styles from "./styles.module.css";
+import styles from "./styles.module.scss";
 import { useAuthStore } from "@/shared/auth/auth-store/use-auth-store";
 import { useEffect, useState } from "react";
 import { AppRoute } from "@/shared/enums/app-route.enums";
@@ -16,15 +16,24 @@ import { ButtonVariant } from "@/shared/enums/button/button-variant.enum";
 import { ButtonSize } from "@/shared/enums/button/button-size.enum";
 import SearchBar from "../search/SearchBar";
 import { useUserStore } from "@/shared/user/store/UseUserStore";
+import { useRouter } from "next/navigation";
+import { useBasketStore } from "@/shared/api/basket/basket-store";
 
 const Header = () => {
   const { isAuthenticated, logout } = useAuthStore();
+  const { basket } = useBasketStore();
+
+  const totalQuantity = basket?.items.reduce(
+    (acc, item) => acc + item.quantity,
+    0
+  );
+
   const user = useUserStore((state) => state.user);
   const loadUser = useUserStore((state) => state.loadUser);
   const [searchTerm, setSearchTerm] = useState("");
   const [isOpen, setIsOpen] = useState(false);
 
-  console.log("Header user", user);
+  const router = useRouter();
 
   const toggleList = useCategoryListStore((state) => state.toggleList);
 
@@ -60,6 +69,7 @@ const Header = () => {
             console.log("Пошук:", searchTerm);
           }}
         />
+
         <div className={styles.header__about}>
           <div className={styles.header__about_phone}>
             <PhoneIcon />
@@ -67,21 +77,30 @@ const Header = () => {
           </div>
           <span>Без вихідних, з 9 до 20</span>
         </div>
+
         {/* <div>Повідомлення від магазину</div> якщо користувач увійшов в систему */}
         <Button
           className={styles.header__cart}
           variant={ButtonVariant.TRANSPARENT}
           size={ButtonSize.SMALL}
+          onClick={() => router.push(AppRoute.BASKET)}
         >
           <ShoppingCartIcon />
           <span>Кошик</span>
+          {(totalQuantity ?? 0) > 0 && (
+            <div className={styles.header__cart_basket_quantity}>
+              {totalQuantity ?? 0}
+            </div>
+          )}
         </Button>
+
         {isAuthenticated ? (
           <>
             <Button onClick={() => setIsOpen(!isOpen)}>
               {user?.firstName[0].toUpperCase()}
               {user?.lastName[0].toUpperCase()}
             </Button>
+
             {isOpen && (
               <aside className={styles.header__user}>
                 {" "}
@@ -94,7 +113,6 @@ const Header = () => {
                 <Link href={AppRoute.NEWS}>NEWS</Link>
                 <Link href={AppRoute.ORDERS}>Orders</Link>
                 <Link href={AppRoute.CHANGE_ACCOUNT}>Change Account</Link>
-                <Link href={AppRoute.BASKET}>Basket</Link>
               </aside>
             )}
           </>

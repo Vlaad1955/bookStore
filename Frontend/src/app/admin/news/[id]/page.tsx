@@ -1,6 +1,6 @@
 import Pagination from "@/components/admin/pagination/Pagination";
 import NewsList from "@/components/admin/newsList/NewsList";
-import NewsHeader from "@/components/admin/newsHeader/NewsHeader"; // <== додай цей імпорт
+import NewsHeader from "@/components/admin/newsHeader/NewsHeader";
 import { getAllNews } from "@/shared/admin/news/news-api";
 
 type Params = { id: string };
@@ -27,7 +27,7 @@ export default async function NewsPage({
         <div>
             <NewsHeader />
             <NewsList news={data.entities} />
-            <Pagination currentPage={data.page} totalPages={data.pages} />
+            <Pagination currentPage={data.page} totalPages={data.pages} searchName={`news`} />
         </div>
     );
 }

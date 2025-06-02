@@ -1,8 +1,10 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
+import styles from "./styles.module.css";
 import { updateCategory, deleteCategory, createCategory } from "@/shared/api/category/category-api";
 import { UpdateCategoryDto, CreateCategoryDto } from "@/shared/types/categoryTypes/category";
+import {Button} from "@/components/ui/button/Button";
 
 interface Category {
     id: string;
@@ -46,14 +48,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
             };
 
             await updateCategory(category.id, dto);
-
-            // Оновлюємо локальний стан на основі введених значень
-            onUpdateCategory({
-                ...category,
-                name: newName,
-                parentId: dto.parentId,
-            });
-
+            onUpdateCategory({ ...category, name: newName, parentId: dto.parentId });
             setIsEditing(false);
         } catch (error) {
             console.error("Помилка оновлення категорії", error);
@@ -82,10 +77,8 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
                 name: subCatName.trim(),
                 parentId: category.id,
             };
-
             const newCategory = await createCategory(dto);
             onAddSubCategory(newCategory);
-
             setSubCatName("");
             setAddingSubCat(false);
         } catch (error) {
@@ -95,69 +88,61 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
     };
 
     return (
-        <div
-            style={{
-                border: "1px solid black",
-                padding: "10px",
-                marginBottom: "10px",
-                borderRadius: "5px",
-            }}
-        >
-            {isEditing ? (
-                <>
-                    <input
-                        type="text"
-                        value={newName}
-                        onChange={(e) => setNewName(e.target.value)}
-                        placeholder="Нове ім'я"
-                    />
-                    {type === "sub" && (
-                        <select value={newParentId} onChange={(e) => setNewParentId(e.target.value)}>
-                            <option value="">Виберіть категорію</option>
-                            {main.map((cat) => (
-                                <option key={cat.id} value={cat.id}>
-                                    {cat.name}
-                                </option>
-                            ))}
-                        </select>
-                    )}
-                    <button onClick={handleSave}>Зберегти</button>
-                    <button onClick={() => setIsEditing(false)}>Скасувати</button>
-                </>
-            ) : (
-                <>
-                    <h3>{category.name}</h3>
-                    {type === "main" ? (
-                        <>
-                            <p>Тип: Категорія</p>
-                            <button onClick={() => setIsEditing(true)}>Редагувати</button>
-                            <button onClick={() => setAddingSubCat(!addingSubCat)}>
-                                {addingSubCat ? "Відмінити" : "Додати підкатегорію"}
-                            </button>
-                            {addingSubCat && (
-                                <div style={{ marginTop: 10 }}>
-                                    <input
-                                        type="text"
-                                        value={subCatName}
-                                        onChange={(e) => setSubCatName(e.target.value)}
-                                        placeholder="Введіть назву підкатегорії"
-                                    />
-                                    <button onClick={handleAddSubCategory}>Додати</button>
-                                </div>
+        <div className={styles.categoryCard}>
+            <div className={styles.cardContent}>
+                {isEditing ? (
+                    <>
+                        <input
+                            value={newName}
+                            onChange={(e) => setNewName(e.target.value)}
+                            placeholder="Нове ім'я"
+                        />
+                        {type === "sub" && (
+                            <select value={newParentId} onChange={(e) => setNewParentId(e.target.value)}>
+                                <option value="">Виберіть категорію</option>
+                                {main.map((cat) => (
+                                    <option key={cat.id} value={cat.id}>
+                                        {cat.name}
+                                    </option>
+                                ))}
+                            </select>
+                        )}
+                        <div className={styles.cardButtons}>
+                            <Button className={styles.button} onClick={handleSave}>Зберегти</Button>
+                            <Button className={`${styles.button} ${styles.cancel}`} onClick={() => setIsEditing(false)}>Скасувати</Button>
+                        </div>
+                    </>
+                ) : (
+                    <>
+                        <h3 className={styles.cardTitle}>{category.name}</h3>
+                        <div className={styles.cardType}>
+                            {type === "main" ? "Категорія" : `Підкатегорія: ${main.find(cat => cat.id === category.parentId)?.name || "Невідома"}`}
+                        </div>
+                        <div className={styles.cardButtons}>
+                            <Button className={styles.button} onClick={() => setIsEditing(true)}>Редагувати</Button>
+                            {type === "main" ? (
+                                <>
+                                    <Button className={`${styles.button} ${styles.addSub}`} onClick={() => setAddingSubCat(!addingSubCat)}>
+                                        {addingSubCat ? "Скасувати" : "Додати підкатегорію"}
+                                    </Button>
+                                    {addingSubCat && (
+                                        <div className={styles.inputGroup}>
+                                            <input
+                                                value={subCatName}
+                                                onChange={(e) => setSubCatName(e.target.value)}
+                                                placeholder="Назва підкатегорії"
+                                            />
+                                            <Button className={styles.button} onClick={handleAddSubCategory}>Додати</Button>
+                                        </div>
+                                    )}
+                                </>
+                            ) : (
+                                <Button className={`${styles.button} ${styles.cancel}`} onClick={handleDelete}>Видалити</Button>
                             )}
-                        </>
-                    ) : (
-                        <>
-                            <p>
-                                Тип: Підкатегорія{" "}
-                                {main.find((cat) => cat.id === category.parentId)?.name || "Невідома категорія"}
-                            </p>
-                            <button onClick={() => setIsEditing(true)}>Редагувати</button>
-                            <button onClick={handleDelete}>Видалити</button>
-                        </>
-                    )}
-                </>
-            )}
+                        </div>
+                    </>
+                )}
+            </div>
         </div>
     );
 };

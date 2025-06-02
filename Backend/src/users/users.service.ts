@@ -1,4 +1,5 @@
 import {
+  BadRequestException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -87,6 +88,22 @@ export class UsersService {
     });
 
     return usersWithoutPassword;
+  }
+
+  async roleUpdate(id: string) {
+    const user = await this.findOne(id);
+
+    if (!user) {
+      throw new NotFoundException('User not found');
+    }
+
+    if (user.role === 'User') {
+      user.role = 'Admin';
+      await this.userRepository.save(user);
+      return user;
+    } else {
+      throw new BadRequestException('The user is already an admin');
+    }
   }
 
   async update(id: string, Dto: UpdateUserDto, userId: string) {

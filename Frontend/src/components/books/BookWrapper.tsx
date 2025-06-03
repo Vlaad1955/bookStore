@@ -4,6 +4,7 @@ import BookFilters from "./BookFilters";
 import BookList from "./BookList";
 import { Book } from "@/shared/types/bookTypes/bookTypes";
 import styles from "./styles.module.scss";
+import SpecialProducts from "../specialProducts/SpecialProducts";
 
 interface BookWrapperProps {
   initialAuthor: string[];
@@ -21,12 +22,17 @@ const BookWrapper: React.FC<BookWrapperProps> = ({ initialAuthor, books }) => {
         <BookFilters authors={initialAuthor} />
 
         {/* Книги */}
-        <div className={styles.books}>
-          <ul className={styles.book_list}>
-            {books.map((book) => (
-              <BookList key={book.id} book={book} />
-            ))}
-          </ul>
+        <div>
+          <div className={styles.books}>
+            <div className={styles.book_list}>
+              {books.map((book) => (
+                <BookList key={book.id} book={book} />
+              ))}
+            </div>
+          </div>
+          {/* Спеціальні продукти */}
+          <SpecialProducts categoryName="Дитяча література" />
+          <SpecialProducts categoryName="Книги-іграшки" />
         </div>
       </div>
     </div>

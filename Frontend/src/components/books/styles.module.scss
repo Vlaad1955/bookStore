@@ -145,6 +145,9 @@
   min-height: calc(200px * 1.4);
   overflow: hidden;
   gap: 20px;
+  border-radius: 8px;
+  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
+    rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
 }
 
 .book_content {
@@ -195,19 +198,28 @@
 }
 
 .book_basket {
-  width: 177.36px;
-  margin: 10px 0 10px 0;
-  border-radius: 8px;
-
+  width: 100%;
+  // margin: 10px 0 10px 0;
+  border-radius: 0px 0px 8px 8px;
   position: absolute;
-  bottom: -50px;
-  left: 50%;
-  transform: translateX(-50%) translateY(10px);
+  left: 0;
+  top: 62%;
+  background-color: #fff;
+  color: #512ac7;
+  border: 1px solid #512ac7;
+  // bottom: -50px;
+  // left: 50%;
+  // transform: translateX(-50%) translateY(10px);
   opacity: 0;
-  transform: translateX(10px);
+  // transform: translateX(10px);
   transition: opacity 0.3s ease, transform 0.3s ease;
   pointer-events: none;
   z-index: 1000;
+
+  &:hover {
+    background-color: #512ac7;
+    color: #fff;
+  }
 }
 
 .book_item:hover {
@@ -216,7 +228,7 @@
 
 .book_item:hover .book_basket {
   opacity: 1;
-  transform: translateX(-50%) translateY(0);
+  // transform: translateX(-50%) translateY(0);
   pointer-events: auto;
 }
 

@@ -1,8 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname, useSearchParams } from "next/navigation";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import styles from "./styles.module.scss";
+import { Button } from "../ui/button/Button";
 
 type FiltersProps = {
   authors: string[];
@@ -11,6 +12,7 @@ type FiltersProps = {
 const BookFilters = ({ authors }: FiltersProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
+  const router = useRouter();
 
   const getUpdatedSearch = (
     key: string,
@@ -47,6 +49,13 @@ const BookFilters = ({ authors }: FiltersProps) => {
   const isChecked = (key: string, value: string): boolean => {
     const values = searchParams.getAll(key);
     return values.includes(value);
+  };
+
+  const resetFilters = () => {
+    const params = new URLSearchParams();
+    const category = searchParams.get("categories");
+    if (category) params.set("categories", category);
+    router.push(`${pathname}?${params.toString()}`);
   };
 
   return (
@@ -119,6 +128,9 @@ const BookFilters = ({ authors }: FiltersProps) => {
           </Link>
         ))}
       </div>
+      <Button onClick={resetFilters} className={styles.filter_reset_button}>
+        Скинути фільтри
+      </Button>
     </div>
   );
 };

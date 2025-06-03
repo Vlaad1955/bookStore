@@ -23,7 +23,7 @@ export default async function BookPage({ searchParams }: Props) {
     sort: getParam(searchParams.sort, "title"),
     order: getParam(searchParams.order, "ASC"),
     categories: getParam(searchParams.categories),
-    published: getParam(searchParams.published, "true"), // додано для фільтрації за опублікованими книгами
+    published: getParam(searchParams.published, "true"),
   };
 
   const baseParams = cleanParams({
@@ -33,7 +33,7 @@ export default async function BookPage({ searchParams }: Props) {
     cover: undefined,
     title: undefined,
     page: undefined,
-    limit: undefined,
+    limit: 20,
   });
 
   let books: Book[] = [];
@@ -43,18 +43,21 @@ export default async function BookPage({ searchParams }: Props) {
     const data = await getBooksInOneCategory(cleanParams(filters));
     books = data.entities;
 
-    const all = await getBooksInOneCategory(baseParams);
+    const all = await getBooksInOneCategory(cleanParams(baseParams));
     allCategoryBooks = all.entities;
   } catch (error) {
     console.error("Помилка завантаження книг:", error);
   }
 
   const authors = Array.from(new Set(books.map((book) => book.author)));
+  console.log("authors", authors);
   const initialAuthor = Array.from(
     new Set(allCategoryBooks.map((book) => book.author))
   );
-  console.log(initialAuthor);
+  initialAuthor.sort((a, b) => a.localeCompare(b));
 
-  console.log("Фільтри:", authors);
+  console.log("books", books);
+  console.log("filters", filters);
+
   return <BookWrapper initialAuthor={initialAuthor} books={books} />;
 }

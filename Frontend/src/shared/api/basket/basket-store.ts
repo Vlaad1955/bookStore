@@ -45,7 +45,35 @@ export const useBasketStore = create<BasketState>((set) => ({
     try {
       set({ isLoading: true });
       const res = await basketApi.addBook({ bookId, quantity });
-      set({ basket: res.data, error: null });
+
+      set((state) => {
+        const updatedItem = res.data.items.find(
+          (item: { book: { id: string } }) => item.book.id === bookId
+        );
+        if (!updatedItem) {
+          return { basket: res.data, error: null };
+        }
+
+        const currentItems = state.basket?.items || [];
+
+        const itemExists = currentItems.some(
+          (item) => String(item.book.id) === bookId
+        );
+
+        const updatedItems = itemExists
+          ? currentItems.map((item) =>
+              String(item.book.id) === bookId ? updatedItem : item
+            )
+          : [...currentItems, updatedItem];
+
+        return {
+          basket: {
+            ...res.data,
+            items: updatedItems,
+          },
+          error: null,
+        };
+      });
     } catch {
       set({ error: "Не вдалося додати книгу до корзини" });
     } finally {

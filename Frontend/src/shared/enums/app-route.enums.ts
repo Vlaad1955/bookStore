@@ -8,6 +8,7 @@ const AppRoute = {
   EXPECTEDGOODS: "/my-account/expected-goods",
   CHANGE_ACCOUNT: "/my-account/change-account",
   BASKET: "/my-account/basket",
+  ADMIN: "/admin",
 } as const;
 
 export { AppRoute };

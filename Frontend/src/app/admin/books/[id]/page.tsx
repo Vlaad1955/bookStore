@@ -27,7 +27,7 @@ export default async function BooksPage({
         <div>
             <BooksHeader />
             <BooksList books={data.entities} />
-            <Pagination currentPage={data.page} totalPages={data.pages} />
+            <Pagination currentPage={data.page} totalPages={data.pages} searchName={`books`} />
         </div>
     );
 }

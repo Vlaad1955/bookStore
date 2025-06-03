@@ -22,7 +22,7 @@ export default async function CategoryPage ({
     return(
         <div>
         <CategoryList category={data.entities} main={mainCategories}/>
-    <Pagination currentPage={data.page} totalPages={data.pages} />
+    <Pagination currentPage={data.page} totalPages={data.pages} searchName={`category`} />
         </div>
     );
 }

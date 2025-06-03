@@ -5,7 +5,6 @@ import {
   Patch,
   Param,
   Delete,
-  Headers,
   Query,
   UseGuards,
 } from '@nestjs/common';
@@ -14,6 +13,8 @@ import { UpdateUserDto } from './dto/update-user.dto';
 import { UsersQueryDto } from '../common/validator/users.query.validator';
 import { AuthGuard } from '@nestjs/passport';
 import { User } from '../common/decorator/user.decorator';
+import { Roles } from '../common/decorator/roles.decorator';
+import { RoleGuard } from '../common/guards/role.guard';
 
 @Controller('users')
 export class UsersController {
@@ -43,6 +44,13 @@ export class UsersController {
     @User('id') userId: string,
   ) {
     return this.usersService.update(id, Dto, userId);
+  }
+
+  @Roles('Admin')
+  @UseGuards(AuthGuard(), RoleGuard)
+  @Patch('role/:id')
+  updateRole(@Param('id') id: string) {
+    return this.usersService.roleUpdate(id);
   }
 
   @UseGuards(AuthGuard())

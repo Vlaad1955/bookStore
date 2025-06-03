@@ -20,11 +20,11 @@ const Pagination = ({ currentPage, totalPages, genreId, searchName}: PaginationP
 
     const getHref = (page: number) => {
         if (searchName) {
-            return `/search/${searchName}/${page}`;
+            return `/admin/${searchName}/${page}`;
         }
         return genreId
-            ? `/movieslist/${page}/${genreId}`
-            : `/movieslist/${page}`;
+            ? `/booklist/${page}/${genreId}`
+            : `/booklist/${page}`;
     };
 
     return (

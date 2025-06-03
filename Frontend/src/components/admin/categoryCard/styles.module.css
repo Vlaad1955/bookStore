@@ -1,0 +1,65 @@
+/* styles.module.css */
+
+.categoryCard {
+    background: var(--color-purple-500);
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
+    margin-bottom: 20px;
+    transition: box-shadow 0.3s ease;
+}
+
+.categoryCard:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.cardContent {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.cardTitle {
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
+}
+
+.cardType {
+    display: inline-block;
+    font-size: 0.95rem;
+    color: #666;
+    background-color: #fff;
+    padding: 4px 8px;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+}
+
+.cardButtons {
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+}
+
+.inputGroup {
+    display: flex;
+    gap: 8px;
+    margin-top: 8px;
+}
+
+.categoryCard input,
+.categoryCard select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+.categoryCard input:focus,
+.categoryCard select:focus {
+    outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 4px rgba(74, 144, 226, 0.4);
+}

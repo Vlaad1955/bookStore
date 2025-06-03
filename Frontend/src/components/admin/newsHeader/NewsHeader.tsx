@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Button } from "@/components/ui/button/Button";
-import styles from "./newshead.module.css";
+import styles from "@/components/admin/BooksHeader/BooksHeader.module.css";
 
 export default function NewsHeader() {
   const router = useRouter();
@@ -29,29 +29,29 @@ export default function NewsHeader() {
 
   return (
     <div className={styles.header}>
-      <Button onClick={handleCreate}>Створити новину</Button>
+      <Button onClick={handleCreate} className={styles.applyButton}>Створити новину</Button>
 
-      <div className={styles.header__controls}>
+      <div className={styles.controls}>
         <input
           type="text"
           placeholder="Пошук за заголовком..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
-          className={styles.header__search}
+          className={styles.searchInput}
         />
 
         <div style={{ display: "flex", gap: "10px", alignItems: "center" }}>
           <select
             value={category}
             onChange={(e) => setCategory(e.target.value)}
-            className={styles.header__category}
+            className={styles.select}
           >
             <option value="all">Всі категорії</option>
             <option value="general">General</option>
             <option value="event">Event</option>
             <option value="promotion">Promotion</option>
           </select>
-          <Button onClick={handleSearch}>Застосувати</Button>
+          <Button onClick={handleSearch} className={styles.applyButton}>Застосувати</Button>
         </div>
       </div>
     </div>

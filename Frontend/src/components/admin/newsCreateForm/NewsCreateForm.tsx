@@ -99,7 +99,7 @@ export default function CreateNewsForm() {
                 </div>
             )}
 
-            <button type="submit" disabled={loading}>
+            <button type="submit" className={styles.submitButton} disabled={loading}>
                 {loading ? "Завантаження..." : "Створити новину"}
             </button>
         </form>

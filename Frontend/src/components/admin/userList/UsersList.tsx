@@ -9,10 +9,10 @@ const UsersList  = ({ users }: { users: User[] }) =>{
 
     return(
         <div className={styles.menu}>
-            <ul key={`users`}>
+            <ul key={`users`} className={styles.list}>
                 {users.map((user) =>(
                 <li key={user.id}>
-                    <div className="movie-list">
+                    <div className={styles.listItem}>
                     <UserCard user={user} key={user.id}/>
                     </div>
                 </li>

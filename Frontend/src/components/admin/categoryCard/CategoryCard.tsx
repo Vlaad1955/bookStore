@@ -109,7 +109,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
                         )}
                         <div className={styles.cardButtons}>
                             <Button className={styles.button} onClick={handleSave}>Зберегти</Button>
-                            <Button className={`${styles.button} ${styles.cancel}`} onClick={() => setIsEditing(false)}>Скасувати</Button>
+                            <Button className={`${styles.cancel}`} onClick={() => setIsEditing(false)}>Скасувати</Button>
                         </div>
                     </>
                 ) : (
@@ -122,8 +122,8 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
                             <Button className={styles.button} onClick={() => setIsEditing(true)}>Редагувати</Button>
                             {type === "main" ? (
                                 <>
-                                    <Button className={`${styles.button} ${styles.addSub}`} onClick={() => setAddingSubCat(!addingSubCat)}>
-                                        {addingSubCat ? "Скасувати" : "Додати підкатегорію"}
+                                    <Button className={`${styles.button}`} onClick={() => setAddingSubCat(!addingSubCat)}>
+                                        {addingSubCat ? <div className={styles.cancel}>Скасувати</div> : "Додати підкатегорію"}
                                     </Button>
                                     {addingSubCat && (
                                         <div className={styles.inputGroup}>
@@ -132,7 +132,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
                                                 onChange={(e) => setSubCatName(e.target.value)}
                                                 placeholder="Назва підкатегорії"
                                             />
-                                            <Button className={styles.button} onClick={handleAddSubCategory}>Додати</Button>
+                                            <Button className={`${styles.button} ${styles.addSub}`} onClick={handleAddSubCategory}>Додати</Button>
                                         </div>
                                     )}
                                 </>

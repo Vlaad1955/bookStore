@@ -10,7 +10,7 @@ export interface User {
   age: number;
   image: string;
   isEmailConfirmed: boolean;
-  role: string;
+  role: "Admin" | "User";
   comments: unknown[];
   basket: null;
 }

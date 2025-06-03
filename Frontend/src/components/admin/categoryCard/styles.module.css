@@ -1,144 +1,65 @@
+/* styles.module.css */
+
 .categoryCard {
-    display: flex;
-    flex-direction: column;
     background: var(--color-purple-500);
-    padding: 16px;
     border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    padding: 16px;
     margin-bottom: 20px;
-    gap: 10px;
-    max-width: 95%;
-    color: white;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: box-shadow 0.3s ease;
+}
+
+.categoryCard:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
 .cardContent {
     display: flex;
     flex-direction: column;
-    gap: 10px;
+    gap: 12px;
 }
 
 .cardTitle {
-    font-size: 20px;
-    font-weight: 700;
-    margin: 0 0 8px 0;
+    font-size: 1.2rem;
+    font-weight: 600;
+    color: white;
 }
 
 .cardType {
-    font-size: 14px;
-    font-weight: 500;
-    color: #ddd;
-}
-
-.cardParent {
-    font-size: 14px;
-    color: #ccc;
-}
-
-.inputField,
-.selectField {
-    padding: 10px 14px;
+    display: inline-block;
+    font-size: 0.95rem;
+    color: #666;
+    background-color: #fff;
+    padding: 4px 8px;
     border-radius: 8px;
-    border: 2px solid var(--color-purple-300);
-    background-color: white;
-    color: #333;
-    font-size: 14px;
-    width: 100%;
-    max-width: 300px;
-    transition: border-color 0.3s, box-shadow 0.3s;
-    appearance: none;
-    -webkit-appearance: none;
-    -moz-appearance: none;
-    background-image: linear-gradient(45deg, transparent 50%, var(--color-purple-300) 50%),
-    linear-gradient(135deg, var(--color-purple-300) 50%, transparent 50%),
-    linear-gradient(to right, #ccc, #ccc);
-    background-position: calc(100% - 20px) calc(1em + 2px), calc(100% - 15px) calc(1em + 2px), calc(100% - 2.5em) 0.5em;
-    background-size: 5px 5px, 5px 5px, 1px 1.5em;
-    background-repeat: no-repeat;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
 }
 
-.inputField:focus,
-.selectField:focus {
-    border-color: var(--color-purple-500);
-    box-shadow: 0 0 0 3px rgba(128, 0, 128, 0.2);
-    outline: none;
-}
-
-input::placeholder,
-select::placeholder {
-    color: #aaa;
-}
-
-:global(select option) {
-    background-color: white;
-    color: #333;
-    padding: 10px;
-}
-
-.buttonGroup,
 .cardButtons {
     display: flex;
+    gap: 10px;
     flex-wrap: wrap;
-    gap: 8px;
 }
 
-.buttonGroup button,
-.cardButtons button {
-    padding: 8px 16px;
-    border-radius: 8px;
-    border: none;
-    cursor: pointer;
-    font-size: 14px;
-    font-weight: 600;
-    transition: background-color 0.3s;
-}
-
-.buttonGroup button:hover,
-.cardButtons button:hover {
-    background-color: var(--color-purple-300);
-    color: white;
-}
-
-.cancel {
-    background-color: #ff4d4f;
-    color: white;
-}
-
-.cancel:hover {
-    background-color: #ff7875;
-}
-
-.addSub {
-    background-color: #4caf50;
-    color: white;
-}
-
-.addSub:hover {
-    background-color: #66bb6a;
-}
-
-.inputGroup,
-.subCategoryInputGroup {
+.inputGroup {
     display: flex;
     gap: 8px;
-    margin-top: 10px;
-    align-items: center;
+    margin-top: 8px;
 }
 
-.inputGroup input,
-.subCategoryInputGroup input {
-    flex: 1;
-    padding: 10px 14px;
-    border-radius: 8px;
-    border: 2px solid var(--color-purple-300);
-    background-color: white;
-    color: #333;
-    font-size: 14px;
-    transition: border-color 0.3s, box-shadow 0.3s;
+.categoryCard input,
+.categoryCard select {
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 0.95rem;
+    width: 100%;
+    box-sizing: border-box;
 }
 
-.inputGroup input:focus,
-.subCategoryInputGroup input:focus {
-    border-color: var(--color-purple-500);
-    box-shadow: 0 0 0 3px rgba(128, 0, 128, 0.2);
+.categoryCard input:focus,
+.categoryCard select:focus {
     outline: none;
+    border-color: #4a90e2;
+    box-shadow: 0 0 4px rgba(74, 144, 226, 0.4);
 }

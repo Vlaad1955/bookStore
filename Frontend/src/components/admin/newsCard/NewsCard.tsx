@@ -41,16 +41,16 @@ const NewsCard = ({ news }: { news: News }) => {
                     <div>🏷️ {news.category}</div>
                 </div>
             </div>
+            <Link href={`/admin/news/edit/${news.id}`}>
+                <div className={styles.cardButtonWrapper}>
+                    <Button variant="edit">Редагувати</Button>
+                </div>
+            </Link>
             <div className={styles.cardButtonWrapper}>
                 <Button variant="delete" onClick={handleDelete} disabled={isDeleting}>
                     {isDeleting ? "Видалення..." : "Видалити"}
                 </Button>
             </div>
-            <Link href={`/admin/news/edit/${news.id}`}>
-            <div className={styles.cardButtonWrapper}>
-                <Button variant="delete">Редагувати</Button>
-            </div>
-            </Link>
         </div>
     );
 };

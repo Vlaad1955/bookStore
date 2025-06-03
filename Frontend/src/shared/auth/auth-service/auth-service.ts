@@ -4,8 +4,8 @@ import { UserSignInRequestDto } from "@/shared/types/authTypes/user-sign-in-requ
 import { UserSignUpRequestDto } from "@/shared/types/authTypes/user-sign-up-request-dto";
 import axiosInstance from "../auth-axios-instance/axiosInstance";
 import { useUserStore } from "@/shared/user/store/UseUserStore";
-// import { userApi } from "@/shared/user/user-api/user-api";
 import { tokenStorage } from "@/shared/token/UseTokenStore";
+import {userApi} from "@/shared/user/user-api/user-api";
 
 class AuthService {
   private token: string | null = null;
@@ -25,6 +25,10 @@ class AuthService {
       this.token = accessToken;
       tokenStorage.setToken(accessToken);
       axiosInstance.defaults.headers.Authorization = `Bearer ${accessToken}`;
+
+      const {data} = await userApi.fetchCurrentUser();
+      useUserStore.getState().setUser(data);
+      console.log(data)
 
       this.isAuthenticated = true;
     } catch (error) {
@@ -47,9 +51,8 @@ class AuthService {
       tokenStorage.setToken(accessToken);
       axiosInstance.defaults.headers.Authorization = `Bearer ${accessToken}`;
 
-      // const { data } = await userApi.fetchCurrentUser();
-      // useUserStore.getState().setUser(data);
-      // this.user = data;
+      const { data } = await userApi.fetchCurrentUser();
+      useUserStore.getState().setUser(data);
 
       this.isAuthenticated = true;
     } catch (error) {

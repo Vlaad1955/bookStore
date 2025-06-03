@@ -1,98 +1,210 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
+# 📚 Онлайн-книгарня — API на NestJS
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+Це бекенд для онлайн-книгарні, створений за допомогою [NestJS](https://nestjs.com/).
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+# 🚀 Запуск проєкту
 
-## Description
+## Встановлення залежностей
+npm install
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+## Запуск сервера у режимі розробки
+npm run start:dev
 
-## Project setup
+## 📦 Основні залежності
 
-```bash
-$ npm install
-```
+@nestjs/common, @nestjs/core, @nestjs/swagger
 
-## Compile and run the project
+typeorm — для роботи з БД
 
-```bash
-# development
-$ npm run start
+bcrypt — для хешування паролів
 
-# watch mode
-$ npm run start:dev
+passport, jwt — для аутентифікації
 
-# production mode
-$ npm run start:prod
-```
+supabase — для зберігання зображень
 
-## Run tests
+redis — для керування сесіями токенів
 
-```bash
-# unit tests
-$ npm run test
+Swagger - API-документація
 
-# e2e tests
-$ npm run test:e2e
+# 🔐Auth
 
-# test coverage
-$ npm run test:cov
-```
+Реалізовано повний цикл аутентифікації користувача, включаючи завантаження аватарів, реєстрацію, логін, оновлення токенів, вихід із системи.
 
-## Deployment
+Авторизація
+Для захищених маршрутів використовується @UseGuards(AuthGuard()) із JWT.
 
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
+>mail-нотифікації
+Після реєстрації користувачу відправляється вітальний email за допомогою EmailService.
 
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
+### Аутентифікація
+Реєстрація
+POST /auth/registration
 
-```bash
-$ npm install -g mau
-$ mau deploy
-```
+multipart/form-data
 
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+Тіло: email, password, firstName, lastName, age, phone, image (файл) (опціонально)
 
-## Resources
+📥 Завантажене зображення зберігається у Supabase. Якщо не передано — використовується аватар за замовчуванням.
 
-Check out a few resources that may come in handy when working with NestJS:
 
-- Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
-- For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
-- To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
-- Deploy your application to AWS with the help of [NestJS Mau](https://mau.nestjs.com) in just a few clicks.
-- Visualize your application graph and interact with the NestJS application in real-time using [NestJS Devtools](https://devtools.nestjs.com).
-- Need help with your project (part-time to full-time)? Check out our official [enterprise support](https://enterprise.nestjs.com).
-- To stay in the loop and get updates, follow us on [X](https://x.com/nestframework) and [LinkedIn](https://linkedin.com/company/nestjs).
-- Looking for a job, or have a job to offer? Check out our official [Jobs board](https://jobs.nestjs.com).
+### Логін
+POST /auth/login
 
-## Support
+Тіло: email, password
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+📤 Відповідь:
 
-## Stay in touch
+json
+{
+  "accessToken": "jwt-token",
+  "refreshToken": "refresh-token"
+}
 
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+### Вихід
+POST /auth/logout
+🔐 Requires Bearer Token
 
-## License
+### Оновлення токенів
+POST /auth/refresh
 
-Nest is [MIT licensed](https://github.com/nestjs/nest/blob/master/LICENSE).
+📤 Відповідь:
+json
+{
+  "refreshToken": "..."
+}
+
+# 🛒 Basket
+
+Функціонал дозволяє авторизованим користувачам додавати книги до кошика, видаляти окремі книги, очищати весь кошик і переглядати вміст.
+
+> Усі маршрути вимагають авторизації (JWT Bearer Token).
+
+### Отримати поточний кошик
+
+ET /basket/find
+
+Headers:
+Authorization: Bearer <accessToken>
+
+📤 Відповідь: Об'єкт кошика користувача:
+
+json
+{
+"id": "basket-id",
+"user": { ... },
+"items": [
+{
+"id": "item-id",
+"book": {
+"id": "book-id",
+"title": "Назва книги",
+...
+},
+"quantity": 2
+},
+...
+]
+}
+
+### Додати книгу до кошика
+
+POST /basket/add
+
+Headers:
+Authorization: Bearer <accessToken>
+
+Тіло:
+json
+  {
+    "bookId": "string",
+    "quantity": 2 // опціонально, за замовчуванням 1
+  }
+📤 Відповідь: Оновлений об'єкт кошика
+
+### Видалити одну книгу з кошика
+
+DELETE /basket/remove/:id
+
+:id — bookId
+
+Headers:
+Authorization: Bearer <accessToken>
+
+📤 Відповідь: Оновлений об'єкт кошика
+
+### Очистити весь кошик
+
+DELETE /basket/clear
+
+Headers:
+Authorization: Bearer <accessToken>
+
+📤 Відповідь: Оновлений (порожній) об'єкт кошика
+
+### 📘 Примітки
+
+>Якщо книга вже є в кошику — її кількість збільшується.
+
+>Якщо передати від'ємну кількість, вона буде приведена до 0.
+
+>Якщо кошика в користувача ще немає — він створюється автоматично.
+
+# 📚 Books
+
+Модуль для керування книгами: створення, оновлення, публікація, отримання, фільтрація та видалення.
+
+### Створення книги
+
+POST /books/create-book
+
+Headers:
+Authorization: Bearer <accessToken>
+
+Поле зображення: image
+
+Тіло:
+title: string;
+price: number;
+description?: string;
+author?: string;
+gift: boolean;
+cover: 'soft' | 'firm';
+categories: string[];
+
+### Оновлення книги
+
+PATCH /books/update/:id
+
+Headers:
+Authorization: Bearer <accessToken>
+
+Тіло: (всі поля опціональні) title?: string;
+price?: number;
+description?: string;
+author?: string;
+image?: string;
+gift?: boolean;
+cover?: 'soft' | 'firm';
+categories?: string[];
+
+### Зміна статусу публікації
+
+PUT /books/published/:id
+
+Headers:
+Authorization: Bearer <accessToken>
+
+### Отримання списку книг
+
+GET /books/list
+
+### Отримання однієї книги
+
+GET /books/find/:id
+
+### Видалення книги
+
+DELETE /books/delete/:id
+
+Headers:
+Authorization: Bearer <accessToken>

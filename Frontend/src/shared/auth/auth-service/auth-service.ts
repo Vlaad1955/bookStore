@@ -28,7 +28,6 @@ class AuthService {
 
       const {data} = await userApi.fetchCurrentUser();
       useUserStore.getState().setUser(data);
-      console.log(data)
 
       this.isAuthenticated = true;
     } catch (error) {

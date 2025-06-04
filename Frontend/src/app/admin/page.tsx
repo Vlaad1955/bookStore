@@ -1,9 +1,10 @@
 import React from 'react';
+import AdminInstructions from "@/components/admin/іnstruction/Instruction";
 
 export default function AdminPage() {
     return (
         <div>
-            <h1>Base</h1>
+            <AdminInstructions/>
         </div>
     );
 }

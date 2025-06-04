@@ -4,27 +4,31 @@ import React, { useState } from "react";
 import styles from "@/components/admin/userCard/styles.module.css";
 import { Button } from "@/components/ui/button/Button";
 import { News } from "@/shared/types/newsATypes/news";
-import {removeNews} from "@/shared/admin/news/news-api";
+import { removeNews } from "@/shared/admin/news/news-api";
 import Link from "next/link";
+import Modal from "@/components/ui/modalAdmin/ConfirmModal";
 
 const NewsCard = ({ news }: { news: News }) => {
     const [isDeleting, setIsDeleting] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-    const handleDelete = async () => {
-        const confirmDelete = window.confirm("Ви впевнені, що хочете видалити цю новину?");
-        if (!confirmDelete) return;
-
+    const handleConfirmDelete = async () => {
         try {
             setIsDeleting(true);
             await removeNews(news.id);
-            setIsVisible(false); // прибрати з UI
+            setIsVisible(false);
         } catch (error) {
             console.error("Помилка при видаленні новини:", error);
             alert("Не вдалося видалити новину.");
         } finally {
             setIsDeleting(false);
+            setIsModalOpen(false);
         }
+    };
+
+    const handleDelete = () => {
+        setIsModalOpen(true);
     };
 
     if (!isVisible) return null;
@@ -51,6 +55,13 @@ const NewsCard = ({ news }: { news: News }) => {
                     {isDeleting ? "Видалення..." : "Видалити"}
                 </Button>
             </div>
+
+            <Modal
+                message="delete"
+                isOpen={isModalOpen}
+                onCancel={() => setIsModalOpen(false)}
+                onConfirm={handleConfirmDelete}
+            />
         </div>
     );
 };

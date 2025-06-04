@@ -2,9 +2,17 @@
 
 import React, { useEffect, useState } from "react";
 import styles from "./styles.module.css";
-import { updateCategory, deleteCategory, createCategory } from "@/shared/api/category/category-api";
-import { UpdateCategoryDto, CreateCategoryDto } from "@/shared/types/categoryTypes/category";
-import {Button} from "@/components/ui/button/Button";
+import {
+    updateCategory,
+    deleteCategory,
+    createCategory,
+} from "@/shared/api/category/category-api";
+import {
+    UpdateCategoryDto,
+    CreateCategoryDto,
+} from "@/shared/types/categoryTypes/category";
+import { Button } from "@/components/ui/button/Button";
+import ConfirmModal from "@/components/ui/modalAdmin/ConfirmModal";
 
 interface Category {
     id: string;
@@ -32,13 +40,22 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
     const [isEditing, setIsEditing] = useState(false);
     const [newName, setNewName] = useState(category.name);
     const [newParentId, setNewParentId] = useState(category.parentId || "");
+
     const [addingSubCat, setAddingSubCat] = useState(false);
     const [subCatName, setSubCatName] = useState("");
+
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalType, setModalType] = useState<"delete" | "save" | "category">("delete");
 
     useEffect(() => {
         setNewName(category.name);
         setNewParentId(category.parentId || "");
     }, [category.name, category.parentId]);
+
+    const openModal = (type: "delete" | "save" | "category") => {
+        setModalType(type);
+        setIsModalOpen(true);
+    };
 
     const handleSave = async () => {
         try {
@@ -53,17 +70,20 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         } catch (error) {
             console.error("Помилка оновлення категорії", error);
             alert("Помилка оновлення категорії");
+        } finally {
+            setIsModalOpen(false);
         }
     };
 
-    const handleDelete = async () => {
-        if (!window.confirm("Ви впевнені, що хочете видалити цю категорію?")) return;
+    const handleConfirmDelete = async () => {
         try {
             await deleteCategory(category.id);
             onDeleteCategory(category.id);
         } catch (error) {
             console.error("Помилка видалення категорії", error);
             alert("Помилка видалення категорії");
+        } finally {
+            setIsModalOpen(false);
         }
     };
 
@@ -84,7 +104,15 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         } catch (error) {
             console.error("Помилка додавання підкатегорії", error);
             alert("Помилка додавання підкатегорії");
+        } finally {
+            setIsModalOpen(false);
         }
+    };
+
+    const handleModalConfirm = () => {
+        if (modalType === "delete") return handleConfirmDelete();
+        if (modalType === "save") return handleSave();
+        if (modalType === "category") return handleAddSubCategory();
     };
 
     return (
@@ -108,22 +136,30 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
                             </select>
                         )}
                         <div className={styles.cardButtons}>
-                            <Button className={styles.button} onClick={handleSave}>Зберегти</Button>
-                            <Button className={`${styles.cancel}`} onClick={() => setIsEditing(false)}>Скасувати</Button>
+                            <Button className={styles.button} onClick={() => openModal("save")}>
+                                Зберегти
+                            </Button>
+                            <Button className={styles.cancel} onClick={() => setIsEditing(false)}>
+                                Скасувати
+                            </Button>
                         </div>
                     </>
                 ) : (
                     <>
                         <h3 className={styles.cardTitle}>{category.name}</h3>
                         <div className={styles.cardType}>
-                            {type === "main" ? "Категорія" : `Підкатегорія: ${main.find(cat => cat.id === category.parentId)?.name || "Невідома"}`}
+                            {type === "main"
+                                ? "Категорія"
+                                : `Підкатегорія: ${main.find((cat) => cat.id === category.parentId)?.name || "Невідома"}`}
                         </div>
                         <div className={styles.cardButtons}>
-                            <Button className={styles.button} onClick={() => setIsEditing(true)}>Редагувати</Button>
+                            <Button className={styles.button} onClick={() => setIsEditing(true)}>
+                                Редагувати
+                            </Button>
                             {type === "main" ? (
                                 <>
-                                    <Button className={`${styles.button}`} onClick={() => setAddingSubCat(!addingSubCat)}>
-                                        {addingSubCat ? <div className={styles.cancel}>Скасувати</div> : "Додати підкатегорію"}
+                                    <Button className={styles.button} onClick={() => setAddingSubCat(!addingSubCat)}>
+                                        {addingSubCat ? "Скасувати" : "Додати підкатегорію"}
                                     </Button>
                                     {addingSubCat && (
                                         <div className={styles.inputGroup}>
@@ -132,17 +168,35 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
                                                 onChange={(e) => setSubCatName(e.target.value)}
                                                 placeholder="Назва підкатегорії"
                                             />
-                                            <Button className={`${styles.button} ${styles.addSub}`} onClick={handleAddSubCategory}>Додати</Button>
+                                            <Button
+                                                className={`${styles.button} ${styles.addSub}`}
+                                                onClick={() => openModal("category")}
+                                            >
+                                                Додати
+                                            </Button>
                                         </div>
                                     )}
                                 </>
                             ) : (
-                                <Button className={`${styles.button} ${styles.cancel}`} onClick={handleDelete}>Видалити</Button>
+                                <Button
+                                    className={`${styles.button} ${styles.cancel}`}
+                                    onClick={() => openModal("delete")}
+                                >
+                                    Видалити
+                                </Button>
                             )}
                         </div>
                     </>
                 )}
             </div>
+
+            <ConfirmModal
+                isOpen={isModalOpen}
+                message={modalType}
+                onConfirm={handleModalConfirm}
+                onCancel={() => setIsModalOpen(false)}
+                title="Підтвердження дії"
+            />
         </div>
     );
 };

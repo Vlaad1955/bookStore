@@ -47,19 +47,6 @@
 .filter_checkbox {
   display: flex;
   margin-bottom: 5px;
-
-  //   & input {
-  //     border: 1px solid #da1515;
-  //   }
-
-  //   & input:hover {
-  //     cursor: pointer;
-
-  //     transition: border-color 0.2s ease;
-
-  //     border-color: #512ac7;
-  //     background-color: #512ac7;
-  //   }
 }
 
 .filter_checkbox_input {
@@ -207,11 +194,7 @@
   background-color: #fff;
   color: #512ac7;
   border: 1px solid #512ac7;
-  // bottom: -50px;
-  // left: 50%;
-  // transform: translateX(-50%) translateY(10px);
   opacity: 0;
-  // transform: translateX(10px);
   transition: opacity 0.3s ease, transform 0.3s ease;
   pointer-events: none;
   z-index: 1000;
@@ -228,7 +211,6 @@
 
 .book_item:hover .book_basket {
   opacity: 1;
-  // transform: translateX(-50%) translateY(0);
   pointer-events: auto;
 }
 
@@ -239,6 +221,7 @@
   display: flex;
   flex-direction: row;
   grid-column-gap: 20px;
+  position: relative;
 
   margin: 0;
   padding: 20px 16px 40px 16px;

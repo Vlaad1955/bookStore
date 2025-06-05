@@ -7,6 +7,11 @@ import { useRouter } from "next/navigation";
 import { userApi } from "@/shared/user/user-api/user-api";
 import { userService } from "@/shared/user/user-service/user-service";
 import { toast } from "react-toastify";
+import styles from "./styles.module.scss";
+import { Button } from "../ui/button/Button";
+import { ButtonType } from "@/shared/enums/button/button-type.enum";
+import Form from "next/form";
+import { ButtonVariant } from "@/shared/enums/button/button-variant.enum";
 
 // interface Props {
 //   user: {
@@ -151,9 +156,10 @@ const ChangeAccountClient = () => {
 
   return (
     <ProtectedRoute>
-      <div style={{ maxWidth: 400, margin: "0 auto" }}>
-        <h2>Редагування профілю</h2>
-        <form onSubmit={handleSubmit}>
+      <div className={styles.change_account_container}>
+        <div className={styles.change_account_title}>Редагування профілю</div>
+        <Form onSubmit={handleSubmit} action={""}>
+          <span className={styles.change_account_label}>Ім&apos;я</span>
           <input
             type="text"
             name="firstName"
@@ -161,7 +167,10 @@ const ChangeAccountClient = () => {
             value={form.firstName}
             onChange={handleChange}
             disabled={loading || deleting}
+            className={styles.change_account_input}
           />
+
+          <span className={styles.change_account_label}>Прізвище</span>
           <input
             type="text"
             name="lastName"
@@ -169,8 +178,10 @@ const ChangeAccountClient = () => {
             value={form.lastName}
             onChange={handleChange}
             disabled={loading || deleting}
+            className={styles.change_account_input}
           />
 
+          <span className={styles.change_account_label}>Телефон</span>
           <input
             type="text"
             name="phone"
@@ -178,28 +189,38 @@ const ChangeAccountClient = () => {
             value={form.phone}
             onChange={handleChange}
             disabled={loading || deleting}
+            className={styles.change_account_input}
           />
+
+          <span className={styles.change_account_label}>Вік</span>
           <input
+            aria-label="Age"
             type="number"
             name="age"
             placeholder="Вік"
             value={form.age}
             onChange={handleChange}
             disabled={loading || deleting}
+            className={styles.change_account_input}
           />
 
-          <button type="submit" disabled={loading || deleting}>
+          <Button
+            className={styles.change_account_button_submit}
+            type={ButtonType.SUBMIT}
+            disabled={loading || deleting}
+          >
             {loading ? "Збереження..." : "Зберегти зміни"}
-          </button>
-        </form>
+          </Button>
+        </Form>
       </div>
-      <button
+      <Button
+        variant={ButtonVariant.DELETE}
         onClick={handleDelete}
-        className="bg-red-600 text-white px-4 py-2 rounded mt-4"
+        className={styles.change_account_button_delete}
         disabled={loading || deleting}
       >
         {deleting ? "Видалення акаунту..." : "Видалити акаунт"}
-      </button>
+      </Button>
     </ProtectedRoute>
   );
 };

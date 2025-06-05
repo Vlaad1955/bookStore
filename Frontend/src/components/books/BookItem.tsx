@@ -12,6 +12,7 @@ import ModalBasket from "../modal/ModalBasket";
 import { useUserStore } from "@/shared/user/store/UseUserStore";
 import { useRouter } from "next/navigation";
 import DeleteBasket from "@/shared/assets/icons/deleteBasket";
+import { useBookStore } from "@/shared/store/UseBookStore";
 
 interface BooksItemProps {
   book: Book;
@@ -22,6 +23,9 @@ const BookItem: React.FC<BooksItemProps> = ({ book }) => {
   const { user } = useUserStore();
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const setSelectedCategories = useBookStore(
+    (state) => state.setSelectedCategories
+  );
 
   console.log("basket", basket);
 
@@ -35,6 +39,11 @@ const BookItem: React.FC<BooksItemProps> = ({ book }) => {
     } else {
       addToBasket(book.id.toString(), 1);
     }
+  };
+
+  const handleClick = (name: string, id: string) => {
+    setSelectedCategories([name, id]);
+    router.push(`/dashboard/books?categories=${id}`);
   };
 
   const bookCover = book.cover === "firm" ? "Тверда" : "Мяка";
@@ -81,6 +90,7 @@ const BookItem: React.FC<BooksItemProps> = ({ book }) => {
             <div className={styles.book_item_category_list}>
               {book.categories.map((category) => (
                 <Link
+                  onClick={() => handleClick(category.name, category.id)}
                   href={`/dashboard/books?categories=${category.id}`}
                   key={category.id}
                   className={styles.book_item_category_list_item}

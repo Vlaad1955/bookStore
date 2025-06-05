@@ -176,3 +176,122 @@
   color: #626b77;
   margin-bottom: 20px;
 }
+
+///////////////
+
+.news_scroll_wrapper {
+  display: flex;
+  align-items: center;
+  position: relative;
+  //   gap: 5px;
+  padding: 0 16px 20px 16px;
+  width: 1320px;
+}
+
+.news_list {
+  display: flex;
+  width: 100%;
+  gap: 20px;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-bottom: 8px;
+  scroll-behavior: smooth;
+
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none;
+}
+
+.news_list::-webkit-scrollbar {
+  height: 8px;
+}
+
+.news_list::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+}
+
+.news_item {
+  padding: 0 12px 0 12px;
+  position: relative;
+  width: 33%;
+  flex: 0 0 calc(16.6667%);
+  box-sizing: border-box;
+  transition: transform 0.3s ease;
+  border-radius: 8px;
+
+  &:hover {
+    transform: scale(1.02);
+    z-index: 10;
+  }
+}
+
+.news_card_item {
+  display: flex;
+  justify-content: center;
+  max-height: 282px;
+  object-fit: cover;
+}
+
+.imggg {
+  width: 200px;
+  min-width: 200px;
+  height: calc(200px * 1.4);
+  min-height: calc(200px * 1.4);
+  overflow: hidden;
+  gap: 20px;
+  border-radius: 8px;
+  box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
+    rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+}
+
+.news_content {
+  display: flex;
+  flex-direction: column;
+}
+
+.news_card_name {
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 16px;
+  line-height: 1.2;
+  font-weight: 500;
+  color: #222;
+  margin-bottom: 4px;
+  margin-top: 8px;
+}
+
+.news_author {
+  font-size: 14px;
+  line-height: 16px;
+  font-weight: 400;
+  color: #78818d;
+  margin-bottom: 8px;
+}
+
+.news_item:hover {
+  box-shadow: rgba(0, 0, 0, 0.1) 0px 1px 2px 0px;
+}
+
+.scrollButton {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  min-width: 44px;
+  height: 44px;
+  background-color: transparent;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+  user-select: none;
+  border-radius: 50%;
+
+  &:hover {
+    color: #fff;
+    background-color: #cf56e3;
+    transition: color 0.3s ease, background-color 0.3s ease;
+  }
+}

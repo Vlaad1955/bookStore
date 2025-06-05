@@ -5,6 +5,7 @@ import BookList from "./BookList";
 import { Book } from "@/shared/types/bookTypes/bookTypes";
 import styles from "./styles.module.scss";
 import SpecialProducts from "../specialProducts/SpecialProducts";
+import NewsSpecail from "../news/NewsSpecail";
 
 interface BookWrapperProps {
   initialAuthor: string[];
@@ -23,6 +24,7 @@ const BookWrapper: React.FC<BookWrapperProps> = ({ initialAuthor, books }) => {
 
         {/* Книги */}
         <div>
+          <NewsSpecail />
           <div className={styles.books}>
             <div className={styles.book_list}>
               {books.map((book) => (

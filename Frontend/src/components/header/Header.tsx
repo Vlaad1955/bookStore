@@ -18,6 +18,7 @@ import SearchBar from "../search/SearchBar";
 import { useUserStore } from "@/shared/user/store/UseUserStore";
 import { useRouter } from "next/navigation";
 import { useBasketStore } from "@/shared/api/basket/basket-store";
+import Image from "next/image";
 
 const Header = () => {
   const { isAuthenticated, logout } = useAuthStore();
@@ -101,22 +102,26 @@ const Header = () => {
               {user?.lastName[0].toUpperCase()}
             </Button>
 
-            {isOpen && (
+            {isOpen && user && (
               <aside className={styles.header__user}>
                 {" "}
-                <img src={user?.image} alt={user?.firstName} className={styles.img}/>
+                <Image
+                  src={user.image}
+                  alt={user.firstName}
+                  className={styles.img}
+                  width={300}
+                  height={300}
+                />
                 <p>
                   {user?.firstName} {user?.lastName}
                 </p>
                 {user?.role === "Admin" && (
-                    <Link href={AppRoute.ADMIN}>Адмін панель</Link>
+                  <Link href={AppRoute.ADMIN}>Адмін панель</Link>
                 )}
+                <Link href={AppRoute.NEWS}>Новини</Link>
+                <Link href={AppRoute.CHANGE_ACCOUNT}>Редагувати акаунт</Link>
                 <Button onClick={() => setIsOpen(false)}>Закрити</Button>
                 <Button onClick={handleLogout}>Вийти</Button>
-                <Link href={AppRoute.EXPECTEDGOODS}>Expected Goods</Link>
-                <Link href={AppRoute.NEWS}>NEWS</Link>
-                <Link href={AppRoute.ORDERS}>Orders</Link>
-                <Link href={AppRoute.CHANGE_ACCOUNT}>Change Account</Link>
               </aside>
             )}
           </>

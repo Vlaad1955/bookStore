@@ -5,6 +5,7 @@ import Link from "next/link";
 import BookList from "../books/BookList";
 import { Book } from "@/shared/types/bookTypes/bookTypes";
 import { useBookStore } from "@/shared/store/UseBookStore";
+import { Button } from "../ui/button/Button";
 
 interface BookWrapperProps {
   books: Book[];
@@ -44,17 +45,25 @@ const SpecialProductsList: React.FC<BookWrapperProps> = ({
         </Link>
       </div>
       <div className={styles.specialproducts_list}>
-        <button onClick={handleScrollLeft} className={styles.scrollButton}>
+        <Button
+          unstyled
+          onClick={handleScrollLeft}
+          className={styles.scrollButton}
+        >
           ←
-        </button>
+        </Button>
         <div ref={scrollRef} className={styles.specialproducts_book_list}>
           {books.map((book) => (
             <BookList key={book.id} book={book} />
           ))}
         </div>
-        <button onClick={handleScrollRight} className={styles.scrollButton}>
+        <Button
+          unstyled
+          onClick={handleScrollRight}
+          className={styles.scrollButton}
+        >
           →
-        </button>
+        </Button>
       </div>
     </div>
   );

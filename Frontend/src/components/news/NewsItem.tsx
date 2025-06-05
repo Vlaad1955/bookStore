@@ -5,7 +5,7 @@ import Image from "next/image";
 import styles from "./styles.module.scss";
 import Link from "next/link";
 
-interface NewsItem {
+interface NewsItems {
   id: string;
   title: string;
   content: string;
@@ -14,7 +14,7 @@ interface NewsItem {
 }
 
 interface NewsItemProps {
-  news: NewsItem;
+  news: NewsItems;
 }
 
 const NewsItem: React.FC<NewsItemProps> = ({ news }) => {

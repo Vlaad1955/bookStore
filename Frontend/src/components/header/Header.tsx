@@ -104,9 +104,13 @@ const Header = () => {
             {isOpen && (
               <aside className={styles.header__user}>
                 {" "}
+                <img src={user?.image} alt={user?.firstName} className={styles.img}/>
                 <p>
                   {user?.firstName} {user?.lastName}
                 </p>
+                {user?.role === "Admin" && (
+                    <Link href={AppRoute.ADMIN}>Адмін панель</Link>
+                )}
                 <Button onClick={() => setIsOpen(false)}>Закрити</Button>
                 <Button onClick={handleLogout}>Вийти</Button>
                 <Link href={AppRoute.EXPECTEDGOODS}>Expected Goods</Link>

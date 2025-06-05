@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import CategoryList from "@/components/categories/CategoryList";
 // import { AuthInit } from "@/components/auth/authInit/authinit";
 import TokenInit from "@/shared/token/token";
+import Footer from "@/components/footer/Footer";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -44,6 +45,7 @@ export default function RootLayout({
           </div>
 
           <ToastContainer position="top-right" autoClose={3000} />
+          <Footer/>
         </div>
       </body>
     </html>

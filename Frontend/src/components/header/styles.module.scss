@@ -186,3 +186,13 @@
   border-radius: 4px;
   cursor: pointer;
 }
+
+.img {
+  margin-left: 4vh;
+  width: 7vh;
+  height: 7vh;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}
+

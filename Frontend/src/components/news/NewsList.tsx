@@ -16,7 +16,7 @@ const NewsList = ({ news }: NewsProps) => {
       <div className={styles.news_card}>
         <Link
           className={styles.news_card_item}
-          href={`/dashboard/books/${news.id}`}
+          href={`/my-account/news/${news.id}`}
         >
           <div>
             <Image
@@ -31,17 +31,19 @@ const NewsList = ({ news }: NewsProps) => {
       </div>
 
       {/* Book details */}
-      <div className={styles.news_content}>
+      <div className={styles.news__list_content}>
         <Link
           className={styles.news_card_name}
-          href={`/dashboard/books/${news.id}`}
+          href={`/my-account/news/${news.id}`}
         >
-          <span>{news.title}</span>
+          <span className={styles.new_list_title}>{news.title}</span>
         </Link>
 
-        <div className={styles.news_author}>
+        <div className={styles.news_category}>
           <span>Категорія: {news.category}</span>
         </div>
+
+        <div className={styles.news_list_description}>{news.content}</div>
       </div>
     </div>
   );

@@ -28,7 +28,7 @@ const NewsSpecailList: React.FC<Props> = ({ news }) => {
   };
 
   return (
-    <div className={styles.news_container}>
+    <div className={styles.news_list_container}>
       <div className={styles.news_scroll_wrapper}>
         <Button
           unstyled

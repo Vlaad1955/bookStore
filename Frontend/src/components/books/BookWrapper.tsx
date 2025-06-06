@@ -23,7 +23,7 @@ const BookWrapper: React.FC<BookWrapperProps> = ({ initialAuthor, books }) => {
         <BookFilters authors={initialAuthor} />
 
         {/* Книги */}
-        <div>
+        <div className={styles.books_container_right_site}>
           <NewsSpecail />
           <div className={styles.books}>
             <div className={styles.book_list}>

@@ -1,13 +1,9 @@
-import StartBook from "@/components/start/start";
+import MainPage from "@/components/mainPage/MainPage";
 
 export default function Home() {
   return (
     <>
-      <StartBook />
-      {/* <CategoryList /> */}
-      {/* <Link href={"/dashboard/categories"}>Category</Link> */}
-      <br />
-      {/* <Link href={"/dashboard/books"}>Books</Link> */}
+      <MainPage />
     </>
   );
 }

@@ -1,7 +1,7 @@
 .specialproducts_container {
   min-width: 0;
   display: block;
-  margin: 12px auto;
+  margin-bottom: 12px;
   padding: 0;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -65,7 +65,7 @@
   position: relative;
   //   gap: 5px;
   padding: 0 16px 20px 16px;
-  width: 1320px;
+  width: 100%;
 }
 
 .specialproducts_book_list {

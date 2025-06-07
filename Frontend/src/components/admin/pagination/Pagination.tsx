@@ -4,11 +4,11 @@ import styles from './styles.module.css'
 type PaginationProps = {
     currentPage: number;
     totalPages: number;
-    genreId?: number;
     searchName?: string;
+    params?: URLSearchParams;
 };
 
-const Pagination = ({ currentPage, totalPages, genreId, searchName}: PaginationProps) => {
+const Pagination = ({ currentPage, totalPages, searchName, params }: PaginationProps) => {
     const visiblePages = 3;
     const startPage = Math.max(1, currentPage - Math.floor(visiblePages / 2));
     const endPage = Math.min(totalPages, startPage + visiblePages - 1);
@@ -22,10 +22,12 @@ const Pagination = ({ currentPage, totalPages, genreId, searchName}: PaginationP
         if (searchName) {
             return `/admin/${searchName}/${page}`;
         }
-        return genreId
-            ? `/booklist/${page}/${genreId}`
-            : `/booklist/${page}`;
+
+        const newParams = new URLSearchParams(params);
+        newParams.set("page", page.toString());
+        return `/dashboard/books?${newParams.toString()}`;
     };
+
 
     return (
         <div className={styles.pagination_container}>

@@ -34,18 +34,19 @@ export default function RootLayout({
         {/* <AuthInit /> */}
         <TokenInit />
         <div className="container">
-          <Header />
 
+          <Header />
           <div className="layout-container">
-            <main className="page-content">{children}</main>
+            <main className="page-content">{children}
+              <Footer/>
+            </main>
 
             <div className="category-list-container">
               <CategoryList />
             </div>
-          </div>
 
+          </div>
           <ToastContainer position="top-right" autoClose={3000} />
-          {/* <Footer/> */}
         </div>
       </body>
     </html>

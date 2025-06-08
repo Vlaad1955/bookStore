@@ -5,25 +5,54 @@ import styles from "@/components/admin/booksCard/BookCard.module.css";
 import { Button } from "@/components/ui/button/Button";
 import Link from "next/link";
 import { Book } from "@/shared/types/bookTypes/bookTypes";
-import { removeBook } from "@/shared/admin/books/books-api";
-import ConfirmModal from "@/components/ui/modalAdmin/ConfirmModal"; // Імпортуй свою модалку
+import {
+    removeBook,
+    updatePublishedStatus,
+} from "@/shared/admin/books/books-api";
+import ConfirmModal from "@/components/ui/modalAdmin/ConfirmModal";
 
 const BookCard = ({ book }: { book: Book }) => {
     const [isDeleting, setIsDeleting] = useState(false);
     const [isVisible, setIsVisible] = useState(true);
-    const [isModalOpen, setIsModalOpen] = useState(false); // Додали стан для модалки
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalType, setModalType] = useState<"published" | "delete" | null>(null);
 
-    const handleDelete = async () => {
-        try {
-            setIsDeleting(true);
-            await removeBook(book.id.toString());
-            setIsVisible(false);
-        } catch (error) {
-            console.error("Помилка при видаленні книги:", error);
-            alert("Не вдалося видалити книгу.");
-        } finally {
-            setIsDeleting(false);
-            setIsModalOpen(false);
+    const handlePublish = () => {
+        setModalType("published");
+        setIsModalOpen(true);
+    };
+
+    const handleDelete = () => {
+        setModalType("delete");
+        setIsModalOpen(true);
+    };
+
+    const handleConfirm = async () => {
+        if (modalType === "published") {
+            try {
+                await updatePublishedStatus(book.id, { published: true });
+                setIsVisible(false);
+            } catch (error) {
+                console.error("Помилка публікації:", error);
+            } finally {
+                setIsModalOpen(false);
+                setModalType(null);
+            }
+        }
+
+        if (modalType === "delete") {
+            try {
+                setIsDeleting(true);
+                await removeBook(book.id.toString());
+                setIsVisible(false);
+            } catch (error) {
+                console.error("Помилка при видаленні книги:", error);
+                alert("Не вдалося видалити книгу.");
+            } finally {
+                setIsDeleting(false);
+                setIsModalOpen(false);
+                setModalType(null);
+            }
         }
     };
 
@@ -61,21 +90,31 @@ const BookCard = ({ book }: { book: Book }) => {
                     <Link href={`/admin/books/edit/${book.id}`}>
                         <Button variant="edit">Редагувати</Button>
                     </Link>
+
                     <Button
                         variant="delete"
-                        onClick={() => setIsModalOpen(true)}
+                        onClick={handleDelete}
                         disabled={isDeleting}
                     >
                         {isDeleting ? "Видалення..." : "Видалити"}
                     </Button>
+
+                    {!book.published && (
+                        <Button variant="edit" onClick={handlePublish}>
+                            Опублікувати
+                        </Button>
+                    )}
                 </div>
             </div>
 
             <ConfirmModal
                 isOpen={isModalOpen}
-                message="delete"
-                onConfirm={handleDelete}
-                onCancel={() => setIsModalOpen(false)}
+                message={modalType ?? ""}
+                onConfirm={handleConfirm}
+                onCancel={() => {
+                    setIsModalOpen(false);
+                    setModalType(null);
+                }}
             />
         </>
     );

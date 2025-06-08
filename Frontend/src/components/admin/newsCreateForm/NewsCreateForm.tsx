@@ -79,9 +79,9 @@ export default function CreateNewsForm() {
                 required
                 className={styles.input}
             >
-                <option value="general">General</option>
-                <option value="promotion">Promotion</option>
-                <option value="event">Event</option>
+                <option value="general">Загальна</option>
+                <option value="promotion">Акція</option>
+                <option value="event">Подія</option>
             </select>
 
             <input

@@ -13,6 +13,7 @@ function getParam(value: string | string[] | undefined, defaultValue = "") {
 }
 
 export default async function BookPage({ searchParams }: Props) {
+
   const filters = {
     page: Number(searchParams.page) || 1,
     limit: Number(searchParams.limit) || 20,
@@ -38,7 +39,7 @@ export default async function BookPage({ searchParams }: Props) {
     limit: 20,
   });
 
-  const urlParams = objectToCleanURLSearchParams(baseParams);
+  const urlParams = objectToCleanURLSearchParams(filters);
 
   let books: Book[] = [];
   let allCategoryBooks: Book[] = [];

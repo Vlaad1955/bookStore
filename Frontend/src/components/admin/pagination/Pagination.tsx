@@ -19,12 +19,13 @@ const Pagination = ({ currentPage, totalPages, searchName, params }: PaginationP
     );
 
     const getHref = (page: number) => {
-        if (searchName) {
-            return `/admin/${searchName}/${page}`;
-        }
-
         const newParams = new URLSearchParams(params);
         newParams.set("page", page.toString());
+
+        if (searchName) {
+            return `/admin/${searchName}/${page}?${newParams.toString()}`;
+        }
+
         return `/dashboard/books?${newParams.toString()}`;
     };
 

@@ -24,7 +24,9 @@ const getDefaultMessage = (type: MessageType): string => {
         case "create":
             return "Ви впевнені, що хочете створити цю книгу?";
         case "category":
-            return "Ви впевнені що хочете додати цю підкатегорію?"
+            return "Ви впевнені що хочете додати цю підкатегорію?";
+        case "published":
+            return "Опублікувати цю книгу?"
         case "admin":
             return "Ви впевнені, що хочете надати права адміністратора цьому користувачу?";
         default:

@@ -66,8 +66,9 @@ const Header = () => {
         <SearchBar
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          onSearch={() => {
-            console.log("Пошук:", searchTerm);
+          onSearch={(e) => {
+            e.preventDefault();
+            router.push(`/dashboard/books?search=${searchTerm}`);
           }}
         />
 

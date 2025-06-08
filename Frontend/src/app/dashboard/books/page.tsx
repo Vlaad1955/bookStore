@@ -2,7 +2,7 @@ import { getBooksInOneCategory } from "@/shared/api/books/books-api";
 import { cleanParams } from "@/shared/utils/cleanParams";
 import { Book } from "@/shared/types/bookTypes/bookTypes";
 import BookWrapper from "@/components/books/BookWrapper";
-import {objectToCleanURLSearchParams} from "@/components/books/ОbjectToCleanURLSearchParams";
+import { objectToCleanURLSearchParams } from "@/components/books/ОbjectToCleanURLSearchParams";
 interface Props {
   searchParams: { [key: string]: string | string[] | undefined };
 }
@@ -13,10 +13,9 @@ function getParam(value: string | string[] | undefined, defaultValue = "") {
 }
 
 export default async function BookPage({ searchParams }: Props) {
-
   const filters = {
     page: Number(searchParams.page) || 1,
-    limit: Number(searchParams.limit) || 20,
+    limit: Number(searchParams.limit) || 18,
     title: getParam(searchParams.title),
     author: getParam(searchParams.author),
     price: getParam(searchParams.price),
@@ -26,7 +25,7 @@ export default async function BookPage({ searchParams }: Props) {
     order: getParam(searchParams.order, "ASC"),
     categories: getParam(searchParams.categories),
     published: getParam(searchParams.published, "true"),
-    search:getParam(searchParams.search),
+    search: getParam(searchParams.search),
   };
 
   const baseParams = cleanParams({
@@ -57,11 +56,19 @@ export default async function BookPage({ searchParams }: Props) {
     console.error("Помилка завантаження книг:", error);
   }
 
-  const authors = Array.from(new Set(books.map((book) => book.author)));
+  // const authors = Array.from(new Set(books.map((book) => book.author)));
   const initialAuthor = Array.from(
     new Set(allCategoryBooks.map((book) => book.author))
   );
   initialAuthor.sort((a, b) => a.localeCompare(b));
 
-  return( <BookWrapper initialAuthor={initialAuthor} books={books}  currentPage={currentPage} totalPages={totalPages} params={urlParams} />);
+  return (
+    <BookWrapper
+      initialAuthor={initialAuthor}
+      books={books}
+      currentPage={currentPage}
+      totalPages={totalPages}
+      params={urlParams}
+    />
+  );
 }

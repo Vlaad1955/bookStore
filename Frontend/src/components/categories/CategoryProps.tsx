@@ -4,7 +4,6 @@ import { useBookStore } from "@/shared/store/UseBookStore";
 import React from "react";
 import styles from "./styles.module.scss";
 import Link from "next/link";
-import {AppRoute} from "@/shared/enums/app-route.enums";
 
 type CategoryLinkProps = {
   basePath?: string; // наприклад, "/books"

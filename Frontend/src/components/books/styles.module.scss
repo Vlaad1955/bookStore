@@ -19,10 +19,11 @@
   position: sticky;
   top: 85px;
   font-family: "Mabry Pro", sans-serif;
+  align-self: start;
   font-size: 16px;
   color: #78818d;
   display: block;
-  margin: 0;
+  margin: 0 0 12px 0;
   padding: 20px 16px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
@@ -82,8 +83,8 @@
 .books {
   min-width: 0;
   display: block;
-  margin: 0 auto;
-  padding: 0;
+  margin: 0 auto 12px;
+  padding-bottom: 15px;
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
   width: 100%;
@@ -99,8 +100,21 @@
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   grid-gap: 20px;
   column-gap: 16px;
-  //   row-gap: 24px;
   padding: 20px 16px 20px 16px;
+}
+
+.books_absent {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100px;
+  font-size: 24px;
+  color: #222;
+  font-family: Mabry Pro, sans-serif;
+  font-weight: 400;
+  font-style: normal;
 }
 
 .book_item {
@@ -113,8 +127,6 @@
   box-sizing: border-box;
   transition: transform 0.3s ease;
   border-radius: 8px;
-
-  //   overflow: hidden;
 
   &:hover {
     transform: scale(1.02);
@@ -139,6 +151,9 @@
   border-radius: 8px;
   box-shadow: rgba(67, 71, 85, 0.27) 0px 0px 0.25em,
     rgba(90, 125, 188, 0.05) 0px 0.25em 1em;
+
+  object-fit: cover;
+  object-position: center;
 }
 
 .book_content {

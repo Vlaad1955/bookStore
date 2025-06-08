@@ -19,6 +19,7 @@ import { useUserStore } from "@/shared/user/store/UseUserStore";
 import { useRouter } from "next/navigation";
 import { useBasketStore } from "@/shared/api/basket/basket-store";
 import Image from "next/image";
+import CategoryList from "../categories/CategoryList";
 
 const Header = () => {
   const { isAuthenticated, logout } = useAuthStore();
@@ -62,6 +63,10 @@ const Header = () => {
           <CategoriesIcon />
           <span>Каталог книг</span>
         </Button>
+
+        <div className={styles.category_list_container}>
+          <CategoryList />
+        </div>
 
         <SearchBar
           value={searchTerm}

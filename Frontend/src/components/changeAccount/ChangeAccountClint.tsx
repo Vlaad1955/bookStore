@@ -211,16 +211,17 @@ const ChangeAccountClient = () => {
           >
             {loading ? "Збереження..." : "Зберегти зміни"}
           </Button>
+
+          <Button
+            variant={ButtonVariant.DELETE}
+            onClick={handleDelete}
+            className={styles.change_account_button_delete}
+            disabled={loading || deleting}
+          >
+            {deleting ? "Видалення акаунту..." : "Видалити акаунт"}
+          </Button>
         </Form>
       </div>
-      <Button
-        variant={ButtonVariant.DELETE}
-        onClick={handleDelete}
-        className={styles.change_account_button_delete}
-        disabled={loading || deleting}
-      >
-        {deleting ? "Видалення акаунту..." : "Видалити акаунт"}
-      </Button>
     </ProtectedRoute>
   );
 };

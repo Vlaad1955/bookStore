@@ -3,8 +3,6 @@ import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
 import Header from "@/components/header/Header";
 import { ToastContainer } from "react-toastify";
-import CategoryList from "@/components/categories/CategoryList";
-// import { AuthInit } from "@/components/auth/authInit/authinit";
 import TokenInit from "@/shared/token/token";
 import Footer from "@/components/footer/Footer";
 
@@ -36,14 +34,9 @@ export default function RootLayout({
         <div className="container">
           <Header />
           <div className="layout-container">
-            <main className="page-content">
-              {children}
-              <Footer />
-            </main>
+            <main className="page-content">{children}</main>
 
-            <div className="category-list-container">
-              <CategoryList />
-            </div>
+            <Footer />
           </div>
           <ToastContainer position="top-right" autoClose={3000} />
         </div>

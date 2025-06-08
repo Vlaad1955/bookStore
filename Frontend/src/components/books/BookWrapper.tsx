@@ -16,7 +16,13 @@ interface BookWrapperProps {
   params?: URLSearchParams;
 }
 
-const BookWrapper: React.FC<BookWrapperProps> = ({ initialAuthor, books, currentPage, totalPages, params  }) => {
+const BookWrapper: React.FC<BookWrapperProps> = ({
+  initialAuthor,
+  books,
+  currentPage,
+  totalPages,
+  params,
+}) => {
   return (
     <div>
       {/* Категорії */}
@@ -24,21 +30,34 @@ const BookWrapper: React.FC<BookWrapperProps> = ({ initialAuthor, books, current
 
       <div className={styles.wrapper}>
         {/* Фільтри */}
-        <BookFilters authors={initialAuthor} />
+        <div className={styles.filters}>
+          <BookFilters authors={initialAuthor} />
+        </div>
 
         {/* Книги */}
         <div className={styles.books_container_right_site}>
-          <div className={styles.books}>
-            <div className={styles.book_list}>
-              {books.map((book) => (
-                <BookList key={book.id} book={book} />
-              ))}
+          {books.length > 0 ? (
+            <div className={styles.books}>
+              <div className={styles.book_list}>
+                {books.map((book) => (
+                  <BookList key={book.id} book={book} />
+                ))}
+              </div>
+              <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                params={params}
+              />
             </div>
-            <Pagination currentPage={currentPage} totalPages={totalPages}  params={params} />
-          </div>
+          ) : (
+            <div className={styles.books_absent}>
+              Книжки за даним запитом відсутні
+            </div>
+          )}
+
           {/* Спеціальні продукти */}
-          <SpecialProducts categoryName="Дитяча література" />
           <NewsSpecail />
+          <SpecialProducts categoryName="Дитяча література" />
           <SpecialProducts categoryName="Книги-іграшки" />
         </div>
       </div>

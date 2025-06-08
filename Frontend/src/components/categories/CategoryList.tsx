@@ -12,6 +12,7 @@ import { ButtonType } from "@/shared/enums/button/button-type.enum";
 import CloseIcon from "@/shared/assets/icons/closeIcon";
 
 import styles from "./styles.module.scss";
+import Link from "next/link";
 
 export default function CategoryList() {
   const { isOpen, toggleList, closeList } = useCategoryListStore();
@@ -52,7 +53,16 @@ export default function CategoryList() {
         <div className={styles["book-menu_wrapper"]}>
           <div className={styles["book-menu_hat"]}>
             <div className={styles["book-menu_top"]}>
-              <div className={styles["book-menu_title"]}>Категорії книг</div>
+              <div className={styles["book-menu_title"]}>
+                <div>Категорії книг</div>
+                <Link
+                  href={"/dashboard/books"}
+                  className={styles.book_menu_all_books}
+                >
+                  Всі книги
+                </Link>
+              </div>
+
               <button
                 type={ButtonType.BUTTON}
                 className={styles["ui-btn-close"]}

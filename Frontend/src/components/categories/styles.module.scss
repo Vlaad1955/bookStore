@@ -1,6 +1,5 @@
 .book-menu_wrapper {
   width: 350px;
-  height: 100vh;
   overflow-y: visible;
   overflow-x: visible;
   position: relative;
@@ -30,13 +29,31 @@
 }
 
 .book-menu_title {
+  display: flex;
+  flex-direction: column;
   font-size: 18px;
   line-height: 1;
-  font-weight: 400;
   color: #222;
   font-family: "Mabry Pro", sans-serif;
   font-weight: 700;
+  gap: 10px;
+}
+
+.book_menu_all_books {
+  width: 85px;
   text-align: center;
+  padding: 5px;
+  cursor: pointer;
+  color: #5b636f;
+  font-size: 15px;
+  line-height: 1;
+  border: 1px solid #5b636f;
+  border-radius: 8px;
+
+  &:hover {
+    background: #5b636f;
+    color: white;
+  }
 }
 
 .book-main_menu {
@@ -85,11 +102,13 @@
 }
 
 .category-sub_menu {
+  border-radius: 8px;
+
   list-style: none;
   margin-left: 0.5px;
   position: absolute;
   top: 0;
-  left: 100%;
+  left: 100.4%;
   background-color: #fff;
   width: 250px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);

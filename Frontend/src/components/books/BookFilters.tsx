@@ -59,7 +59,8 @@ const BookFilters = ({ authors }: FiltersProps) => {
   };
 
   return (
-    <div className={styles.filters}>
+    // <div className={styles.filters}>
+    <div>
       <div className={styles.filter_container}>
         <h3 className={styles.filter_books}>Фільтри</h3>
         {/* В наявності */}
@@ -113,24 +114,31 @@ const BookFilters = ({ authors }: FiltersProps) => {
       </div>
 
       {/* Автори */}
-      <div className={styles.filter_container}>
-        <h3 className={styles.filter_books}>Автори</h3>
-        {authors.map((author) => (
-          <Link href={getUpdatedSearch("author", author, true)} key={author}>
-            <label className={styles.filter_checkbox}>
-              <input
-                type="checkbox"
-                readOnly
-                checked={isChecked("author", author)}
-              />
-              <span className={styles.filter_item}>{author}</span>
-            </label>
-          </Link>
-        ))}
-      </div>
-      <Button onClick={resetFilters} className={styles.filter_reset_button}>
-        Скинути фільтри
-      </Button>
+      {authors.length > 0 && (
+        <>
+          <div className={styles.filter_container}>
+            <h3 className={styles.filter_books}>Автори</h3>
+            {authors.map((author) => (
+              <Link
+                href={getUpdatedSearch("author", author, true)}
+                key={author}
+              >
+                <label className={styles.filter_checkbox}>
+                  <input
+                    type="checkbox"
+                    readOnly
+                    checked={isChecked("author", author)}
+                  />
+                  <span className={styles.filter_item}>{author}</span>
+                </label>
+              </Link>
+            ))}
+          </div>
+          <Button onClick={resetFilters} className={styles.filter_reset_button}>
+            Скинути фільтри
+          </Button>
+        </>
+      )}
     </div>
   );
 };

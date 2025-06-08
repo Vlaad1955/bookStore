@@ -29,11 +29,12 @@ axiosInstance.interceptors.response.use(
     if (error.response?.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
       try {
-        const { data } = await axios.post(
-          `${API_URL}/auth/refresh`,
-          {},
-          { withCredentials: true }
-        );
+        // const { data } = await axios.post(
+        //   `${API_URL}/auth/refresh`,
+        //   {},
+        //   { withCredentials: true }
+        // );
+        const { data } = await axiosInstance.post("/auth/refresh", {});
 
         if (data.accessToken) {
           useAuthStore.setState({ token: data.accessToken });

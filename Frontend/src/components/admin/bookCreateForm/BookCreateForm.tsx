@@ -4,7 +4,8 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { CreateBookDto } from '@/shared/types/bookTypes/bookTypes';
 import styles from '@/components/admin/bookForm/EditBookForm.module.css';
-import {createBook} from "@/shared/admin/books/books-api";
+import { createBook } from '@/shared/admin/books/books-api';
+import ConfirmModal from '@/components/ui/modalAdmin/ConfirmModal';
 
 const EditBookForm = ({ categories }: { categories: { id: string; name: string }[] }) => {
     const router = useRouter();
@@ -22,6 +23,7 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
     const [imageFile, setImageFile] = useState<File | null>(null);
     const [preview, setPreview] = useState<string | null>(null);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const handleChange = (
         e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
@@ -55,13 +57,19 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
         }
     };
 
-    const handleSubmit = async (e: React.FormEvent) => {
+    const handleOpenModal = (e: React.FormEvent) => {
         e.preventDefault();
 
         if (!form.title.trim() || !form.author.trim()) {
             alert('Заповніть назву та автора');
             return;
         }
+
+        setIsModalOpen(true);
+    };
+
+    const handleConfirmCreate = async () => {
+        setIsModalOpen(false);
 
         try {
             setIsSubmitting(true);
@@ -84,14 +92,12 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
     };
 
     return (
-        <form className={styles.form} onSubmit={handleSubmit}>
+        <form className={styles.form} onSubmit={handleOpenModal}>
             <h2 className={styles.title}>Створити нову книгу</h2>
 
             <div className={styles.row}>
                 <div className={styles.col}>
-                    <label htmlFor="title" className={styles.label}>
-                        Назва
-                    </label>
+                    <label htmlFor="title" className={styles.label}>Назва</label>
                     <input
                         type="text"
                         id="title"
@@ -104,9 +110,7 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
                 </div>
 
                 <div className={styles.col}>
-                    <label htmlFor="author" className={styles.label}>
-                        Автор
-                    </label>
+                    <label htmlFor="author" className={styles.label}>Автор</label>
                     <input
                         type="text"
                         id="author"
@@ -119,9 +123,7 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
                 </div>
 
                 <div className={styles.col}>
-                    <label htmlFor="price" className={styles.label}>
-                        Ціна
-                    </label>
+                    <label htmlFor="price" className={styles.label}>Ціна</label>
                     <input
                         type="number"
                         id="price"
@@ -138,9 +140,7 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
 
             <div className={styles.row}>
                 <div className={styles.col}>
-                    <label htmlFor="cover" className={styles.label}>
-                        Тип обкладинки
-                    </label>
+                    <label htmlFor="cover" className={styles.label}>Тип обкладинки</label>
                     <select
                         id="cover"
                         name="cover"
@@ -169,9 +169,7 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
             </div>
 
             <div className={styles.fieldGroupFull}>
-                <label htmlFor="categories" className={styles.label}>
-                    Категорії
-                </label>
+                <label htmlFor="categories" className={styles.label}>Категорії</label>
                 <div className={styles.checkboxList}>
                     {categories.map((cat) => (
                         <div key={cat.id} className={styles.checkboxItem}>
@@ -191,9 +189,7 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
             </div>
 
             <div className={styles.fieldGroupFull}>
-                <label htmlFor="description" className={styles.label}>
-                    Опис
-                </label>
+                <label htmlFor="description" className={styles.label}>Опис</label>
                 <textarea
                     id="description"
                     name="description"
@@ -206,9 +202,7 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
 
             <div className={styles.rowLarge}>
                 <div className={styles.colLarge}>
-                    <label htmlFor="image" className={styles.label}>
-                        Зображення
-                    </label>
+                    <label htmlFor="image" className={styles.label}>Зображення</label>
                     <input
                         type="file"
                         id="image"
@@ -227,6 +221,13 @@ const EditBookForm = ({ categories }: { categories: { id: string; name: string }
             <button type="submit" className={styles.submitButton} disabled={isSubmitting}>
                 {isSubmitting ? 'Завантаження...' : 'Створити'}
             </button>
+
+            <ConfirmModal
+                isOpen={isModalOpen}
+                message="Ви впевнені, що хочете створити цю книгу?"
+                onConfirm={handleConfirmCreate}
+                onCancel={() => setIsModalOpen(false)}
+            />
         </form>
     );
 };

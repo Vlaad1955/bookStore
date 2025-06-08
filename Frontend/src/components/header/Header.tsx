@@ -130,7 +130,6 @@ const Header = () => {
             className={styles.header__login}
             variant={ButtonVariant.TRANSPARENT}
             size={ButtonSize.SMALL}
-            // size="custom"
           >
             <UserIcon />
             <Link href={AppRoute.SIGN_IN}>Увійти</Link>

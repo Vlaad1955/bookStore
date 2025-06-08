@@ -2,6 +2,7 @@ import { getBooksInOneCategory } from "@/shared/api/books/books-api";
 import { cleanParams } from "@/shared/utils/cleanParams";
 import { Book } from "@/shared/types/bookTypes/bookTypes";
 import BookWrapper from "@/components/books/BookWrapper";
+import {objectToCleanURLSearchParams} from "@/components/books/ОbjectToCleanURLSearchParams";
 interface Props {
   searchParams: { [key: string]: string | string[] | undefined };
 }
@@ -12,6 +13,7 @@ function getParam(value: string | string[] | undefined, defaultValue = "") {
 }
 
 export default async function BookPage({ searchParams }: Props) {
+
   const filters = {
     page: Number(searchParams.page) || 1,
     limit: Number(searchParams.limit) || 20,
@@ -24,6 +26,7 @@ export default async function BookPage({ searchParams }: Props) {
     order: getParam(searchParams.order, "ASC"),
     categories: getParam(searchParams.categories),
     published: getParam(searchParams.published, "true"),
+    search:getParam(searchParams.search),
   };
 
   const baseParams = cleanParams({
@@ -36,12 +39,17 @@ export default async function BookPage({ searchParams }: Props) {
     limit: 20,
   });
 
+  const urlParams = objectToCleanURLSearchParams(filters);
+
   let books: Book[] = [];
   let allCategoryBooks: Book[] = [];
-
+  let currentPage;
+  let totalPages;
   try {
     const data = await getBooksInOneCategory(cleanParams(filters));
     books = data.entities;
+    totalPages = data.pages;
+    currentPage = data.page;
 
     const all = await getBooksInOneCategory(cleanParams(baseParams));
     allCategoryBooks = all.entities;
@@ -50,14 +58,10 @@ export default async function BookPage({ searchParams }: Props) {
   }
 
   const authors = Array.from(new Set(books.map((book) => book.author)));
-  console.log("authors", authors);
   const initialAuthor = Array.from(
     new Set(allCategoryBooks.map((book) => book.author))
   );
   initialAuthor.sort((a, b) => a.localeCompare(b));
 
-  console.log("books", books);
-  console.log("filters", filters);
-
-  return <BookWrapper initialAuthor={initialAuthor} books={books} />;
+  return( <BookWrapper initialAuthor={initialAuthor} books={books}  currentPage={currentPage} totalPages={totalPages} params={urlParams} />);
 }

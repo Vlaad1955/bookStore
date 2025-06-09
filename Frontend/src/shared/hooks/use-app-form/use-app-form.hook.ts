@@ -15,7 +15,7 @@ import {
 } from "react-hook-form";
 import { useForm } from "react-hook-form";
 
-import { type ValidationSchema } from "@/shared/types/validation-schema.type";
+import { type ValidationSchema } from "@/shared/validation-schemas/validation-schema.type";
 
 type Parameters<T extends FieldValues = FieldValues> = {
   defaultValues: DeepPartial<T>;

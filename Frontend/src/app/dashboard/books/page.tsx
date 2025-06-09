@@ -1,8 +1,8 @@
-import { getBooksInOneCategory } from "@/shared/api/books/books-api";
+import { getBooksInOneCategory } from "@/features/books/api/booksApi";
 import { cleanParams } from "@/shared/utils/cleanParams";
-import { Book } from "@/shared/types/bookTypes/bookTypes";
-import BookWrapper from "@/components/books/BookWrapper";
-import { objectToCleanURLSearchParams } from "@/components/books/ОbjectToCleanURLSearchParams";
+import { Book } from "@/features/books/types/book";
+import BookWrapper from "@/features/books/components/BookWrapper";
+import { objectToCleanURLSearchParams } from "@/features/books/hooks/objectToCleanURLSearchParams";
 interface Props {
   searchParams: { [key: string]: string | string[] | undefined };
 }

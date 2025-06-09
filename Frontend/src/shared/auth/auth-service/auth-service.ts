@@ -1,11 +1,11 @@
 import { authApi } from "../auth-api/auth-api";
-import { isTokenValid } from "@/shared/hooks/decodeToken";
-import { UserSignInRequestDto } from "@/shared/types/authTypes/user-sign-in-request-dto";
-import { UserSignUpRequestDto } from "@/shared/types/authTypes/user-sign-up-request-dto";
+import { isTokenValid } from "@/shared/token/decodeToken";
+import { UserSignInRequestDto } from "@/shared/auth/authTypes/user-sign-in-request-dto";
+import { UserSignUpRequestDto } from "@/shared/auth/authTypes/user-sign-up-request-dto";
 import axiosInstance from "../auth-axios-instance/axiosInstance";
-import { useUserStore } from "@/shared/user/store/UseUserStore";
 import { tokenStorage } from "@/shared/token/UseTokenStore";
-import {userApi} from "@/shared/user/user-api/user-api";
+import { useUserStore } from "@/user/user/store/UseUserStore";
+import { userApi } from "@/user/user/user-api/user-api";
 
 class AuthService {
   private token: string | null = null;
@@ -26,7 +26,7 @@ class AuthService {
       tokenStorage.setToken(accessToken);
       axiosInstance.defaults.headers.Authorization = `Bearer ${accessToken}`;
 
-      const {data} = await userApi.fetchCurrentUser();
+      const { data } = await userApi.fetchCurrentUser();
       useUserStore.getState().setUser(data);
 
       this.isAuthenticated = true;

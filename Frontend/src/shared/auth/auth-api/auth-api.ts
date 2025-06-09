@@ -1,6 +1,6 @@
 import axiosInstance from "../auth-axios-instance/axiosInstance";
-import { UserSignInRequestDto } from "@/shared/types/authTypes/user-sign-in-request-dto";
-import { UserSignUpRequestDto } from "@/shared/types/authTypes/user-sign-up-request-dto";
+import { UserSignInRequestDto } from "@/shared/auth/authTypes/user-sign-in-request-dto";
+import { UserSignUpRequestDto } from "@/shared/auth/authTypes/user-sign-up-request-dto";
 
 export const authApi = {
   signIn: (payload: UserSignInRequestDto) =>

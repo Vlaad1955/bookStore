@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { authService } from "../auth-service/auth-service";
-import { UserSignInRequestDto } from "@/shared/types/authTypes/user-sign-in-request-dto";
-import { UserSignUpRequestDto } from "@/shared/types/authTypes/user-sign-up-request-dto";
+import { UserSignInRequestDto } from "@/shared/auth/authTypes/user-sign-in-request-dto";
+import { UserSignUpRequestDto } from "@/shared/auth/authTypes/user-sign-up-request-dto";
 
 interface AuthState {
   isAuthenticated: boolean;

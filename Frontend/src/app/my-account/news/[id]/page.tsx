@@ -1,4 +1,4 @@
-import NewsItem from "@/components/news/NewsItem";
+import NewsItem from "@/features/news/components/NewsItem";
 import { getOneNews } from "@/shared/admin/news/news-api";
 
 export default async function OneNews({

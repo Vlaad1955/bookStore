@@ -3,14 +3,14 @@
 import React, { useState } from "react";
 import { useAuthStore } from "@/shared/auth/auth-store/use-auth-store";
 import { useAppForm } from "@/shared/hooks/use-app-form/use-app-form.hook";
-import { UserSignInRequestDto } from "@/shared/types/authTypes/user-sign-in-request-dto";
-import { DEFAULT_SIGN_IN_PAYLOAD } from "@/shared/constants/DEFAULT_SIGN_IN_PAYLOAD";
+import { UserSignInRequestDto } from "@/shared/auth/authTypes/user-sign-in-request-dto";
+import { DEFAULT_SIGN_IN_PAYLOAD } from "@/shared/auth/constants/DEFAULT_SIGN_IN_PAYLOAD";
 import { userSignInValidationSchema } from "@/shared/validation-schemas/validation-schemas";
-import { InputType } from "@/shared/enums/users/input-type.enum";
+import { InputType } from "@/components/ui/input/input-type/input-type.enum";
 import { Input } from "../../ui/input/Input";
 import styles from "./styles.module.scss";
 import { Button } from "@/components/ui/button/Button";
-import { ButtonType } from "@/shared/enums/button/button-type.enum";
+import { ButtonType } from "@/components/ui/button/button-type/button-type.enum";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 

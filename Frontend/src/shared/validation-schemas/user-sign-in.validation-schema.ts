@@ -1,7 +1,7 @@
 import joi from "joi";
 
-import { UserValidationMessage } from "../enums/users/user-validation-message.enum";
-import { type UserSignInRequestDto } from "../types/authTypes/user-sign-in-request-dto";
+import { UserValidationMessage } from "../../user/user-validation-message.enum";
+import { type UserSignInRequestDto } from "../auth/authTypes/user-sign-in-request-dto";
 
 const emailRegExp = /^[^\s@]+(?:\.[^\s@]+)*@[\w-]+(?:\.[\w-]+)+$/;
 const INVALID_EMAIL_ERROR = "any.invalid";

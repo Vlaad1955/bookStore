@@ -1,6 +1,6 @@
-import BookItem from "@/components/books/BookItem";
+import BookItem from "@/features/books/components/BookItem";
 import CommentsServer from "@/components/comments/CommentsServer";
-import { getOneBook } from "@/shared/api/books/books-api";
+import { getOneBook } from "@/features/books/api/booksApi";
 
 export default async function BookFindOne({
   params,

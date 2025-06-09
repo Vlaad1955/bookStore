@@ -1,8 +1,8 @@
 import React from "react";
 import { notFound } from "next/navigation";
 
-import { newsApi } from "@/shared/api/news/news-api";
-import NewsList from "@/components/news/NewsWrapper";
+import { newsApi } from "@/features/news/api/newsApi";
+import NewsList from "@/features/news/components/NewsWrapper";
 
 type NewsItem = {
   id: string;

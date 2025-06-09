@@ -2,7 +2,7 @@
 // import ChangeAccountClient from "./ChangeAccountClient";
 // import { getUser } from "@/shared/user/user-service/user-service"; // Твоя функція отримання користувача по кукі
 
-import ChangeAccountClient from "@/components/changeAccount/ChangeAccountClint";
+import ChangeAccountClient from "@/features/change-account/components/ChangeAccountClint";
 
 export default async function ChangeAccountPage() {
   // Приклад отримання користувача на сервері (SSR)

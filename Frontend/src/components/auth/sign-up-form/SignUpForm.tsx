@@ -1,16 +1,16 @@
 "use client";
 
-import { UserSignUpRequestDto } from "@/shared/types/authTypes/user-sign-up-request-dto";
+import { UserSignUpRequestDto } from "@/shared/auth/authTypes/user-sign-up-request-dto";
 import React, { useState } from "react";
-import { DEFAULT_SIGN_UP_PAYLOAD } from "@/shared/constants/DEFAULT_SIGN_UP_PAYLOAD";
+import { DEFAULT_SIGN_UP_PAYLOAD } from "@/shared/auth/constants/DEFAULT_SIGN_UP_PAYLOAD";
 import { useAuthStore } from "@/shared/auth/auth-store/use-auth-store";
 import { useAppForm } from "@/shared/hooks/use-app-form/use-app-form.hook";
 import { userSignUpValidationSchema } from "@/shared/validation-schemas/validation-schemas";
 import { Input } from "../../ui/input/Input";
-import { InputType } from "@/shared/enums/users/input-type.enum";
+import { InputType } from "@/components/ui/input/input-type/input-type.enum";
 import styles from "./styles.module.scss";
 import { Button } from "@/components/ui/button/Button";
-import { ButtonType } from "@/shared/enums/button/button-type.enum";
+import { ButtonType } from "@/components/ui/button/button-type/button-type.enum";
 import Form from "next/form";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";

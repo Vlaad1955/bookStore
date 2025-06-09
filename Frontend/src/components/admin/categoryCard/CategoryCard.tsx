@@ -6,13 +6,13 @@ import {
   updateCategory,
   deleteCategory,
   createCategory,
-} from "@/shared/api/category/category-api";
+} from "@/features/categories/api/categoryApi";
 import {
   UpdateCategoryDto,
   CreateCategoryDto,
-} from "@/shared/types/categoryTypes/category";
+} from "@/features/categories/types/category";
 import { Button } from "@/components/ui/button/Button";
-import ConfirmModal from "@/components/ui/modalAdmin/ConfirmModal";
+import ConfirmModal from "@/components/ui/modal/modal-admin/ConfirmModal";
 
 interface Category {
   id: string;

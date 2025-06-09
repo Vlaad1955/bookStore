@@ -10,7 +10,7 @@ import { useController as useFormController } from "react-hook-form";
 
 import styles from "./styles.module.scss";
 import { JSX } from "react";
-import { InputType } from "@/shared/enums/users/input-type.enum";
+import { InputType } from "@/components/ui/input/input-type/input-type.enum";
 
 type Properties<T extends FieldValues> = {
   control?: Control<T, null>;

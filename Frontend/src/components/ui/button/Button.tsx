@@ -5,7 +5,7 @@ import {
   type ButtonSize,
   type ButtonType,
   type ButtonVariant,
-} from "@/shared/enums/button/button.enum";
+} from "@/components/ui/button/button-type/button.enum";
 
 import styles from "./styles.module.scss";
 

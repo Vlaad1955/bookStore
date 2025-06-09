@@ -1,7 +1,7 @@
 import joi from "joi";
 
-import { UserValidationMessage } from "../enums/users/user-validation-message.enum";
-import { type UserUpdateRequestDto } from "../types/user-update-request-dto";
+import { UserValidationMessage } from "../../user/user-validation-message.enum";
+import { type UserUpdateRequestDto } from "./user-update-request-dto";
 
 const emailRegExp = /^[^\s@]+(?:\.[^\s@]+)*@[\w-]+(?:\.[\w-]+)+$/;
 const nameRegExp = /^[\dA-Za-z]+(?:-[\dA-Za-z]+)*$/;

@@ -23,13 +23,13 @@ export function buildCategoryTree(
         return (
           <div
             key={cat.id}
-            className={styles["category-item"]}
+            className={styles.category_item}
             onClick={(e) => handleClick(cat.name, cat.id, e)}
           >
-            <li className={styles["category-item_list"]}>
+            <li className={styles.category_item_list}>
               <Link
                 href={"/"}
-                className={styles["category-title"]}
+                className={styles.category_title}
                 onClick={(e) => handleClick(cat.name, cat.id, e)}
               >
                 {cat.name}
@@ -38,9 +38,7 @@ export function buildCategoryTree(
               {hasChildren && (
                 <>
                   <ArrowIcon />
-                  <ul className={styles["category-sub_menu"]}>
-                    {build(cat.id)}
-                  </ul>
+                  <ul className={styles.category_sub_menu}>{build(cat.id)}</ul>
                 </>
               )}
             </li>

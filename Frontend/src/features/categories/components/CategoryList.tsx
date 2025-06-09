@@ -50,10 +50,10 @@ export default function CategoryList() {
   return (
     <>
       {isOpen && (
-        <div className={styles["book-menu_wrapper"]}>
-          <div className={styles["book-menu_hat"]}>
-            <div className={styles["book-menu_top"]}>
-              <div className={styles["book-menu_title"]}>
+        <div className={styles.book_menu_wrapper}>
+          <div className={styles.book_menu_hat}>
+            <div className={styles.book_menu_top}>
+              <div className={styles.book_menu_title}>
                 <div>Категорії книг</div>
                 <Link
                   href={"/dashboard/books"}
@@ -65,14 +65,14 @@ export default function CategoryList() {
 
               <button
                 type={ButtonType.BUTTON}
-                className={styles["ui-btn-close"]}
+                className={styles.ui_btn_close}
                 onClick={toggleList}
               >
                 <CloseIcon />
               </button>
             </div>
           </div>
-          <ul className={styles["book-main_menu"]}>{tree(null)}</ul>
+          <ul className={styles.book_main_menu}>{tree(null)}</ul>
         </div>
       )}
     </>

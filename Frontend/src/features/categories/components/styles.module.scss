@@ -1,4 +1,4 @@
-.book-menu_wrapper {
+.book_menu_wrapper {
   width: 350px;
   overflow-y: visible;
   overflow-x: visible;
@@ -17,7 +17,7 @@
   border-radius: 8px;
 }
 
-.book-menu_top {
+.book_menu_top {
   display: flex;
   justify-content: space-between;
   box-sizing: border-box;
@@ -28,7 +28,7 @@
   padding: 15px 15px 0 15px;
 }
 
-.book-menu_title {
+.book_menu_title {
   display: flex;
   flex-direction: column;
   font-size: 18px;
@@ -56,17 +56,17 @@
   }
 }
 
-.book-main_menu {
+.book_main_menu {
   list-style: none;
   width: 100%;
   padding-top: 20px;
 }
 
-.category-item {
+.category_item {
   width: 100%;
 }
 
-.category-item::before {
+.category_item::before {
   content: "";
   display: block;
   width: 100%;
@@ -74,7 +74,7 @@
   background-color: #e9e4e4;
 }
 
-.category-item:last-child::after {
+.category_item:last-child::after {
   content: "";
   display: block;
   width: 100%;
@@ -82,18 +82,18 @@
   background-color: #e9e4e4;
 }
 
-.category-item_list {
+.category_item_list {
   display: flex;
   justify-content: space-between;
   padding: 20px 20px 20px 0;
 }
 
-.category-item_list:hover {
+.category_item_list:hover {
   background-color: #f0f0f0;
   cursor: pointer;
 }
 
-.category-title {
+.category_title {
   cursor: pointer;
   color: #5b636f;
   font-size: 15px;
@@ -101,7 +101,7 @@
   padding: 0 0 0 15px;
 }
 
-.category-sub_menu {
+.category_sub_menu {
   border-radius: 8px;
 
   list-style: none;
@@ -120,13 +120,13 @@
   transition: opacity 0.3s ease, transform 0.3s ease;
 }
 
-.category-item:hover .category-sub_menu {
+.category_item:hover .category_sub_menu {
   opacity: 1;
   transform: translateX(0);
   pointer-events: auto;
 }
 
-.ui-btn-close {
+.ui_btn_close {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -138,7 +138,7 @@
   background: inherit;
 }
 
-.ui-btn-close:hover {
+.ui_btn_close:hover {
   background-color: #b7b7b8;
   transition: all 0.5s ease;
 }

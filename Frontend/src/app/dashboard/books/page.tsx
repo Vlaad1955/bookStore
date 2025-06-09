@@ -1,5 +1,5 @@
 import { getBooksInOneCategory } from "@/features/books/api/books";
-import { cleanParams } from "@/shared/utils/cleanParams";
+import { cleanParams } from "@/helpers/cleanParams";
 import { Book } from "@/features/books/types/book";
 import BookWrapper from "@/features/books/components/BookWrapper";
 import { objectToCleanURLSearchParams } from "@/features/books/hooks/objectToCleanURLSearchParams";

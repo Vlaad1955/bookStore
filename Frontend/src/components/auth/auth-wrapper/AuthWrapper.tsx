@@ -1,7 +1,7 @@
 "use client";
 
 import styles from "./styles.module.scss";
-import { getText } from "@/shared/helpers/get-text-to-path/get-text-to-path";
+import { getText } from "@/helpers/get-text-to-path/get-text-to-path";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 

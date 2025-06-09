@@ -1,7 +1,7 @@
 import React from "react";
 import SpecialProductsList from "./SpecialProductsList";
 import { getCategoryList } from "@/features/categories/api/category";
-import { cleanParams } from "@/shared/utils/cleanParams";
+import { cleanParams } from "@/helpers/cleanParams";
 import { getBooksInOneCategory } from "@/features/books/api/books";
 
 interface SpecialProductsProps {

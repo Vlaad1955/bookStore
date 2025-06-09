@@ -40,7 +40,6 @@ const Input = <T extends FieldValues>({
   inputClassName = "",
   labelClassName = "",
   isDisabled = false,
-  // onChange,
   maxLength,
   minLength,
   max,
@@ -63,7 +62,6 @@ const Input = <T extends FieldValues>({
   return (
     <label className={labelClasses}>
       <span className={styles.inputLabel}>{label}</span>
-      {/* {onChange && ( */}
       {isFileInput ? (
         <input
           type="file"
@@ -83,23 +81,11 @@ const Input = <T extends FieldValues>({
           placeholder={placeholder}
           disabled={isDisabled}
           className={`${hasError ? inputClassesWithError : inputClasses}`}
-          // onChange={onChange}
           maxLength={maxLength}
           minLength={minLength}
           max={max}
         />
       )}
-
-      {/* )} */}
-      {/* {!onChange && (
-        <input
-          {...field}
-          type={type || InputType.TEXT}
-          placeholder={placeholder}
-          disabled={isDisabled}
-          className={`${hasError ? inputClassesWithError : inputClasses}`}
-        />
-      )} */}
 
       {hasError && <span className={styles.inputError}>{error as string}</span>}
     </label>

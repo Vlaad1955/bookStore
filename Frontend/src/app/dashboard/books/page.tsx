@@ -1,4 +1,4 @@
-import { getBooksInOneCategory } from "@/features/books/api/booksApi";
+import { getBooksInOneCategory } from "@/features/books/api/books";
 import { cleanParams } from "@/shared/utils/cleanParams";
 import { Book } from "@/features/books/types/book";
 import BookWrapper from "@/features/books/components/BookWrapper";
@@ -56,7 +56,6 @@ export default async function BookPage({ searchParams }: Props) {
     console.error("Помилка завантаження книг:", error);
   }
 
-  // const authors = Array.from(new Set(books.map((book) => book.author)));
   const initialAuthor = Array.from(
     new Set(allCategoryBooks.map((book) => book.author))
   );

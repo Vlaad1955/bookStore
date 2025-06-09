@@ -1,8 +1,8 @@
 import React from "react";
 import SpecialProductsList from "./SpecialProductsList";
-import { getCategoryList } from "@/features/categories/api/categoryApi";
+import { getCategoryList } from "@/features/categories/api/category";
 import { cleanParams } from "@/shared/utils/cleanParams";
-import { getBooksInOneCategory } from "@/features/books/api/booksApi";
+import { getBooksInOneCategory } from "@/features/books/api/books";
 
 interface SpecialProductsProps {
   categoryName: string;

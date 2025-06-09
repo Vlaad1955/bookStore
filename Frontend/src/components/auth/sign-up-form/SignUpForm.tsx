@@ -56,7 +56,7 @@ const SignUpForm = () => {
     >
       {formError && <p style={{ color: "red" }}>{formError}</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <p className={styles.inputWrapper}>
+      <p className={styles.input_wrapper}>
         <Input
           name="email"
           type={InputType.EMAIL}
@@ -64,10 +64,10 @@ const SignUpForm = () => {
           placeholder="E-mail address"
           control={control}
           errors={errors}
-          inputClassName={styles.inputPages}
+          inputClassName={styles.input_pages}
         />
       </p>
-      <p className={styles.inputWrapper}>
+      <p className={styles.input_wrapper}>
         <Input
           name="password"
           type={InputType.PASSWORD}
@@ -75,10 +75,10 @@ const SignUpForm = () => {
           placeholder="Password"
           control={control}
           errors={errors}
-          inputClassName={styles.inputPages}
+          inputClassName={styles.input_pages}
         />
       </p>
-      <p className={styles.inputWrapper}>
+      <p className={styles.input_wrapper}>
         <Input
           name="firstName"
           type={InputType.TEXT}
@@ -86,10 +86,10 @@ const SignUpForm = () => {
           placeholder="First Name"
           control={control}
           errors={errors}
-          inputClassName={styles.inputPages}
+          inputClassName={styles.input_pages}
         />
       </p>
-      <p className={styles.inputWrapper}>
+      <p className={styles.input_wrapper}>
         <Input
           name="lastName"
           type={InputType.TEXT}
@@ -97,10 +97,10 @@ const SignUpForm = () => {
           placeholder="Last Name"
           control={control}
           errors={errors}
-          inputClassName={styles.inputPages}
+          inputClassName={styles.input_pages}
         />
       </p>
-      <p className={styles.inputWrapper}>
+      <p className={styles.input_wrapper}>
         <Input
           name="age"
           type={InputType.NUMBER}
@@ -108,10 +108,10 @@ const SignUpForm = () => {
           placeholder="Age"
           control={control}
           errors={errors}
-          inputClassName={styles.inputPages}
+          inputClassName={styles.input_pages}
         />
       </p>
-      <p className={styles.inputWrapper}>
+      <p className={styles.input_wrapper}>
         <Input
           name="phone"
           type={InputType.TEXT}
@@ -119,10 +119,10 @@ const SignUpForm = () => {
           placeholder="Number"
           control={control}
           errors={errors}
-          inputClassName={styles.inputPages}
+          inputClassName={styles.input_pages}
         />
       </p>
-      <p className={styles.inputWrapper}>
+      <p className={styles.input_wrapper}>
         <Input
           name="image"
           type={InputType.FILE}
@@ -130,11 +130,11 @@ const SignUpForm = () => {
           placeholder="Image"
           control={control}
           errors={errors}
-          inputClassName={styles.inputPages}
+          inputClassName={styles.input_pages}
         />
       </p>
       <Button
-        className={styles.formButton}
+        className={styles.form_button}
         type={ButtonType.SUBMIT}
         disabled={isLoading}
       >

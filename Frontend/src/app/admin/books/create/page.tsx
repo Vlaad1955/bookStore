@@ -1,4 +1,4 @@
-import { makeCategoryListRequest } from "@/features/categories/api/categoryApi";
+import { makeCategoryListRequest } from "@/features/categories/api/category";
 import CreateBookForm from "@/components/admin/bookCreateForm/BookCreateForm";
 
 export default async function CreateBooksPage() {

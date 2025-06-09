@@ -3,7 +3,7 @@ import Pagination from "@/components/admin/pagination/Pagination";
 import {
   getCategoryList,
   getMainCategories,
-} from "@/features/categories/api/categoryApi";
+} from "@/features/categories/api/category";
 
 type Params = { id: string };
 

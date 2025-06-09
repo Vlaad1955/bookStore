@@ -4,7 +4,7 @@ export interface Comment {
   user: {
     id: string;
     firstName: string;
-    role?: string; // якщо роль знадобиться для перевірки прав
+    role?: string;
   };
   book: {
     id: string;

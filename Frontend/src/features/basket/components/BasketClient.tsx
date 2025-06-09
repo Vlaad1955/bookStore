@@ -6,7 +6,7 @@ import styles from "./styles.module.scss";
 import Image from "next/image";
 import { ButtonVariant } from "@/components/ui/button/button-type/button-variant.enum";
 import Link from "next/link";
-import { useBasketStore } from "../store/basketStore";
+import { useBasketStore } from "../store/basket";
 import { useUserStore } from "@/user/user/store/UseUserStore";
 
 const BasketClient = () => {
@@ -49,14 +49,12 @@ const BasketClient = () => {
         return;
       }
 
-      // setQuantityLoadingId(bookId);
       try {
         await addToBasket(bookId, delta);
         toast.success("Кількість книги оновлена");
       } catch {
         toast.error("Не вдалося оновити кількість книги");
       } finally {
-        // setQuantityLoadingId(null);
       }
     },
     [addToBasket, handleRemove]
@@ -141,12 +139,12 @@ const BasketClient = () => {
                     onClick={() =>
                       handleQuantityChange(
                         item.book.id.toString(),
-                        1,
+                        -1,
                         item.quantity
                       )
                     }
                   >
-                    +
+                    -
                   </Button>
                   <div className={styles.basket_item_quantity_value}>
                     {item.quantity}
@@ -156,12 +154,12 @@ const BasketClient = () => {
                     onClick={() =>
                       handleQuantityChange(
                         item.book.id.toString(),
-                        -1,
+                        1,
                         item.quantity
                       )
                     }
                   >
-                    -
+                    +
                   </Button>
                 </div>
 

@@ -24,7 +24,6 @@ const BookFilters = ({ authors }: FiltersProps) => {
     if (multi) {
       const all = params.getAll(key);
       if (all.includes(value)) {
-        // remove value
         const filtered = all.filter((v) => v !== value);
         params.delete(key);
         filtered.forEach((v) => params.append(key, v));
@@ -39,7 +38,6 @@ const BookFilters = ({ authors }: FiltersProps) => {
       }
     }
 
-    // Always keep current category
     const category = searchParams.get("categories");
     if (category) params.set("categories", category);
 
@@ -59,11 +57,9 @@ const BookFilters = ({ authors }: FiltersProps) => {
   };
 
   return (
-    // <div className={styles.filters}>
     <div>
       <div className={styles.filter_container}>
         <h3 className={styles.filter_books}>Фільтри</h3>
-        {/* В наявності */}
         <Link href={getUpdatedSearch("published", "true")}>
           <label className={styles.filter_checkbox}>
             <input
@@ -75,7 +71,6 @@ const BookFilters = ({ authors }: FiltersProps) => {
             <span className={styles.filter_item}>В наявності</span>
           </label>
         </Link>
-        {/* Подарункові */}
         <Link href={getUpdatedSearch("gift", "true")}>
           <label className={styles.filter_checkbox}>
             <input
@@ -88,7 +83,6 @@ const BookFilters = ({ authors }: FiltersProps) => {
         </Link>
       </div>
 
-      {/* Обкладинка */}
       <div className={styles.filter_container}>
         <h3 className={styles.filter_books}>Обкладинка</h3>
         <Link href={getUpdatedSearch("cover", "soft")}>
@@ -113,7 +107,6 @@ const BookFilters = ({ authors }: FiltersProps) => {
         </Link>
       </div>
 
-      {/* Автори */}
       {authors.length > 0 && (
         <>
           <div className={styles.filter_container}>

@@ -1,12 +1,12 @@
 "use client";
 
-import { useBookStore } from "@/features/books/store/bookStore";
+import { useBookStore } from "@/features/books/store/book";
 import React from "react";
 import styles from "./styles.module.scss";
 import Link from "next/link";
 
 type CategoryLinkProps = {
-  basePath?: string; // наприклад, "/books"
+  basePath?: string;
 };
 
 const CategoryProps = ({ basePath }: CategoryLinkProps) => {

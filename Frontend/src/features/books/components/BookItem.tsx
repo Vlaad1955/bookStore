@@ -1,18 +1,17 @@
 "use client";
 import React, { useState } from "react";
-// import { Button } from "../ui/button/Button";
 import Image from "next/image";
 import { Book } from "@/features/books/types/book";
 import CategoryProps from "../../categories/components/CategoryProps";
 import styles from "./styles.module.scss";
 import { Button } from "../../../components/ui/button/Button";
-import { useBasketStore } from "@/shared/api/basket/basket-store";
 import Link from "next/link";
 import ModalBasket from "../../../components/ui/modal/modal-basket/ModalBasket";
-import { useUserStore } from "@/shared/user/store/UseUserStore";
 import { useRouter } from "next/navigation";
 import DeleteBasket from "@/assets/icons/deleteBasket";
-import { useBookStore } from "@/features/books/store/bookStore";
+import { useBookStore } from "@/features/books/store/book";
+import { useBasketStore } from "@/features/basket/store/basket";
+import { useUserStore } from "@/user/user/store/UseUserStore";
 
 interface BooksItemProps {
   book: Book;

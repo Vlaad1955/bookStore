@@ -9,17 +9,17 @@ import Form from "next/form";
 
 const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, onSearch }) => {
   return (
-    <Form className={styles.searchBar} onSubmit={onSearch} action={""}>
+    <Form className={styles.search_bar} onSubmit={onSearch} action={""}>
       <SearchIcon />
       <input
         type={InputType.TEXT}
         placeholder="Знайти книгу"
-        className={styles.searchInput}
+        className={styles.search_input}
         value={value}
         onChange={onChange}
         name="search"
       />
-      <Button className={styles.searchButton} type={ButtonType.SUBMIT}>
+      <Button className={styles.search_button} type={ButtonType.SUBMIT}>
         Пошук
       </Button>
     </Form>

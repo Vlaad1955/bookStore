@@ -1,6 +1,6 @@
 import BookItem from "@/features/books/components/BookItem";
-import CommentsServer from "@/components/comments/CommentsServer";
-import { getOneBook } from "@/features/books/api/booksApi";
+import { getOneBook } from "@/features/books/api/books";
+import CommentsServer from "@/features/comments/components/CommentsServer";
 
 export default async function BookFindOne({
   params,
@@ -15,5 +15,5 @@ export default async function BookFindOne({
       <BookItem book={book} />
       <CommentsServer bookId={book.id.toString()} />
     </>
-  ); // Assuming BookItem takes a book prop
+  );
 }

@@ -2,7 +2,7 @@ import React from "react";
 import { Metadata } from "next";
 import AsideComponent from "@/components/admin/aside/AsideComponent";
 import styles from "@/components/admin/aside/styles.module.css";
-import { ProtectedRouteRole } from "@/shared/protected-route/protectedRole-route";
+import { ProtectedRouteRole } from "@/shared/protected-route/protectedRoleRoute";
 
 export const metadata: Metadata = {
   title: "Movie page",

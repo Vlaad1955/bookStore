@@ -1,4 +1,4 @@
-@import url(../../../shared/assets/variables/variables.scss);
+@import url(../../../assets/variables/variables.scss);
 
 .form {
   display: flex;
@@ -8,28 +8,28 @@
   margin: 0 auto;
 }
 
-.inputWrapper {
+.input_wrapper {
   position: relative;
   width: 100%;
   height: 100px;
   margin: 0;
 }
 
-.inputWrapper span:first-child {
+.input_wrapper span:first-child {
   color: (--color-blue-600);
 }
 
-.inputPages {
+.input_pages {
   background: linear-gradient(var(--color-white-100), var(--color-white-100))
       padding-box,
     var(--gradient-10);
 }
 
-.inputPages:hover {
+.input_pages:hover {
   box-shadow: rgb(105 137 254 / 50%) 0 0 10px 0, rgb(60 100 244 / 20%) 0 0 0 4px;
 }
 
-.inputPages:focus {
+.input_pages:focus {
   background: linear-gradient(var(--color-white-100), var(--color-white-100))
       padding-box,
     var(--gradient-5);
@@ -37,8 +37,8 @@
   box-shadow: rgb(0 215 189 / 50%) 0 0 10px 0, rgb(3 191 217 / 20%) 0 0 0 4px;
 }
 
-.inputPages[type="password"],
-.inputPages[type="text"] {
+.input_pages[type="password"],
+.input_pages[type="text"] {
   padding-right: var(--p-6);
 }
 
@@ -65,7 +65,7 @@
   font-size: var(--font-size-1-button-text);
 }
 
-.formButton {
+.form_button {
   width: 149px;
   margin-top: var(--m-4);
   padding: var(--p-2) var(--p-4);

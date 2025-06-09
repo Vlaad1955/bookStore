@@ -1,51 +1,51 @@
 .overlay {
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0, 0, 0, 0.5);
-    z-index: 50;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .modal {
-    background-color: #fff;
-    padding: 2rem;
-    border-radius: 1rem;
-    max-width: 400px;
-    width: 100%;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  background-color: #fff;
+  padding: 2rem;
+  border-radius: 1rem;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
 }
 
 .title {
-    font-size: 1.25rem;
-    font-weight: 600;
-    margin-bottom: 1rem;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-bottom: 1rem;
 }
 
 .text {
-    color: #333;
-    margin-bottom: 1.5rem;
+  color: #333;
+  margin-bottom: 1.5rem;
 }
 
 .buttons {
-    display: flex;
-    justify-content: flex-end;
-    gap: 1rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
 }
 
 .cancel {
-    background-color: #e5e7eb; // gray-200
-color: #000;
-    &:hover {
-        background-color: #d1d5db; // gray-300
-    }
+  background-color: #e5e7eb;
+  color: #000;
+  &:hover {
+    background-color: #d1d5db;
+  }
 }
 
 .confirm {
-    background-color: #dc2626; // red-600
-color: white;
-    &:hover {
-        background-color: #b91c1c; // red-700
-    }
+  background-color: #dc2626;
+  color: white;
+  &:hover {
+    background-color: #b91c1c;
+  }
 }

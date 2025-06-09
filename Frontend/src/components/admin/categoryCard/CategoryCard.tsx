@@ -6,7 +6,7 @@ import {
   updateCategory,
   deleteCategory,
   createCategory,
-} from "@/features/categories/api/categoryApi";
+} from "@/features/categories/api/category";
 import {
   UpdateCategoryDto,
   CreateCategoryDto,

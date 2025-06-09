@@ -16,14 +16,14 @@ const AuthWrapper: React.FC<AuthWrapperProps> = ({ authPath, screen }) => {
   console.log(pathname);
 
   return (
-    <div className={styles.authContainer}>
-      <div className={styles.authWrapper}>
-        <div className={styles.authHeader}>
-          <h2 className={styles.headerTitle}>{getText(pathname, "title")}</h2>
-          <div className={styles.authBody}>{screen}</div>
-          <div className={styles.headerText}>
+    <div className={styles.auth_container}>
+      <div className={styles.auth_wrapper}>
+        <div className={styles.auth_header}>
+          <h2 className={styles.header_title}>{getText(pathname, "title")}</h2>
+          <div className={styles.auth_body}>{screen}</div>
+          <div className={styles.header_text}>
             <span>{getText(pathname, "authText")}</span>
-            <Link className={styles.headerLink} href={authPath}>
+            <Link className={styles.header_link} href={authPath}>
               {getText(pathname, "authLink")}
             </Link>
           </div>

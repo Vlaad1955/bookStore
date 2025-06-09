@@ -2,15 +2,15 @@
 
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import { createComment } from "@/features/comments/api/commentsApi";
-import ModalBasket from "../modal/ModalBasket";
-import { useUserStore } from "@/shared/user/store/UseUserStore";
+import { createComment } from "@/features/comments/api/comments";
 import { toast } from "react-toastify";
 import { Comment } from "@/features/comments/types/comments";
 import styles from "./styles.module.scss";
 import Form from "next/form";
-import { Button } from "../ui/button/Button";
 import { ButtonType } from "@/components/ui/button/button-type/button-type.enum";
+import { useUserStore } from "@/user/user/store/UseUserStore";
+import { Button } from "@/components/ui/button/Button";
+import ModalBasket from "@/components/ui/modal/modal-basket/ModalBasket";
 
 interface Props {
   bookId: string;

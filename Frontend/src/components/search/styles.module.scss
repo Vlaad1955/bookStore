@@ -1,4 +1,4 @@
-.searchBar {
+.search_bar {
   display: flex;
   flex-grow: 1;
   max-width: 776px;
@@ -7,7 +7,7 @@
   position: relative;
 }
 
-.searchInput {
+.search_input {
   border: 2px solid hsl(255, 65%, 47%);
   outline: none;
   color: #222;
@@ -29,14 +29,14 @@
   cursor: text;
 }
 
-.searchBar svg {
+.search_bar svg {
   position: absolute;
   left: 16px;
   top: 50%;
   transform: translateY(-50%);
 }
 
-.searchButton {
+.search_button {
   border-radius: 0 100px 100px 0;
   position: absolute;
   right: 0;

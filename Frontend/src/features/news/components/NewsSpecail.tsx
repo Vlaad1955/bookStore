@@ -1,4 +1,4 @@
-import { newsApi } from "@/features/news/api/newsApi";
+import { newsApi } from "@/features/news/api/news";
 import React from "react";
 import NewsSpecailList from "./NewsSpecailList";
 

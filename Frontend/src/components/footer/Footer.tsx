@@ -53,7 +53,7 @@ export default function Footer() {
         </div>
 
         <div className={styles.column}>
-          <button onClick={scrollToTop} className={styles.scrollButton}>
+          <button onClick={scrollToTop} className={styles.scroll_button}>
             Нагору
           </button>
         </div>

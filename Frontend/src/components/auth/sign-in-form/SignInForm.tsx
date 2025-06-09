@@ -40,30 +40,30 @@ const SignInForm: React.FC = () => {
     <form className={styles.form} onSubmit={handleSubmit(handleFormSubmit)}>
       {formError && <p style={{ color: "red" }}>{formError}</p>}
       {error && <p style={{ color: "red" }}>{error}</p>}
-      <p className={styles.inputWrapper}>
+      <p className={styles.input_wrapper}>
         <Input
           type={InputType.EMAIL}
           label="E-mail"
           placeholder="E-mail address"
           errors={errors}
           control={control}
-          inputClassName={styles.inputPages}
+          inputClassName={styles.input_pages}
           name="email"
         />
       </p>
-      <p className={styles.inputWrapper}>
+      <p className={styles.input_wrapper}>
         <Input
           type={InputType.PASSWORD}
           label="Password"
           placeholder="Password"
           errors={errors}
           control={control}
-          inputClassName={styles.inputPages}
+          inputClassName={styles.input_pages}
           name="password"
         />
       </p>
       <Button
-        className={styles.formButton}
+        className={styles.form_button}
         type={ButtonType.SUBMIT}
         disabled={isLoading}
       >

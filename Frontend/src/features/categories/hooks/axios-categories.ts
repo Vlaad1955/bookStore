@@ -1,4 +1,4 @@
-import { makeCategoryListRequest } from "../api/categoryApi";
+import { makeCategoryListRequest } from "../api/category";
 import { FetchCategoriesOptions } from "../types/category";
 
 export async function fetchCategories({

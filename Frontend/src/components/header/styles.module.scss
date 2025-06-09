@@ -1,13 +1,10 @@
-@import url(../../shared/assets/variables/variables.scss);
+@import url(../../assets/variables/variables.scss);
 
 .header {
   width: 100%;
   background: #ffffff;
   color: black;
   padding: 14px 16px;
-  /* display: flex;
-  justify-content: space-between;
-  align-items: center; */
   display: block;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
@@ -17,14 +14,14 @@
   border: 1px solid #eaeaea;
 }
 
-.header__container {
+.header_container {
   display: flex;
   align-items: center;
   width: 100%;
   min-height: 28px;
 }
 
-.header__logo {
+.header_logo {
   width: 100%;
   max-width: 200px;
   display: flex;
@@ -35,12 +32,12 @@
   cursor: pointer;
 }
 
-.header__logo a {
+.header_logo a {
   color: #512ac7;
   text-decoration: none;
 }
 
-.header__category {
+.header_category {
   max-width: 205px;
   width: 100%;
   height: 44px;
@@ -53,7 +50,7 @@
   left: 0;
 }
 
-.header__search {
+.header_search {
   display: flex;
   flex-grow: 1;
   max-width: 776px;
@@ -62,7 +59,7 @@
   position: relative;
 }
 
-.header__search input {
+.header_search input {
   border: 2px solid hsl(255, 65%, 47%);
   outline: none;
   color: #222;
@@ -84,14 +81,14 @@
   cursor: text;
 }
 
-.header__search svg {
+.header_search svg {
   position: absolute;
   left: 16px;
   top: 50%;
   transform: translateY(-50%);
 }
 
-.header__search button {
+.header_search button {
   border-radius: 0 100px 100px 0;
   position: absolute;
   right: 0;
@@ -100,13 +97,13 @@
   font-size: 17px;
 }
 
-.header__about {
+.header_about {
   display: flex;
   flex-direction: column;
   max-width: 150px;
 }
 
-.header__about span {
+.header_about span {
   font-size: 15px;
   color: #666;
   cursor: pointer;
@@ -116,32 +113,32 @@
   }
 }
 
-.header__about_phone {
+.header_about_phone {
   display: flex;
   align-items: center;
   gap: 5px;
   margin-bottom: 5px;
 }
 
-.header__about_phone ~ span {
+.header_about_phone ~ span {
   font-size: 14px;
   color: #666;
 }
 
-.header__about,
-.header__cart,
-.header__login {
+.header_about,
+.header_cart,
+.header_login {
   margin-left: 15px;
   display: flex;
   align-items: center;
 }
 
-.header__cart {
+.header_cart {
   position: relative;
   margin-right: 7px;
 }
 
-.header__cart_basket_quantity {
+.header_cart_basket_quantity {
   position: absolute;
   top: -8px;
   left: 25px;
@@ -158,14 +155,14 @@
   color: white;
 }
 
-.header__cart span,
-.header__login a {
+.header_cart span,
+.header_login a {
   font-size: 17px;
   text-decoration: none;
   color: #000;
 }
 
-.header__user {
+.header_user {
   position: absolute;
   top: 60px;
   right: 24px;
@@ -178,19 +175,6 @@
   flex-direction: column;
   gap: 8px;
   z-index: 1001;
-}
-
-.title {
-  font-size: 24px;
-}
-
-.loginButton {
-  background: black;
-  color: #007bff;
-  padding: 8px 12px;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
 }
 
 .img {

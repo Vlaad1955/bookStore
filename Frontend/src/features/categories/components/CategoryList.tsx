@@ -4,8 +4,8 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
 import { fetchCategories } from "@/features/categories/hooks/axios-categories";
-import { useCategoryListStore } from "@/features/categories/store/categoryStore";
-import { useBookStore } from "@/features/books/store/bookStore";
+import { useCategoryListStore } from "@/features/categories/store/category";
+import { useBookStore } from "@/features/books/store/book";
 import { buildCategoryTree } from "@/features/categories/hooks/useCategoryTree";
 import { Category } from "@/features/categories/types/category";
 import { ButtonType } from "@/components/ui/button/button-type/button-type.enum";

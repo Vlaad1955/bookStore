@@ -14,20 +14,19 @@ export interface Book {
 export interface FetchBooksOptions {
   page?: number;
   title?: string;
-  published?: string; // важливо: string, не boolean
+  published?: string;
   [key: string]: string | number | boolean | undefined;
 }
 
-//Для адміністратора
 export interface CreateBookDto {
   title: string;
   price: number;
   description?: string;
   author?: string;
-  image?: string; // бек сам проставить, не обов’язково передавати
+  image?: string;
   gift: boolean;
   cover: "soft" | "firm";
-  categories: string[]; // масив UUID
+  categories: string[];
 }
 
 export interface UpdateBookDto {
@@ -49,16 +48,15 @@ export interface CategoryDto {
   name: string;
 }
 
-//Для адміністратора
 export interface CreateBookDto {
   title: string;
   price: number;
   description?: string;
   author?: string;
-  image?: string; // бек сам проставить, не обов’язково передавати
+  image?: string;
   gift: boolean;
   cover: "soft" | "firm";
-  categories: string[]; // масив UUID
+  categories: string[];
 }
 
 export interface UpdateBookDto {

@@ -4,13 +4,13 @@ import styles from "./styles.module.scss";
 import Link from "next/link";
 import BookList from "../../features/books/components/BookList";
 import { Book } from "@/features/books/types/book";
-import { useBookStore } from "@/features/books/store/bookStore";
+import { useBookStore } from "@/features/books/store/book";
 import { Button } from "../ui/button/Button";
 
 interface BookWrapperProps {
   books: Book[];
   categoryName: string;
-  categoryId: string; // Назва категорії, яку передаємо ззовні
+  categoryId: string;
 }
 
 const SpecialProductsList: React.FC<BookWrapperProps> = ({
@@ -48,7 +48,7 @@ const SpecialProductsList: React.FC<BookWrapperProps> = ({
         <Button
           unstyled
           onClick={handleScrollLeft}
-          className={styles.scrollButton}
+          className={styles.scroll_button}
         >
           ←
         </Button>
@@ -60,7 +60,7 @@ const SpecialProductsList: React.FC<BookWrapperProps> = ({
         <Button
           unstyled
           onClick={handleScrollRight}
-          className={styles.scrollButton}
+          className={styles.scroll_button}
         >
           →
         </Button>

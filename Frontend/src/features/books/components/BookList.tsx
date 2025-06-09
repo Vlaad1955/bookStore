@@ -8,7 +8,7 @@ import styles from "./styles.module.scss";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import ModalBasket from "../../../components/ui/modal/modal-basket/ModalBasket";
-import { useBasketStore } from "@/features/basket/store/basketStore";
+import { useBasketStore } from "@/features/basket/store/basket";
 import { useUserStore } from "@/user/user/store/UseUserStore";
 
 type BookItemProps = {
@@ -31,7 +31,6 @@ const BookList = ({ book }: BookItemProps) => {
 
   return (
     <div className={styles.book_item}>
-      {/* Link to book details page */}
       <div className={styles.book_card}>
         <Link
           className={styles.book_card_item}
@@ -49,7 +48,6 @@ const BookList = ({ book }: BookItemProps) => {
         </Link>
       </div>
 
-      {/* Book details */}
       <div className={styles.book_content}>
         <Link
           className={styles.book_card_name}

@@ -25,16 +25,13 @@ const BookWrapper: React.FC<BookWrapperProps> = ({
 }) => {
   return (
     <div>
-      {/* Категорії */}
       <CategoryProps basePath="books" />
 
       <div className={styles.wrapper}>
-        {/* Фільтри */}
         <div className={styles.filters}>
           <BookFilters authors={initialAuthor} />
         </div>
 
-        {/* Книги */}
         <div className={styles.books_container_right_site}>
           {books.length > 0 ? (
             <div className={styles.books}>
@@ -55,7 +52,6 @@ const BookWrapper: React.FC<BookWrapperProps> = ({
             </div>
           )}
 
-          {/* Спеціальні продукти */}
           <NewsSpecail />
           <SpecialProducts categoryName="Дитяча література" />
           <SpecialProducts categoryName="Книги-іграшки" />

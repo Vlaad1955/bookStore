@@ -70,8 +70,6 @@
   opacity: 0.7;
 }
 
-/* CommentItem.module.scss */
-
 .comment_item_container {
   display: flex;
   background-color: #f9fafb;
@@ -94,7 +92,7 @@
 
 .comment_item_name {
   font-weight: 600;
-  color: #1e40af; // насичений синій
+  color: #1e40af;
   margin-bottom: 8px;
   font-size: 14px;
 }
@@ -152,38 +150,6 @@
   background: #1aa808;
   color: #ffffff;
 }
-
-// .comment_item_cancel {
-//   background-color: #e5e7eb;
-//   color: #374151;
-//   border: none;
-// }
-
-// .comment_item_cancel:hover {
-//   background-color: #d1d5db;
-// }
-
-// .comment_item_manage {
-//   background-color: transparent;
-//   color: #2563eb;
-//   border: none;
-//   text-decoration: underline;
-// }
-
-// .comment_item_manage:hover {
-//   color: #1d4ed8;
-// }
-
-// .comment_item_delete {
-//   background-color: transparent;
-//   color: #dc2626;
-//   border: none;
-//   text-decoration: underline;
-// }
-
-// .comment_item_delete:hover {
-//   color: #b91c1c;
-// }
 
 .comment_item_container_manage {
   display: flex;

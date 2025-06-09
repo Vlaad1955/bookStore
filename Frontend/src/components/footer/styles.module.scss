@@ -1,5 +1,3 @@
-@import url(../../shared/assets/variables/variables.scss);
-
 .footer {
   width: 100%;
   background: #ffffff;
@@ -8,7 +6,6 @@
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   border-radius: 8px;
   border: 1px solid #eaeaea;
-  // position: sticky;
 }
 
 .container {
@@ -76,7 +73,7 @@
   color: #666;
 }
 
-.scrollButton {
+.scroll_button {
   position: static;
   width: 70%;
   margin-top: 10%;
@@ -92,6 +89,6 @@
   transition: background 0.3s ease;
 }
 
-.scrollButton:hover {
+.scroll_button:hover {
   background: linear-gradient(135deg, #4121a7, #6e45e2);
 }

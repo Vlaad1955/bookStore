@@ -29,7 +29,6 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        {/* <AuthInit /> */}
         <TokenInit />
         <div className="container">
           <Header />

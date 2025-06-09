@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import { useRouter } from "next/navigation";
 import { Book, UpdateBookDto } from "@/features/books/types/book";
 import { updateBook } from "@/shared/admin/books/books-api";
-import { makeCategoryListRequest } from "@/features/categories/api/categoryApi";
+import { makeCategoryListRequest } from "@/features/categories/api/category";
 import ConfirmModal from "@/components/ui/modal/modal-admin/ConfirmModal";
 import styles from "./EditBookForm.module.css";
 

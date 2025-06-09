@@ -1,6 +1,6 @@
 "use client";
 import { useState, useEffect, useCallback } from "react";
-import ProtectedRoute from "@/shared/protected-route/protected-route";
+import ProtectedRoute from "@/shared/protected-route/protectedRoute";
 import { authApi } from "@/shared/auth/auth-api/auth-api";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
@@ -12,16 +12,6 @@ import { ButtonVariant } from "@/components/ui/button/button-type/button-variant
 import { useUserStore } from "@/user/user/store/UseUserStore";
 import { userService } from "@/user/user/user-service/user-service";
 import { userApi } from "@/user/user/user-api/user-api";
-
-// interface Props {
-//   user: {
-//     id: string;
-//     firstName: string;
-//     lastName: string;
-//     phone?: string;
-//     age?: number;
-//   };
-// }
 
 const ChangeAccountClient = () => {
   const router = useRouter();
@@ -54,29 +44,6 @@ const ChangeAccountClient = () => {
     const { name, value } = e.target;
     setForm((prev) => ({ ...prev, [name]: value }));
   }, []);
-
-  //   const handleSubmit = async (e: React.FormEvent) => {
-  //     e.preventDefault();
-
-  //     if (!user) return;
-
-  //     try {
-  //       const payload = {
-  //         firstName: form.firstName,
-  //         lastName: form.lastName,
-  //         phone: form.phone,
-  //         age: Number(form.age),
-  //       };
-
-  //       await userService.updateUser(user.id, payload);
-  //       updateUserFields(payload);
-
-  //       alert("Дані користувача оновлено");
-  //     } catch (error) {
-  //       console.error("Помилка при оновленні:", error);
-  //       alert("Не вдалося оновити дані");
-  //     }
-  //   };
 
   const handleSubmit = useCallback(
     async (e: React.FormEvent) => {
@@ -112,25 +79,6 @@ const ChangeAccountClient = () => {
       updateUserFields,
     ]
   );
-
-  //   const handleDelete = async () => {
-  //     if (!user) return;
-
-  //     try {
-  //       const confirmed = window.confirm(
-  //         "Ви впевнені, що хочете видалити акаунт?"
-  //       );
-  //       if (!confirmed) return;
-
-  //       await userApi.deleteUser(user.id);
-  //       resetUser();
-  //       authApi.logout();
-  //       router.push("/auht/sign-in");
-  //     } catch (error) {
-  //       console.error("Помилка при видаленні акаунта:", error);
-  //       alert("Не вдалося видалити акаунт");
-  //     }
-  //   };
 
   const handleDelete = useCallback(async () => {
     if (!user) return;

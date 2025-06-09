@@ -1,16 +1,13 @@
 "use client";
 
-import { useUserStore } from "@/shared/user/store/UseUserStore";
-import {
-  deleteComment,
-  updateComment,
-} from "@/features/comments/api/commentsApi";
+import { deleteComment, updateComment } from "@/features/comments/api/comments";
 import { useState } from "react";
 import { toast } from "react-toastify";
 import { Comment } from "@/features/comments/types/comments";
 import styles from "./styles.module.scss";
-import { Button } from "../ui/button/Button";
 import { ButtonVariant } from "@/components/ui/button/button-type/button-variant.enum";
+import { useUserStore } from "@/user/user/store/UseUserStore";
+import { Button } from "@/components/ui/button/Button";
 
 interface Props {
   comment: Comment;

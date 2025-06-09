@@ -5,7 +5,7 @@ import styles from "./styles.module.scss";
 import { useAuthStore } from "@/shared/auth/auth-store/use-auth-store";
 import { useEffect, useState } from "react";
 import { AppRoute } from "@/shared/auth/enums/app-route.enums";
-import { useCategoryListStore } from "@/features/categories/store/categoryStore";
+import { useCategoryListStore } from "@/features/categories/store/category";
 import MenuIcon from "@/assets/icons/menuIcon";
 import CategoriesIcon from "@/assets/icons/categoriesIcon";
 import ShoppingCartIcon from "@/assets/icons/shoppingCartIcon";
@@ -18,12 +18,12 @@ import SearchBar from "../search/SearchBar";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import CategoryList from "../../features/categories/components/CategoryList";
-import { useBasketStore } from "@/features/basket/store/basketStore";
+import { useBasketStore } from "@/features/basket/store/basket";
 import { useUserStore } from "@/user/user/store/UseUserStore";
 
 const Header = () => {
   const { isAuthenticated, logout } = useAuthStore();
-  const { basket } = useBasketStore();
+  const basket = useBasketStore((state) => state.basket);
 
   const totalQuantity = basket?.items.reduce(
     (acc, item) => acc + item.quantity,
@@ -53,13 +53,13 @@ const Header = () => {
 
   return (
     <header className={styles.header}>
-      <div className={styles.header__container}>
-        <div className={styles.header__logo}>
+      <div className={styles.header_container}>
+        <div className={styles.header_logo}>
           <MenuIcon />
           <Link href={AppRoute.ROOT}>BookOutFit</Link>
         </div>
 
-        <Button className={styles.header__category} onClick={toggleList}>
+        <Button className={styles.header_category} onClick={toggleList}>
           <CategoriesIcon />
           <span>Каталог книг</span>
         </Button>
@@ -76,17 +76,16 @@ const Header = () => {
           }}
         />
 
-        <div className={styles.header__about}>
-          <div className={styles.header__about_phone}>
+        <div className={styles.header_about}>
+          <div className={styles.header_about_phone}>
             <PhoneIcon />
             <Link href="tel:0800800800">0-800-800-800</Link>
           </div>
           <span>Без вихідних, з 9 до 20</span>
         </div>
 
-        {/* <div>Повідомлення від магазину</div> якщо користувач увійшов в систему */}
         <Button
-          className={styles.header__cart}
+          className={styles.header_cart}
           variant={ButtonVariant.TRANSPARENT}
           size={ButtonSize.SMALL}
           onClick={() => router.push(AppRoute.BASKET)}
@@ -94,7 +93,7 @@ const Header = () => {
           <ShoppingCartIcon />
           <span>Кошик</span>
           {(totalQuantity ?? 0) > 0 && (
-            <div className={styles.header__cart_basket_quantity}>
+            <div className={styles.header_cart_basket_quantity}>
               {totalQuantity ?? 0}
             </div>
           )}
@@ -108,7 +107,7 @@ const Header = () => {
             </Button>
 
             {isOpen && user && (
-              <aside className={styles.header__user}>
+              <aside className={styles.header_user}>
                 {" "}
                 <Image
                   src={user.image}
@@ -132,7 +131,7 @@ const Header = () => {
           </>
         ) : (
           <Button
-            className={styles.header__login}
+            className={styles.header_login}
             variant={ButtonVariant.TRANSPARENT}
             size={ButtonSize.SMALL}
           >

@@ -63,7 +63,6 @@
   display: flex;
   align-items: center;
   position: relative;
-  //   gap: 5px;
   padding: 0 16px 20px 16px;
   width: 100%;
 }
@@ -78,11 +77,11 @@
   padding-bottom: 8px;
   scroll-behavior: smooth;
 
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
-.scrollButton {
+.scroll_button {
   display: flex;
   align-items: center;
   justify-content: center;

@@ -1,7 +1,7 @@
-import Pagination from "@/components/admin/pagination/Pagination";
-import NewsList from "@/components/admin/newsList/NewsList";
-import NewsHeader from "@/components/admin/newsHeader/NewsHeader";
-import { getAllNews } from "@/shared/admin/news/news-api";
+import Pagination from "@/admin/other/components/pagination/Pagination";
+import NewsList from "@/admin/news/components/list/NewsList";
+import NewsHeader from "@/admin/news/components/header/NewsHeader";
+import { getAllNews } from "@/admin/news/api/news";
 import { objectToCleanURLSearchParams } from "@/features/books/hooks/objectToCleanURLSearchParams";
 
 type Params = { id: string };
@@ -15,8 +15,8 @@ export default async function NewsPage({
   searchParams: SearchParams;
 }) {
   const newParams = objectToCleanURLSearchParams(searchParams);
-  const { id } = await params;
-  const { title, category } = await searchParams;
+  const { id } =  params;
+  const { title, category } = searchParams;
   const page = parseInt(id, 10) || 1;
 
   const data = await getAllNews({

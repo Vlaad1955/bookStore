@@ -1,13 +1,13 @@
 import React from 'react';
-import UsersList from "@/components/admin/userList/UsersList";
-import Pagination from "@/components/admin/pagination/Pagination";
-import {getAllUsers} from "@/shared/admin/users/users-api";
+import UsersList from "@/admin/users/components/list/UsersList";
+import Pagination from "@/admin/other/components/pagination/Pagination";
+import {getAllUsers} from "@/admin/users/api/users";
 
 type Params = { id: string };
 
 export default async function UsersPage({ params }: { params: Params }) {
 
-    const {id} = await params;
+    const {id} = params;
     const page = parseInt(id, 10) || 1;
 
     const data = await getAllUsers({page});

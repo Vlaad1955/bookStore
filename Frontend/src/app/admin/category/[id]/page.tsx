@@ -1,5 +1,5 @@
-import CategoryList from "@/components/admin/categoryList/CategoryList";
-import Pagination from "@/components/admin/pagination/Pagination";
+import CategoryList from "@/admin/category/components/list/CategoryList";
+import Pagination from "@/admin/other/components/pagination/Pagination";
 import {
   getCategoryList,
   getMainCategories,
@@ -8,7 +8,7 @@ import {
 type Params = { id: string };
 
 export default async function CategoryPage({ params }: { params: Params }) {
-  const { id } = await params;
+  const { id } = params;
   const page = parseInt(id, 10) || 1;
 
   const data = await getCategoryList({

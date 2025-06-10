@@ -6,7 +6,7 @@ import { Book } from "@/features/books/types/book";
 import styles from "./styles.module.scss";
 import SpecialProducts from "../../../components/special-products/SpecialProducts";
 import NewsSpecail from "../../news/components/NewsSpecail";
-import Pagination from "@/components/admin/pagination/Pagination";
+import Pagination from "@/admin/other/components/pagination/Pagination";
 
 interface BookWrapperProps {
   initialAuthor: string[];

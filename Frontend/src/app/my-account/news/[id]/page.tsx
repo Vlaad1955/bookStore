@@ -1,5 +1,5 @@
 import NewsItem from "@/features/news/components/NewsItem";
-import { getOneNews } from "@/shared/admin/news/news-api";
+import { getOneNews } from "@/admin/news/api/news";
 
 export default async function OneNews({
   params,

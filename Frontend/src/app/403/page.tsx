@@ -1,4 +1,4 @@
-import {ClosedAccess} from "@/components/admin/closedAccess/ClosedAccess";
+import {ClosedAccess} from "@/admin/other/components/closed-access/ClosedAccess";
 
 export default function AccessDeniedPage() {
     return <ClosedAccess />;

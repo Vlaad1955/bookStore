@@ -234,11 +234,11 @@ return notFound();
 
 Дані будуть завантажені на сервері перед рендером — тобто це і є SSR в App Router.
 
-🧩 Твій файл news-api.ts лишається таким же:
+🧩 Твій файл news.ts лишається таким же:
 ts
 Copy
 Edit
-// shared/api/news/news-api.ts
+// shared/api/news/news.ts
 
 import axiosInstance from "@/shared/auth/auth-axios-instance/axiosInstance";
 

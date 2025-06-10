@@ -1,5 +1,5 @@
 import { makeCategoryListRequest } from "@/features/categories/api/category";
-import CreateBookForm from "@/components/admin/bookCreateForm/BookCreateForm";
+import CreateBookForm from "@/admin/books/components/create-form/BookCreateForm";
 
 export default async function CreateBooksPage() {
   const categories = await makeCategoryListRequest("limit=1000");

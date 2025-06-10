@@ -66,7 +66,7 @@ export default function EditBookForm({ book }: { book: Book }) {
     if (!pendingData) return;
     try {
       setIsSubmitting(true);
-      await updateBook(book.id, pendingData);
+      await updateBook(String(book.id), pendingData);
       router.push("/admin/books/1");
     } catch (error) {
       console.error("Помилка оновлення:", error);
@@ -149,9 +149,6 @@ export default function EditBookForm({ book }: { book: Book }) {
               className={styles.select}
               required
             >
-              <option value="" disabled>
-                Виберіть тип обкладинки
-              </option>
               <option value="soft">М’яка</option>
               <option value="firm">Тверда</option>
             </select>

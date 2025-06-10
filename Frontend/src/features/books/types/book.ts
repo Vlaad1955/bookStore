@@ -35,7 +35,7 @@ export interface UpdateBookDto {
   description?: string;
   author?: string;
   gift?: boolean;
-  cover?: "soft" | "firm";
+  cover?: "soft" | "firm" | "";
   categories?: string[];
 }
 
@@ -65,7 +65,7 @@ export interface UpdateBookDto {
   description?: string;
   author?: string;
   gift?: boolean;
-  cover?: "soft" | "firm";
+  cover?: "soft" | "firm" | "";
   categories?: string[];
 }
 

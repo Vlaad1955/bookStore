@@ -1,11 +1,13 @@
 "use client";
 
-import { useState } from "react";
+import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { CreateBookDto } from "@/features/books/types/book";
 import styles from "@/admin/books/components/edit-form/styles.module.scss";
 import { createBook } from "@/admin/books/api/books";
 import ConfirmModal from "@/components/ui/modal/modal-admin/ConfirmModal";
+import Image from "next/image";
+import {FieldName} from "@/admin/books/enums/field-name";
 
 const CreateBookForm = ({
   categories,
@@ -30,17 +32,24 @@ const CreateBookForm = ({
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const handleChange = (
-    e: React.ChangeEvent<
-      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-    >
+      e: React.ChangeEvent<
+          HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+      >
   ) => {
-    const { name, value, type, checked } = e.target;
+    const target = e.target;
 
-    if (type === "checkbox" && name === "gift") {
-      setForm((prev) => ({ ...prev, gift: checked }));
-    } else if (name === "price") {
-      setForm((prev) => ({ ...prev, price: parseFloat(value) || 0 }));
+    if (target instanceof HTMLInputElement) {
+      const { name, value, type, checked } = target;
+
+      if (type === FieldName.CHECKBOX && name === FieldName.GIFT) {
+        setForm((prev) => ({ ...prev, gift: checked }));
+      } else if (name === FieldName.PRICE) {
+        setForm((prev) => ({ ...prev, price: parseFloat(value) || 0 }));
+      } else {
+        setForm((prev) => ({ ...prev, [name]: value }));
+      }
     } else {
+      const { name, value } = target;
       setForm((prev) => ({ ...prev, [name]: value }));
     }
   };
@@ -66,8 +75,8 @@ const CreateBookForm = ({
   const handleOpenModal = (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!form.title.trim() || !form.author.trim()) {
-      alert("Заповніть назву та автора");
+    if (!form.title.trim()) {
+      alert("Заповніть назву.");
       return;
     }
 
@@ -232,7 +241,8 @@ const CreateBookForm = ({
           />
           {preview && (
             <div className={styles.imagePreview}>
-              <img src={preview} alt="Прев’ю" />
+              <Image src={preview} alt="Прев’ю" width={750}
+                     height={750} />
             </div>
           )}
         </div>

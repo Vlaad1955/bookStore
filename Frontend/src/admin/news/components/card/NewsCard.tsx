@@ -7,6 +7,7 @@ import { News } from "@/features/news/types/news";
 import { removeNews } from "@/admin/news/api/news";
 import Link from "next/link";
 import Modal from "@/components/ui/modal/modal-admin/ConfirmModal";
+import {ButtonVariant} from "@/components/ui/button/button-type/button-variant.enum";
 
 const NewsCard = ({ news }: { news: News }) => {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -47,11 +48,11 @@ const NewsCard = ({ news }: { news: News }) => {
       </div>
       <Link href={`/admin/news/edit/${news.id}`}>
         <div className={styles.cardButtonWrapper}>
-          <Button variant="edit">Редагувати</Button>
+          <Button variant={ButtonVariant.SECONDARY}>Редагувати</Button>
         </div>
       </Link>
       <div className={styles.cardButtonWrapper}>
-        <Button variant="delete" onClick={handleDelete} disabled={isDeleting}>
+        <Button variant= {ButtonVariant.DELETE} onClick={handleDelete} disabled={isDeleting}>
           {isDeleting ? "Видалення..." : "Видалити"}
         </Button>
       </div>

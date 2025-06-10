@@ -25,9 +25,11 @@ export async function getOneBook(id: string): Promise<Book> {
 }
 
 // Створити книгу з обкладинкою
-export async function createBook(bookData: CreateBookDto, imageFile: File) {
+export async function createBook(bookData: CreateBookDto, imageFile: File | null) {
   const formData = new FormData();
-  formData.append("image", imageFile);
+  if (imageFile) {
+    formData.append("image", imageFile);
+  }
   formData.append("title", bookData.title);
   formData.append("price", bookData.price.toString());
   formData.append("gift", String(bookData.gift));

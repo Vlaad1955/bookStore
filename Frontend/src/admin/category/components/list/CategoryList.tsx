@@ -6,7 +6,7 @@ import CategoryCard from "@/admin/category/components/card/CategoryCard";
 interface Category {
     id: string;
     name: string;
-    parentId: string | null;
+    parentId: string | undefined;
 }
 
 interface CategoryListProps {

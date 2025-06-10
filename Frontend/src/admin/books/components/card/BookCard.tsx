@@ -1,15 +1,14 @@
 "use client";
 
-import React, { useState } from "react";
+import React, {useState} from "react";
 import styles from "@/admin/books/components/card/styles.module.scss";
-import { Button } from "@/components/ui/button/Button";
+import {Button} from "@/components/ui/button/Button";
 import Link from "next/link";
-import { Book } from "@/features/books/types/book";
-import {
-  removeBook,
-  updatePublishedStatus,
-} from "@/admin/books/api/books";
+import {Book} from "@/features/books/types/book";
+import {removeBook, updatePublishedStatus,} from "@/admin/books/api/books";
 import ConfirmModal from "@/components/ui/modal/modal-admin/ConfirmModal";
+import {ButtonVariant} from "@/components/ui/button/button-type/button-variant.enum";
+import Image from "next/image";
 
 const BookCard = ({ book }: { book: Book }) => {
   const [isDeleting, setIsDeleting] = useState(false);
@@ -32,7 +31,7 @@ const BookCard = ({ book }: { book: Book }) => {
   const handleConfirm = async () => {
     if (modalType === "published") {
       try {
-        await updatePublishedStatus(book.id, { published: true });
+        await updatePublishedStatus(String(book.id), { published: true });
         setIsVisible(false);
       } catch (error) {
         console.error("Помилка публікації:", error);
@@ -65,9 +64,11 @@ const BookCard = ({ book }: { book: Book }) => {
       <div className={styles.bookCard}>
         <div className={styles.topSection}>
           <div className={styles.imageWrapper}>
-            <img
+            <Image
               src={book.image || "/no-image.png"}
               alt={book.title}
+              width={300}
+            height={300}
               className={styles.bookImage}
             />
             <div className={styles.imageText}>
@@ -87,20 +88,19 @@ const BookCard = ({ book }: { book: Book }) => {
             )}
           </div>
         </div>
-
         <div className={styles.buttonSection}>
           <Link href={`/admin/books/edit/${book.id}`}>
-            <Button variant="edit">Редагувати</Button>
+            <Button variant={ButtonVariant.SECONDARY}>Редагувати</Button>
           </Link>
 
-          <Button variant="delete" onClick={handleDelete} disabled={isDeleting}>
+          <Button variant={ButtonVariant.DELETE} onClick={handleDelete} disabled={isDeleting}>
             {isDeleting ? "Видалення..." : "Видалити"}
           </Button>
 
           {!book.published && (
-            <Button variant="edit" onClick={handlePublish}>
-              Опублікувати
-            </Button>
+              <Button variant={ButtonVariant.SECONDARY} onClick={handlePublish}>
+                Опублікувати
+              </Button>
           )}
         </div>
       </div>

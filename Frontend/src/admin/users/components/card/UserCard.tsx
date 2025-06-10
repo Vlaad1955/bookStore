@@ -5,6 +5,8 @@ import styles from "./styles.module.scss";
 import { Button } from "@/components/ui/button/Button";
 import { User } from "@/admin/users/types/user";
 import { updateUserRole } from "@/admin/users/api/users";
+import {ButtonVariant} from "@/components/ui/button/button-type/button-variant.enum";
+import Image from "next/image";
 
 const UserCard = ({ user }: { user: User }) => {
   const [role, setRole] = useState(user.role); // локальний стан ролі
@@ -26,7 +28,8 @@ const UserCard = ({ user }: { user: User }) => {
   return (
     <div className={styles.movieCard}>
       <div className={styles.cardImage}>
-        <img src={user.image} alt={user.firstName} />
+        <Image src={user.image} alt={user.firstName} width={300}
+               height={300}/>
       </div>
       <div className={styles.cardContent}>
         <h2 className={styles.cardTitle}>
@@ -40,7 +43,7 @@ const UserCard = ({ user }: { user: User }) => {
       </div>
       {role === "User" && (
         <div className={styles.cardButtonWrapper}>
-          <Button variant="delete" onClick={handlePromote} disabled={loading}>
+          <Button variant={ButtonVariant.SECONDARY} onClick={handlePromote} disabled={loading}>
             {loading ? "Оновлення..." : "Зробити адміністратором"}
           </Button>
         </div>

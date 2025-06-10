@@ -17,7 +17,7 @@ import ConfirmModal from "@/components/ui/modal/modal-admin/ConfirmModal";
 interface Category {
   id: string;
   name: string;
-  parentId: string | null;
+  parentId: string | undefined;
 }
 
 interface CategoryCardProps {
@@ -63,7 +63,7 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
     try {
       const dto: UpdateCategoryDto = {
         name: newName,
-        parentId: type === "main" ? null : newParentId || null,
+        parentId: type === "main" ? undefined : newParentId || undefined,
       };
 
       await updateCategory(category.id, dto);

@@ -5,8 +5,8 @@ import styles from "@/admin/other/components/aside/styles.module.scss";
 import { ProtectedRouteRole } from "@/shared/protected-route/protectedRoleRoute";
 
 export const metadata: Metadata = {
-  title: "Movie page",
-  description: "Page about the movie",
+  title: "Адміністративна панель",
+  description: "Admin control page",
 };
 type Props = { children: React.ReactNode };
 const AdminLayout = ({ children }: Props) => {

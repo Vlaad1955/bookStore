@@ -6,8 +6,8 @@ export const metadata: Metadata = {
   description: "Сторінка де знаходяться книга",
 };
 type Props = { children: React.ReactNode };
-const BooksLayout = ({ children }: Props) => {
+const BookLayout = ({ children }: Props) => {
   return <div>{children}</div>;
 };
 
-export default BooksLayout;
+export default BookLayout;

@@ -11,20 +11,16 @@ import { useUserStore } from "@/user/user/store/UseUserStore";
 
 const BasketClient = () => {
   const user = useUserStore((state) => state.user);
-  const [loading, setLoading] = useState(false);
   const [actionLoadingId, setActionLoadingId] = useState<string | null>(null);
   const { basket, fetchBasket, removeFromBasket, clearBasket, addToBasket } =
     useBasketStore();
 
   useEffect(() => {
     if (user && !basket) {
-      setLoading(true);
-      fetchBasket()
-        .catch((error) => {
-          toast.error("Не вдалося завантажити корзину");
-          throw error;
-        })
-        .finally(() => setLoading(false));
+      fetchBasket().catch((error) => {
+        toast.error("Не вдалося завантажити корзину");
+        throw error;
+      });
     }
   }, [user, basket, fetchBasket]);
 
@@ -64,30 +60,20 @@ const BasketClient = () => {
   );
 
   const handleClear = useCallback(async () => {
-    setLoading(true);
     try {
       await clearBasket();
       toast.success("Корзина очищена");
     } catch {
       toast.error("Не вдалося очистити корзину");
     } finally {
-      setLoading(false);
     }
   }, [clearBasket]);
-
-  if (loading) {
-    return <></>;
-  }
 
   return (
     <>
       <div className={styles.basket_container}>
         <div className={styles.basket_title}>Кошик</div>
-        <Button
-          className={styles.basket_button_delete}
-          onClick={handleClear}
-          disabled={loading}
-        >
+        <Button className={styles.basket_button_delete} onClick={handleClear}>
           Очистити корзину повністю
         </Button>
       </div>

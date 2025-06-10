@@ -18,7 +18,6 @@ export default function CategoryList() {
   const { isOpen, toggleList, closeList } = useCategoryListStore();
   const { setSelectedCategories } = useBookStore();
   const [categories, setCategories] = useState<Category[]>([]);
-  const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
 
   const router = useRouter();
@@ -30,7 +29,7 @@ export default function CategoryList() {
         setError(err.message);
         throw error;
       })
-      .finally(() => setLoading(false));
+      .finally(() => {});
   }, []);
 
   const handleClick = (
@@ -47,7 +46,6 @@ export default function CategoryList() {
 
   const tree = buildCategoryTree(categories, handleClick, styles);
 
-  if (loading) return <></>;
   if (error) return <div>Помилка: {error}</div>;
 
   return (

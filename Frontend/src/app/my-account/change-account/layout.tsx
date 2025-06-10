@@ -6,8 +6,8 @@ export const metadata: Metadata = {
   description: "Сторінка де знаходяться зміна акаунту",
 };
 type Props = { children: React.ReactNode };
-const BooksLayout = ({ children }: Props) => {
+const ChangeAccountLayout = ({ children }: Props) => {
   return <div>{children}</div>;
 };
 
-export default BooksLayout;
+export default ChangeAccountLayout;

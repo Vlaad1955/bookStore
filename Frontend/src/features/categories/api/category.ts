@@ -4,40 +4,48 @@ import {
   FetchCategoriesOptions,
   UpdateCategoryDto,
 } from "@/features/categories/types/category";
+import { retryAsync } from "@/shared/hooks/retry/useRetry.hook";
 
 export async function createCategory(dto: CreateCategoryDto) {
-  const response = await axiosInstance.post("/category/create", dto);
-  return response.data;
+  return retryAsync(() =>
+    axiosInstance.post("/category/create", dto).then((res) => res.data)
+  );
 }
 
 export async function makeCategoryListRequest(queryString: string) {
-  const response = await axiosInstance.get(`/category/list?${queryString}`);
-  return response.data;
+  return retryAsync(() =>
+    axiosInstance.get(`/category/list?${queryString}`).then((res) => res.data)
+  );
 }
 
 export async function getCategoryList(queryParams: FetchCategoriesOptions) {
-  const response = await axiosInstance.get("/category/list", {
-    params: queryParams,
-  });
-  return response.data;
+  return retryAsync(() =>
+    axiosInstance
+      .get("/category/list", { params: queryParams })
+      .then((res) => res.data)
+  );
 }
 
 export async function getCategoryById(id: string) {
-  const response = await axiosInstance.get(`/category/find/id/${id}`);
-  return response.data;
+  return retryAsync(() =>
+    axiosInstance.get(`/category/find/id/${id}`).then((res) => res.data)
+  );
 }
 
 export async function updateCategory(id: string, dto: UpdateCategoryDto) {
-  const response = await axiosInstance.patch(`/category/update/${id}`, dto);
-  return response.data;
+  return retryAsync(() =>
+    axiosInstance.patch(`/category/update/${id}`, dto).then((res) => res.data)
+  );
 }
 
 export async function deleteCategory(id: string) {
-  const response = await axiosInstance.delete(`/category/delete/${id}`);
-  return response.data;
+  return retryAsync(() =>
+    axiosInstance.delete(`/category/delete/${id}`).then((res) => res.data)
+  );
 }
 
 export async function getMainCategories() {
-  const response = await axiosInstance.get(`/category/mainCategories/list`);
-  return response.data;
+  return retryAsync(() =>
+    axiosInstance.get(`/category/mainCategories/list`).then((res) => res.data)
+  );
 }

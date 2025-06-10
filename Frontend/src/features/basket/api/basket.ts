@@ -1,13 +1,14 @@
 import axiosInstance from "@/shared/auth/auth-axios-instance/axiosInstance";
+import { retryAsync } from "@/shared/hooks/retry/useRetry.hook";
 
 export const basketApi = {
   addBook: (payload: { bookId: string; quantity?: number }) =>
-    axiosInstance.post("/basket/add", payload),
+    retryAsync(() => axiosInstance.post("/basket/add", payload)),
 
   removeBook: (bookId: string) =>
-    axiosInstance.delete(`/basket/remove/${bookId}`),
+    retryAsync(() => axiosInstance.delete(`/basket/remove/${bookId}`)),
 
-  clearBasket: () => axiosInstance.delete("/basket/clear"),
+  clearBasket: () => retryAsync(() => axiosInstance.delete("/basket/clear")),
 
-  getBasket: () => axiosInstance.get("/basket/find"),
+  getBasket: () => retryAsync(() => axiosInstance.get("/basket/find")),
 };

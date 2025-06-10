@@ -20,7 +20,10 @@ const BasketClient = () => {
     if (user && !basket) {
       setLoading(true);
       fetchBasket()
-        .catch(() => toast.error("Не вдалося завантажити корзину"))
+        .catch((error) => {
+          toast.error("Не вдалося завантажити корзину");
+          throw error;
+        })
         .finally(() => setLoading(false));
     }
   }, [user, basket, fetchBasket]);
@@ -73,7 +76,7 @@ const BasketClient = () => {
   }, [clearBasket]);
 
   if (loading) {
-    return <p>Завантаження корзини...</p>;
+    return <></>;
   }
 
   return (

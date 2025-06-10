@@ -1,5 +1,4 @@
 import React from "react";
-import { notFound } from "next/navigation";
 
 import { newsApi } from "@/features/news/api/news";
 import NewsList from "@/features/news/components/NewsWrapper";
@@ -43,11 +42,8 @@ export default async function NewsPage({
 
     const newsData: NewsData = res.data;
 
-    console.log("News data:", newsData);
-
     return <NewsList newsData={newsData} />;
   } catch (error) {
-    console.error("❌ Failed to fetch news:", error);
-    return notFound();
+    throw error;
   }
 }

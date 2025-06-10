@@ -9,13 +9,13 @@ import { ButtonVariant } from "@/components/ui/button/button-type/button-variant
 import { useUserStore } from "@/user/user/store/UseUserStore";
 import { Button } from "@/components/ui/button/Button";
 
-interface Props {
+type CommentItemProps = {
   comment: Comment;
   onDelete: (id: string) => void;
   onUpdate: (id: string, text: string) => void;
-}
+};
 
-const CommentItem = ({ comment, onDelete, onUpdate }: Props) => {
+const CommentItem = ({ comment, onDelete, onUpdate }: CommentItemProps) => {
   const { user } = useUserStore();
   const [isEditing, setIsEditing] = useState(false);
   const [editText, setEditText] = useState(comment.text);

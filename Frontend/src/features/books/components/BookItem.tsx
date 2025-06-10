@@ -13,11 +13,11 @@ import { useBookStore } from "@/features/books/store/book";
 import { useBasketStore } from "@/features/basket/store/basket";
 import { useUserStore } from "@/user/user/store/UseUserStore";
 
-interface BooksItemProps {
+type BooksItemProps = {
   book: Book;
-}
+};
 
-const BookItem: React.FC<BooksItemProps> = ({ book }) => {
+const BookItem = ({ book }: BooksItemProps) => {
   const { basket, addToBasket, removeFromBasket } = useBasketStore();
   const { user } = useUserStore();
   const router = useRouter();
@@ -26,11 +26,7 @@ const BookItem: React.FC<BooksItemProps> = ({ book }) => {
     (state) => state.setSelectedCategories
   );
 
-  console.log("basket", basket);
-
   const basketItem = basket?.items.find((item) => item.book.id === book.id);
-
-  console.log("basketItem", basketItem);
 
   const handleBuyClick = () => {
     if (!user) {

@@ -5,11 +5,11 @@ import Link from "next/link";
 import styles from "./styles.module.scss";
 import { News } from "@/features/news/types/news";
 
-type NewsProps = {
+type NewsListProps = {
   news: News;
 };
 
-const NewsList = ({ news }: NewsProps) => {
+const NewsList = ({ news }: NewsListProps) => {
   return (
     <div className={styles.news_item}>
       <div className={styles.news_card}>

@@ -1,12 +1,12 @@
 import React from "react";
 import SpecialProductsList from "./SpecialProductsList";
 import { getCategoryList } from "@/features/categories/api/category";
-import { cleanParams } from "@/helpers/cleanParams";
+import { cleanParams } from "@/shared/hooks/clean-params.hook.ts/cleanParams";
 import { getBooksInOneCategory } from "@/features/books/api/books";
 
-interface SpecialProductsProps {
+type SpecialProductsProps = {
   categoryName: string;
-}
+};
 
 export default async function SpecialProducts({
   categoryName,
@@ -28,7 +28,7 @@ export default async function SpecialProducts({
     const filters = cleanParams({
       categories: targetCategory.id,
       limit: 10,
-      published: "true",
+      published: true,
     });
 
     const data = await getBooksInOneCategory(filters);
@@ -41,8 +41,7 @@ export default async function SpecialProducts({
         categoryId={targetCategory.id}
       />
     );
-  } catch (err) {
-    console.error("Помилка при завантаженні SpecialProducts:", err);
-    return null;
+  } catch (error) {
+    throw error;
   }
 }

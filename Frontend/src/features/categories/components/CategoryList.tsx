@@ -26,7 +26,10 @@ export default function CategoryList() {
   useEffect(() => {
     fetchCategories({ page: 1, limit: 100 })
       .then((data) => setCategories(data.entities))
-      .catch((err) => setError(err.message))
+      .catch((err) => {
+        setError(err.message);
+        throw error;
+      })
       .finally(() => setLoading(false));
   }, []);
 
@@ -44,7 +47,7 @@ export default function CategoryList() {
 
   const tree = buildCategoryTree(categories, handleClick, styles);
 
-  if (loading) return <div>Завантаження...</div>;
+  if (loading) return <></>;
   if (error) return <div>Помилка: {error}</div>;
 
   return (

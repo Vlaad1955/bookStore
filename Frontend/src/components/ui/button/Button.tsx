@@ -2,9 +2,9 @@ import classNames from "classnames";
 import React from "react";
 
 import {
-  type ButtonSize,
+  ButtonSize,
   type ButtonType,
-  type ButtonVariant,
+  ButtonVariant,
 } from "@/components/ui/button/button-type/button.enum";
 
 import styles from "./styles.module.scss";
@@ -21,17 +21,17 @@ type Properties = {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-const Button: React.FC<Properties> = ({
+const Button = ({
   children,
   type,
   className,
-  variant = "primary",
-  size = "medium",
+  variant = ButtonVariant.PRIMARY,
+  size = ButtonSize.MEDIUM,
   disabled = false,
   unstyled = false,
   onClick,
   name = "",
-}) => {
+}: Properties) => {
   const buttonClasses = !unstyled
     ? classNames(
         styles.button,
@@ -40,7 +40,6 @@ const Button: React.FC<Properties> = ({
         variant === "primary" && size === "medium" ? styles.primaryMedium : "",
         variant === "delete" && size === "small" ? styles.deleteSmall : "",
         variant === "transparent" ? styles.transparent : "",
-        variant === "free" ? styles.free : "",
         styles[variant + (disabled ? "Disabled" : "")],
         className
       )

@@ -14,7 +14,7 @@ export interface Book {
 export interface FetchBooksOptions {
   page?: number;
   title?: string;
-  published?: string;
+  published?: boolean;
   [key: string]: string | number | boolean | undefined;
 }
 

@@ -8,20 +8,13 @@ import { Button } from "@/components/ui/button/Button";
 
 import styles from "./styles.module.scss";
 import Link from "next/link";
-
-type NewsItem = {
-  id: string;
-  title: string;
-  content: string;
-  category: "general" | "promotion" | "event";
-  image?: string;
-};
+import { News } from "../types/news";
 
 type NewsData = {
   page: number;
   pages: number;
   countItems: number;
-  entities: NewsItem[];
+  entities: News[];
 };
 
 export default function NewsWrapper({ newsData }: { newsData: NewsData }) {
@@ -30,8 +23,6 @@ export default function NewsWrapper({ newsData }: { newsData: NewsData }) {
   const handleClick = (id: string) => {
     router.push(`/my-account/news/${id}`);
   };
-
-  console.log("newsData", newsData);
 
   return (
     <>

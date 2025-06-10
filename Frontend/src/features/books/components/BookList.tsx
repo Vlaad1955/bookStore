@@ -11,11 +11,11 @@ import ModalBasket from "../../../components/ui/modal/modal-basket/ModalBasket";
 import { useBasketStore } from "@/features/basket/store/basket";
 import { useUserStore } from "@/user/user/store/UseUserStore";
 
-type BookItemProps = {
+type BookListProps = {
   book: Book;
 };
 
-const BookList = ({ book }: BookItemProps) => {
+const BookList = ({ book }: BookListProps) => {
   const { addToBasket } = useBasketStore();
   const { user } = useUserStore();
   const router = useRouter();

@@ -3,13 +3,13 @@ import React from "react";
 import styles from "./styles.module.scss";
 import { Button } from "../../button/Button";
 
-interface ModalProps {
+type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
-}
+};
 
-const Modal: React.FC<ModalProps> = ({ isOpen, onClose, onConfirm }) => {
+const Modal = ({ isOpen, onClose, onConfirm }: ModalProps) => {
   if (!isOpen) return null;
 
   return (

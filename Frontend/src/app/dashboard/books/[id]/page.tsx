@@ -9,7 +9,6 @@ export default async function BookFindOne({
 }) {
   const { id } = await params;
   const book = await getOneBook(id);
-  console.log(book);
   return (
     <>
       <BookItem book={book} />

@@ -71,9 +71,7 @@ const Header = () => {
         <SearchBar
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          onSearch={() => {
-            console.log("Пошук:", searchTerm);
-          }}
+          onSearch={() => {}}
         />
 
         <div className={styles.header_about}>

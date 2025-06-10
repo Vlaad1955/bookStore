@@ -8,6 +8,5 @@ export default async function OneNews({
 }) {
   const { id } = await params;
   const news = await getOneNews(id);
-  console.log(news);
   return <NewsItem news={news} />;
 }

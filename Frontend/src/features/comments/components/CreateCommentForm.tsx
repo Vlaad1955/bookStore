@@ -12,12 +12,12 @@ import { useUserStore } from "@/user/user/store/UseUserStore";
 import { Button } from "@/components/ui/button/Button";
 import ModalBasket from "@/components/ui/modal/modal-basket/ModalBasket";
 
-interface Props {
+type CreateCommentProps = {
   bookId: string;
   onSuccess: (comment: Comment) => void;
-}
+};
 
-const CreateCommentForm = ({ bookId, onSuccess }: Props) => {
+const CreateCommentForm = ({ bookId, onSuccess }: CreateCommentProps) => {
   const router = useRouter();
   const { user } = useUserStore();
   const [text, setText] = useState("");

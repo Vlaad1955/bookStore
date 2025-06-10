@@ -4,7 +4,7 @@ import { UserSignUpRequestDto } from "@/shared/auth/authTypes/user-sign-up-reque
 import React, { useState } from "react";
 import { DEFAULT_SIGN_UP_PAYLOAD } from "@/shared/auth/constants/DEFAULT_SIGN_UP_PAYLOAD";
 import { useAuthStore } from "@/shared/auth/auth-store/use-auth-store";
-import { useAppForm } from "@/shared/hooks/use-app-form/use-app-form.hook";
+import { useAppForm } from "@/shared/hooks/use-app-form/useAppForm.hook";
 import { userSignUpValidationSchema } from "@/shared/validation-schemas/validation-schemas";
 import { Input } from "../../ui/input/Input";
 import { InputType } from "@/components/ui/input/input-type/input-type.enum";
@@ -32,7 +32,6 @@ const SignUpForm = () => {
       setFormError("Будь ласка, заповніть усі поля");
       return;
     }
-    console.log("Submitting user:", user);
 
     try {
       await signUp(user);
@@ -40,11 +39,10 @@ const SignUpForm = () => {
         toast.success("you are register successfully");
         router.push("/");
       }
-      console.log(user);
     } catch (error) {
       toast.error(error.message || "you are not login");
-
       setFormError("Помилка входу. Перевірте дані.");
+      throw error;
     }
   };
 

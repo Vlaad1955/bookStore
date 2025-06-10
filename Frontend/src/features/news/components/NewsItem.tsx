@@ -4,20 +4,13 @@ import React from "react";
 import Image from "next/image";
 import styles from "./styles.module.scss";
 import Link from "next/link";
+import { News } from "../types/news";
 
-interface NewsItems {
-  id: string;
-  title: string;
-  content: string;
-  category: "general" | "promotion" | "event";
-  image: string;
-}
+type NewsItemProps = {
+  news: News;
+};
 
-interface NewsItemProps {
-  news: NewsItems;
-}
-
-const NewsItem: React.FC<NewsItemProps> = ({ news }) => {
+const NewsItem = ({ news }: NewsItemProps) => {
   return (
     <>
       <Link href={`/my-account/news/`}>

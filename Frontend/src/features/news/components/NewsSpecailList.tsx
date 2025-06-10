@@ -5,11 +5,11 @@ import { Button } from "../../../components/ui/button/Button";
 import { News } from "@/features/news/types/news";
 import NewsList from "./NewsList";
 
-type Props = {
+type NewsSpecialListProps = {
   news: News[];
 };
 
-const NewsSpecailList: React.FC<Props> = ({ news }) => {
+const NewsSpecailList = ({ news }: NewsSpecialListProps) => {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const handleScrollLeft = () => {

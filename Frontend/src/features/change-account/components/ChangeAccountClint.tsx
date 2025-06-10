@@ -63,8 +63,7 @@ const ChangeAccountClient = () => {
         await userService.updateUser(user.id, payload);
         updateUserFields(payload);
         toast.success("Дані користувача оновлено");
-      } catch (error) {
-        console.error("Помилка при оновленні:", error);
+      } catch {
         toast.error("Не вдалося оновити дані");
       } finally {
         setLoading(false);

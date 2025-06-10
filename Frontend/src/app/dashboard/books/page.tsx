@@ -1,19 +1,20 @@
 import { getBooksInOneCategory } from "@/features/books/api/books";
-import { cleanParams } from "@/helpers/cleanParams";
+import { cleanParams } from "@/shared/hooks/clean-params.hook.ts/cleanParams";
 import { Book } from "@/features/books/types/book";
 import BookWrapper from "@/features/books/components/BookWrapper";
 import { objectToCleanURLSearchParams } from "@/features/books/hooks/objectToCleanURLSearchParams";
-interface Props {
+import { retryAsync } from "@/shared/hooks/retry/useRetry.hook";
+import {
+  getBooleanParam,
+  getParam,
+} from "@/shared/hooks/get-param/getParam.hook";
+
+type BookProps = {
   searchParams: { [key: string]: string | string[] | undefined };
-}
+};
 
-function getParam(value: string | string[] | undefined, defaultValue = "") {
-  if (Array.isArray(value)) return value.join(",");
-  return value ?? defaultValue;
-}
-
-export default async function BookPage({ searchParams }: Props) {
-  const filters = {
+function buildFilters(searchParams: BookProps["searchParams"]) {
+  return {
     page: Number(searchParams.page) || 1,
     limit: Number(searchParams.limit) || 18,
     title: getParam(searchParams.title),
@@ -24,10 +25,12 @@ export default async function BookPage({ searchParams }: Props) {
     sort: getParam(searchParams.sort, "title"),
     order: getParam(searchParams.order, "ASC"),
     categories: getParam(searchParams.categories),
-    published: getParam(searchParams.published, "true"),
+    published: getBooleanParam(searchParams.published, true),
     search: getParam(searchParams.search),
   };
+}
 
+async function fetchBooksData(filters: ReturnType<typeof buildFilters>) {
   const baseParams = cleanParams({
     ...filters,
     author: undefined,
@@ -35,35 +38,46 @@ export default async function BookPage({ searchParams }: Props) {
     cover: undefined,
     title: undefined,
     page: undefined,
-    limit: 20,
+    limit: 10000,
   });
 
-  const urlParams = objectToCleanURLSearchParams(filters);
+  return retryAsync(
+    async () => {
+      const data = await getBooksInOneCategory(cleanParams(filters));
+      const all = await getBooksInOneCategory(cleanParams(baseParams));
+      return { data, all };
+    },
+    3,
+    1000
+  );
+}
 
+export default async function BookPage({ searchParams }: BookProps) {
+  const filters = buildFilters(searchParams);
   let books: Book[] = [];
   let allCategoryBooks: Book[] = [];
-  let currentPage;
-  let totalPages;
+  let currentPage = 1;
+  let totalPages = 1;
+
   try {
-    const data = await getBooksInOneCategory(cleanParams(filters));
+    const { data, all } = await fetchBooksData(filters);
     books = data.entities;
     totalPages = data.pages;
     currentPage = data.page;
-
-    const all = await getBooksInOneCategory(cleanParams(baseParams));
     allCategoryBooks = all.entities;
   } catch (error) {
-    console.error("Помилка завантаження книг:", error);
+    throw error;
   }
 
-  const initialAuthor = Array.from(
+  const initialAuthors = Array.from(
     new Set(allCategoryBooks.map((book) => book.author))
-  );
-  initialAuthor.sort((a, b) => a.localeCompare(b));
+  ).sort((a, b) => a.localeCompare(b));
+
+  const urlParams = objectToCleanURLSearchParams(filters);
 
   return (
     <BookWrapper
-      initialAuthor={initialAuthor}
+      initialAuthor={initialAuthors}
       books={books}
       currentPage={currentPage}
       totalPages={totalPages}

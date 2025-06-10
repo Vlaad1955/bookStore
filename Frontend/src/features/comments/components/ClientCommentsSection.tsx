@@ -6,15 +6,15 @@ import CreateCommentForm from "./CreateCommentForm";
 import { Comment } from "@/features/comments/types/comments";
 import styles from "./styles.module.scss";
 
-interface Props {
+type ClientCommentProps = {
   comments: Comment[];
   bookId: string;
-}
+};
 
 const ClientCommentsSection = ({
   comments: initialComments,
   bookId,
-}: Props) => {
+}: ClientCommentProps) => {
   const [comments, setComments] = useState(initialComments);
 
   const handleAdd = (comment: Comment) =>

@@ -6,14 +6,14 @@ import { Button } from "@/components/ui/button/Button";
 
 type MessageType = "delete" | "save" | "create" | "admin" | "category" | string;
 
-interface ConfirmModalProps {
+type ConfirmModalProps = {
   isOpen: boolean;
   message: MessageType;
   onConfirm: () => void;
   onCancel: () => void;
   title?: string;
   customMessage?: string;
-}
+};
 
 const getDefaultMessage = (type: MessageType): string => {
   switch (type) {
@@ -34,14 +34,14 @@ const getDefaultMessage = (type: MessageType): string => {
   }
 };
 
-const ConfirmModal: React.FC<ConfirmModalProps> = ({
+const ConfirmModal = ({
   isOpen,
   message,
   onConfirm,
   onCancel,
   title = "Підтвердження дії",
   customMessage,
-}) => {
+}: ConfirmModalProps) => {
   if (!isOpen) return null;
 
   const finalMessage = customMessage || getDefaultMessage(message);

@@ -7,7 +7,7 @@ import { SearchBarProps } from "@/shared/types/searchTypes/searchTypes";
 import { ButtonType } from "@/components/ui/button/button-type/button-type.enum";
 import Form from "next/form";
 
-const SearchBar: React.FC<SearchBarProps> = ({ value, onChange, onSearch }) => {
+const SearchBar = ({ value, onChange, onSearch }: SearchBarProps) => {
   return (
     <Form className={styles.search_bar} onSubmit={onSearch} action={""}>
       <SearchIcon />

@@ -5,11 +5,11 @@ import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import styles from "./styles.module.scss";
 import { Button } from "../../../components/ui/button/Button";
 
-type FiltersProps = {
+type BookFiltersProps = {
   authors: string[];
 };
 
-const BookFilters = ({ authors }: FiltersProps) => {
+const BookFilters = ({ authors }: BookFiltersProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();

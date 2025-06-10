@@ -1,5 +1,5 @@
 import axiosInstance from "@/shared/auth/auth-axios-instance/axiosInstance";
-import { User } from "@/shared/user/store/UseUserStore";
+import { User } from "../store/UseUserStore";
 
 export const userApi = {
   fetchCurrentUser: () => axiosInstance.get("/users/find"),

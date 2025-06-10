@@ -1,20 +1,31 @@
 import axiosInstance from "@/shared/auth/auth-axios-instance/axiosInstance";
-import { FetchBooksOptions } from "@/features/books/types/book";
+import { FetchBooksOptions, Book } from "@/features/books/types/book";
+import { retryAsync } from "@/shared/hooks/retry/useRetry.hook";
 
-export async function getAllBooks() {
-  const response = await axiosInstance.get("/books/list");
-  return response.data;
+type BooksListResponse = {
+  entities: Book[];
+  pages: number;
+  page: number;
+};
+
+export async function getAllBooks(): Promise<BooksListResponse> {
+  return retryAsync(() =>
+    axiosInstance.get<BooksListResponse>("/books/list").then((res) => res.data)
+  );
 }
 
-export async function getBooksInOneCategory(cleanParams: FetchBooksOptions) {
-  const response = await axiosInstance.get("/books/list", {
-    params: cleanParams,
-  });
-
-  return response.data;
+export async function getBooksInOneCategory(
+  cleanParams: FetchBooksOptions
+): Promise<BooksListResponse> {
+  return retryAsync(() =>
+    axiosInstance
+      .get<BooksListResponse>("/books/list", { params: cleanParams })
+      .then((res) => res.data)
+  );
 }
 
-export async function getOneBook(id: string) {
-  const response = await axiosInstance.get(`/books/find/${id}`);
-  return response.data;
+export async function getOneBook(id: number): Promise<Book> {
+  return retryAsync(() =>
+    axiosInstance.get<Book>(`/books/find/${id}`).then((res) => res.data)
+  );
 }

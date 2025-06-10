@@ -1,19 +1,17 @@
 "use client";
 
 import styles from "./styles.module.scss";
-import { getText } from "@/helpers/get-text-to-path/get-text-to-path";
+import { getText } from "@/helpers/get-text-to-path/getTextToPath";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-interface AuthWrapperProps {
+type AuthWrapperProps = {
   authPath: string;
   screen: React.ReactNode;
-}
+};
 
-const AuthWrapper: React.FC<AuthWrapperProps> = ({ authPath, screen }) => {
+const AuthWrapper = ({ authPath, screen }: AuthWrapperProps) => {
   const pathname = usePathname();
-
-  console.log(pathname);
 
   return (
     <div className={styles.auth_container}>

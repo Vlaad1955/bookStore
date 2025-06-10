@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useAuthStore } from "@/shared/auth/auth-store/use-auth-store";
-import { useAppForm } from "@/shared/hooks/use-app-form/use-app-form.hook";
+import { useAppForm } from "@/shared/hooks/use-app-form/useAppForm.hook";
 import { UserSignInRequestDto } from "@/shared/auth/authTypes/user-sign-in-request-dto";
 import { DEFAULT_SIGN_IN_PAYLOAD } from "@/shared/auth/constants/DEFAULT_SIGN_IN_PAYLOAD";
 import { userSignInValidationSchema } from "@/shared/validation-schemas/validation-schemas";
@@ -14,7 +14,7 @@ import { ButtonType } from "@/components/ui/button/button-type/button-type.enum"
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
-const SignInForm: React.FC = () => {
+const SignInForm = () => {
   const router = useRouter();
   const { signIn, isLoading, error } = useAuthStore();
   const [formError, setFormError] = useState<string | null>(null);
@@ -33,6 +33,7 @@ const SignInForm: React.FC = () => {
     } catch (error) {
       toast.error(error.message || "you are not login");
       setFormError("Помилка входу. Перевірте дані.");
+      throw error;
     }
   };
 

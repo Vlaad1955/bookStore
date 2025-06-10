@@ -8,21 +8,21 @@ import SpecialProducts from "../../../components/special-products/SpecialProduct
 import NewsSpecail from "../../news/components/NewsSpecail";
 import Pagination from "@/admin/other/components/pagination/Pagination";
 
-interface BookWrapperProps {
+type BookWrapperProps = {
   initialAuthor: string[];
   books: Book[];
   currentPage: number;
   totalPages: number;
   params?: URLSearchParams;
-}
+};
 
-const BookWrapper: React.FC<BookWrapperProps> = ({
+const BookWrapper = ({
   initialAuthor,
   books,
   currentPage,
   totalPages,
   params,
-}) => {
+}: BookWrapperProps) => {
   return (
     <div>
       <CategoryProps basePath="books" />

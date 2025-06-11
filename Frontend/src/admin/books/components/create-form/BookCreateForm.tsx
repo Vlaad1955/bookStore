@@ -1,269 +1,269 @@
 "use client";
 
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
-import { CreateBookDto } from "@/features/books/types/book";
+import React, {useState} from "react";
+import {useRouter} from "next/navigation";
+import {CreateBookDto} from "@/features/books/types/book";
 import styles from "@/admin/books/components/edit-form/styles.module.scss";
-import { createBook } from "@/admin/books/api/books";
+import {createBook} from "@/admin/books/api/books";
 import ConfirmModal from "@/components/ui/modal/modal-admin/ConfirmModal";
 import Image from "next/image";
 import {FieldName} from "@/admin/books/enums/field-name";
 
 const CreateBookForm = ({
-  categories,
-}: {
-  categories: { id: string; name: string }[];
+                            categories,
+                        }: {
+    categories: { id: string; name: string }[];
 }) => {
-  const router = useRouter();
+    const router = useRouter();
 
-  const [form, setForm] = useState<CreateBookDto>({
-    title: "",
-    price: 0,
-    gift: false,
-    cover: "soft",
-    categories: [],
-    description: "",
-    author: "",
-  });
-
-  const [imageFile, setImageFile] = useState<File | null>(null);
-  const [preview, setPreview] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-
-  const handleChange = (
-      e: React.ChangeEvent<
-          HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
-      >
-  ) => {
-    const target = e.target;
-
-    if (target instanceof HTMLInputElement) {
-      const { name, value, type, checked } = target;
-
-      if (type === FieldName.CHECKBOX && name === FieldName.GIFT) {
-        setForm((prev) => ({ ...prev, gift: checked }));
-      } else if (name === FieldName.PRICE) {
-        setForm((prev) => ({ ...prev, price: parseFloat(value) || 0 }));
-      } else {
-        setForm((prev) => ({ ...prev, [name]: value }));
-      }
-    } else {
-      const { name, value } = target;
-      setForm((prev) => ({ ...prev, [name]: value }));
-    }
-  };
-
-  const handleCategoryChange = (id: string) => {
-    setForm((prev) => {
-      const exists = prev.categories.includes(id);
-      const newCategories = exists
-        ? prev.categories.filter((cat) => cat !== id)
-        : [...prev.categories, id];
-      return { ...prev, categories: newCategories };
+    const [form, setForm] = useState<CreateBookDto>({
+        title: "",
+        price: 0,
+        gift: false,
+        cover: "soft",
+        categories: [],
+        description: "",
+        author: "",
     });
-  };
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      setImageFile(file);
-      setPreview(URL.createObjectURL(file));
-    }
-  };
+    const [imageFile, setImageFile] = useState<File | null>(null);
+    const [preview, setPreview] = useState<string | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const handleOpenModal = (e: React.FormEvent) => {
-    e.preventDefault();
+    const handleChange = (
+        e: React.ChangeEvent<
+            HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+        >
+    ) => {
+        const target = e.target;
 
-    if (!form.title.trim()) {
-      alert("Заповніть назву.");
-      return;
-    }
+        if (target instanceof HTMLInputElement) {
+            const {name, value, type, checked} = target;
 
-    setIsModalOpen(true);
-  };
+            if (type === FieldName.CHECKBOX && name === FieldName.GIFT) {
+                setForm((prev) => ({...prev, gift: checked}));
+            } else if (name === FieldName.PRICE) {
+                setForm((prev) => ({...prev, price: parseFloat(value) || 0}));
+            } else {
+                setForm((prev) => ({...prev, [name]: value}));
+            }
+        } else {
+            const {name, value} = target;
+            setForm((prev) => ({...prev, [name]: value}));
+        }
+    };
 
-  const handleConfirmCreate = async () => {
-    setIsModalOpen(false);
+    const handleCategoryChange = (id: string) => {
+        setForm((prev) => {
+            const exists = prev.categories.includes(id);
+            const newCategories = exists
+                ? prev.categories.filter((cat) => cat !== id)
+                : [...prev.categories, id];
+            return {...prev, categories: newCategories};
+        });
+    };
 
-    try {
-      setIsSubmitting(true);
+    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const file = e.target.files?.[0];
+        if (file) {
+            setImageFile(file);
+            setPreview(URL.createObjectURL(file));
+        }
+    };
 
-      const dto: CreateBookDto = {
-        ...form,
-        price: Number(form.price),
-        gift: Boolean(form.gift),
-        categories: form.categories.map(String),
-      };
+    const handleOpenModal = (e: React.FormEvent) => {
+        e.preventDefault();
 
-      await createBook(dto, imageFile);
-      router.push("/admin/books/1");
-    } catch (error) {
-      console.error("Помилка створення книги:", error);
-      alert("Не вдалося створити книгу. Спробуйте ще раз.");
-    } finally {
-      setIsSubmitting(false);
-    }
-  };
+        if (!form.title.trim()) {
+            alert("Заповніть назву.");
+            return;
+        }
 
-  return (
-    <form className={styles.form} onSubmit={handleOpenModal}>
-      <h2 className={styles.title}>Створити нову книгу</h2>
+        setIsModalOpen(true);
+    };
 
-      <div className={styles.row}>
-        <div className={styles.col}>
-          <label htmlFor="title" className={styles.label}>
-            Назва
-          </label>
-          <input
-            type="text"
-            id="title"
-            name="title"
-            placeholder="Введіть назву"
-            value={form.title}
-            onChange={handleChange}
-            className={styles.input}
-          />
-        </div>
+    const handleConfirmCreate = async () => {
+        setIsModalOpen(false);
 
-        <div className={styles.col}>
-          <label htmlFor="author" className={styles.label}>
-            Автор
-          </label>
-          <input
-            type="text"
-            id="author"
-            name="author"
-            placeholder="Ім’я автора"
-            value={form.author}
-            onChange={handleChange}
-            className={styles.input}
-          />
-        </div>
+        try {
+            setIsSubmitting(true);
 
-        <div className={styles.col}>
-          <label htmlFor="price" className={styles.label}>
-            Ціна
-          </label>
-          <input
-            type="number"
-            id="price"
-            name="price"
-            placeholder="Вкажіть ціну"
-            value={form.price}
-            onChange={handleChange}
-            className={styles.input}
-            min="0"
-            step="0.01"
-          />
-        </div>
-      </div>
+            const dto: CreateBookDto = {
+                ...form,
+                price: Number(form.price),
+                gift: Boolean(form.gift),
+                categories: form.categories.map(String),
+            };
 
-      <div className={styles.row}>
-        <div className={styles.col}>
-          <label htmlFor="cover" className={styles.label}>
-            Тип обкладинки
-          </label>
-          <select
-            id="cover"
-            name="cover"
-            value={form.cover}
-            onChange={handleChange}
-            className={styles.select}
-          >
-            <option value="soft">М’яка</option>
-            <option value="firm">Тверда</option>
-          </select>
-        </div>
+            await createBook(dto, imageFile);
+            router.push("/admin/books/1");
+        } catch (error) {
+            console.error("Помилка створення книги:", error);
+            alert("Не вдалося створити книгу. Спробуйте ще раз.");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
-        <div className={styles.colCheckbox}>
-          <input
-            type="checkbox"
-            id="gift"
-            name="gift"
-            checked={form.gift}
-            onChange={handleChange}
-            className={styles.checkbox}
-          />
-          <label htmlFor="gift" className={styles.checkboxLabel}>
-            Подарункове видання
-          </label>
-        </div>
-      </div>
+    return (
+        <form className={styles.form} onSubmit={handleOpenModal}>
+            <h2 className={styles.title}>Створити нову книгу</h2>
 
-      <div className={styles.fieldGroupFull}>
-        <label htmlFor="categories" className={styles.label}>
-          Категорії
-        </label>
-        <div className={styles.checkboxList}>
-          {categories.map((cat) => (
-            <div key={cat.id} className={styles.checkboxItem}>
-              <input
-                type="checkbox"
-                id={cat.id}
-                checked={form.categories.includes(cat.id)}
-                onChange={() => handleCategoryChange(cat.id)}
-                className={styles.checkbox}
-              />
-              <label htmlFor={cat.id} className={styles.checkboxLabel}>
-                {cat.name}
-              </label>
+            <div className={styles.row}>
+                <div className={styles.col}>
+                    <label htmlFor="title" className={styles.label}>
+                        Назва
+                    </label>
+                    <input
+                        type="text"
+                        id="title"
+                        name="title"
+                        placeholder="Введіть назву"
+                        value={form.title}
+                        onChange={handleChange}
+                        className={styles.input}
+                    />
+                </div>
+
+                <div className={styles.col}>
+                    <label htmlFor="author" className={styles.label}>
+                        Автор
+                    </label>
+                    <input
+                        type="text"
+                        id="author"
+                        name="author"
+                        placeholder="Ім’я автора"
+                        value={form.author}
+                        onChange={handleChange}
+                        className={styles.input}
+                    />
+                </div>
+
+                <div className={styles.col}>
+                    <label htmlFor="price" className={styles.label}>
+                        Ціна
+                    </label>
+                    <input
+                        type="number"
+                        id="price"
+                        name="price"
+                        placeholder="Вкажіть ціну"
+                        value={form.price}
+                        onChange={handleChange}
+                        className={styles.input}
+                        min="0"
+                        step="0.01"
+                    />
+                </div>
             </div>
-          ))}
-        </div>
-      </div>
 
-      <div className={styles.fieldGroupFull}>
-        <label htmlFor="description" className={styles.label}>
-          Опис
-        </label>
-        <textarea
-          id="description"
-          name="description"
-          placeholder="Введіть опис"
-          value={form.description}
-          onChange={handleChange}
-          className={styles.textarea}
-        />
-      </div>
+            <div className={styles.row}>
+                <div className={styles.col}>
+                    <label htmlFor="cover" className={styles.label}>
+                        Тип обкладинки
+                    </label>
+                    <select
+                        id="cover"
+                        name="cover"
+                        value={form.cover}
+                        onChange={handleChange}
+                        className={styles.select}
+                    >
+                        <option value="soft">М’яка</option>
+                        <option value="firm">Тверда</option>
+                    </select>
+                </div>
 
-      <div className={styles.rowLarge}>
-        <div className={styles.colLarge}>
-          <label htmlFor="image" className={styles.label}>
-            Зображення
-          </label>
-          <input
-            type="file"
-            id="image"
-            accept="image/*"
-            onChange={handleImageChange}
-            className={styles.fileInput}
-          />
-          {preview && (
-            <div className={styles.imagePreview}>
-              <Image src={preview} alt="Прев’ю" width={750}
-                     height={750} />
+                <div className={styles.colCheckbox}>
+                    <input
+                        type="checkbox"
+                        id="gift"
+                        name="gift"
+                        checked={form.gift}
+                        onChange={handleChange}
+                        className={styles.checkbox}
+                    />
+                    <label htmlFor="gift" className={styles.checkboxLabel}>
+                        Подарункове видання
+                    </label>
+                </div>
             </div>
-          )}
-        </div>
-      </div>
 
-      <button
-        type="submit"
-        className={styles.submitButton}
-        disabled={isSubmitting}
-      >
-        {isSubmitting ? "Завантаження..." : "Створити"}
-      </button>
+            <div className={styles.fieldGroupFull}>
+                <label htmlFor="categories" className={styles.label}>
+                    Категорії
+                </label>
+                <div className={styles.checkboxList}>
+                    {categories.map((cat) => (
+                        <div key={cat.id} className={styles.checkboxItem}>
+                            <input
+                                type="checkbox"
+                                id={cat.id}
+                                checked={form.categories.includes(cat.id)}
+                                onChange={() => handleCategoryChange(cat.id)}
+                                className={styles.checkbox}
+                            />
+                            <label htmlFor={cat.id} className={styles.checkboxLabel}>
+                                {cat.name}
+                            </label>
+                        </div>
+                    ))}
+                </div>
+            </div>
 
-      <ConfirmModal
-        isOpen={isModalOpen}
-        message="Ви впевнені, що хочете створити цю книгу?"
-        onConfirm={handleConfirmCreate}
-        onCancel={() => setIsModalOpen(false)}
-      />
-    </form>
-  );
+            <div className={styles.fieldGroupFull}>
+                <label htmlFor="description" className={styles.label}>
+                    Опис
+                </label>
+                <textarea
+                    id="description"
+                    name="description"
+                    placeholder="Введіть опис"
+                    value={form.description}
+                    onChange={handleChange}
+                    className={styles.textarea}
+                />
+            </div>
+
+            <div className={styles.rowLarge}>
+                <div className={styles.colLarge}>
+                    <label htmlFor="image" className={styles.label}>
+                        Зображення
+                    </label>
+                    <input
+                        type="file"
+                        id="image"
+                        accept="image/*"
+                        onChange={handleImageChange}
+                        className={styles.fileInput}
+                    />
+                    {preview && (
+                        <div className={styles.imagePreview}>
+                            <Image src={preview} alt="Прев’ю" width={750}
+                                   height={750}/>
+                        </div>
+                    )}
+                </div>
+            </div>
+
+            <button
+                type="submit"
+                className={styles.submitButton}
+                disabled={isSubmitting}
+            >
+                {isSubmitting ? "Завантаження..." : "Створити"}
+            </button>
+
+            <ConfirmModal
+                isOpen={isModalOpen}
+                message="Ви впевнені, що хочете створити цю книгу?"
+                onConfirm={handleConfirmCreate}
+                onCancel={() => setIsModalOpen(false)}
+            />
+        </form>
+    );
 };
 
 export default CreateBookForm;

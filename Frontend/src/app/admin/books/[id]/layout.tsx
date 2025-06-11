@@ -9,7 +9,7 @@ type Props = { children: React.ReactNode }
 const BooksLayout = ({children}: Props) => {
     return (
         <div>
-                {children}
+            {children}
         </div>
     );
 };

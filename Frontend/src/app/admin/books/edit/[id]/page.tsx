@@ -1,8 +1,8 @@
 import {getOneBook} from "@/admin/books/api/books";
 import EditBookForm from "@/admin/books/components/edit-form/EditBookForm";
 
-export default async function EditBookPage({ params }: { params: { id: string } }) {
-    const {id} = params;
+export default async function EditBookPage({params}: { params: { id: string } }) {
+    const {id} = await params;
 
     const book = await getOneBook(id);
 
@@ -10,5 +10,5 @@ export default async function EditBookPage({ params }: { params: { id: string } 
         return <p>Книга не знайдена.</p>;
     }
 
-    return <EditBookForm book={book} />;
+    return <EditBookForm book={book}/>;
 }

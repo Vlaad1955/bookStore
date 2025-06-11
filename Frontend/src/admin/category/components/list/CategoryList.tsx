@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React, {useState, useEffect} from "react";
 import CategoryCard from "@/admin/category/components/card/CategoryCard";
 
 interface Category {
@@ -14,7 +14,7 @@ interface CategoryListProps {
     main: Category[];
 }
 
-const CategoryList: React.FC<CategoryListProps> = ({ category, main }) => {
+const CategoryList: React.FC<CategoryListProps> = ({category, main}) => {
     const [categories, setCategories] = useState<Category[]>(category);
 
     useEffect(() => {

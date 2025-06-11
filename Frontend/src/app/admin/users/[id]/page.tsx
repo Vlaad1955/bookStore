@@ -5,9 +5,9 @@ import {getAllUsers} from "@/admin/users/api/users";
 
 type Params = { id: string };
 
-export default async function UsersPage({ params }: { params: Params }) {
+export default async function UsersPage({params}: { params: Params }) {
 
-    const {id} = params;
+    const {id} = await params;
     const page = parseInt(id, 10) || 1;
 
     const data = await getAllUsers({page});
@@ -16,7 +16,7 @@ export default async function UsersPage({ params }: { params: Params }) {
     return (
         <div>
             <UsersList users={data.entities}/>
-            <Pagination currentPage={data.page} totalPages={data.pages} searchName={`users`} />
+            <Pagination currentPage={data.page} totalPages={data.pages} searchName={`users`}/>
         </div>
     );
 }

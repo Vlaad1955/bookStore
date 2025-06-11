@@ -3,7 +3,7 @@
 import Link from "next/link";
 import styles from "./styles.module.scss";
 import { useAuthStore } from "@/shared/auth/auth-store/use-auth-store";
-import { useEffect, useState } from "react";
+import {useEffect, useRef, useState} from "react";
 import { AppRoute } from "@/shared/auth/enums/app-route.enums";
 import { useCategoryListStore } from "@/features/categories/store/category";
 import MenuIcon from "@/assets/icons/menuIcon";
@@ -43,13 +43,34 @@ const Header = () => {
     logout();
   };
 
+  const userMenuRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+          userMenuRef.current &&
+          !userMenuRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener("mousedown", handleClickOutside);
+    }
+
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [isOpen]);
+
   useEffect(() => {
     if (isAuthenticated && !user) {
       loadUser();
       // useUserStore.getState().loadUser();
       // setUser(null);
     }
-  }, [isAuthenticated, user]);
+  }, [isAuthenticated, loadUser, user]);
 
   return (
     <header className={styles.header}>
@@ -71,7 +92,10 @@ const Header = () => {
         <SearchBar
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
-          onSearch={() => {}}
+          onSearch={(e) => {
+            e.preventDefault();
+            router.push(`/dashboard/books?search=${searchTerm}`);
+          }}
         />
 
         <div className={styles.header_about}>
@@ -105,7 +129,7 @@ const Header = () => {
             </Button>
 
             {isOpen && user && (
-              <aside className={styles.header_user}>
+              <aside className={styles.header_user} ref={userMenuRef}>
                 {" "}
                 <Image
                   src={user.image}

@@ -9,7 +9,7 @@ type Props = { children: React.ReactNode }
 const NewsLayout = ({children}: Props) => {
     return (
         <div>
-                {children}
+            {children}
         </div>
     );
 };

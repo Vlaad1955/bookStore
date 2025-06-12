@@ -6,9 +6,10 @@ type PaginationProps = {
     totalPages: number;
     searchName?: string;
     params?: URLSearchParams;
+    userName?: string;
 };
 
-const Pagination = ({currentPage, totalPages, searchName, params}: PaginationProps) => {
+const Pagination = ({currentPage, totalPages, searchName, params, userName}: PaginationProps) => {
     const visiblePages = 3;
     const startPage = Math.max(1, currentPage - Math.floor(visiblePages / 2));
     const endPage = Math.min(totalPages, startPage + visiblePages - 1);
@@ -24,6 +25,10 @@ const Pagination = ({currentPage, totalPages, searchName, params}: PaginationPro
 
         if (searchName) {
             return `/admin/${searchName}/${page}?${newParams.toString()}`;
+        }
+
+        if (userName){
+            return `/my-account/my-comments/${userName}?${newParams.toString()}`;
         }
 
         return `/dashboard/books?${newParams.toString()}`;

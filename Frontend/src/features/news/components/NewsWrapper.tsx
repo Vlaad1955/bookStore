@@ -1,14 +1,12 @@
 "use client";
-
+import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button/Button";
-
-import styles from "./styles.module.scss";
-import Link from "next/link";
 import { News } from "../types/news";
+import styles from "./styles.module.scss";
 
 type NewsData = {
   page: number;
@@ -19,6 +17,8 @@ type NewsData = {
 
 export default function NewsWrapper({ newsData }: { newsData: NewsData }) {
   const router = useRouter();
+
+  console.log(newsData);
 
   const handleClick = (id: string) => {
     router.push(`/my-account/news/${id}`);

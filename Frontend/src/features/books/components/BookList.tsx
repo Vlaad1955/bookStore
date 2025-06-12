@@ -1,15 +1,15 @@
 "use client";
-
-import { Button } from "../../../components/ui/button/Button";
-import Image from "next/image";
-import { Book } from "@/features/books/types/book";
 import Link from "next/link";
-import styles from "./styles.module.scss";
+import Image from "next/image";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+
 import ModalBasket from "../../../components/ui/modal/modal-basket/ModalBasket";
-import { useBasketStore } from "@/features/basket/store/basket";
+import { Button } from "../../../components/ui/button/Button";
 import { useUserStore } from "@/user/user/store/UseUserStore";
+import { useBasketStore } from "@/features/basket/store/basket";
+import { Book } from "@/features/books/types/book";
+import styles from "./styles.module.scss";
 
 type BookListProps = {
   book: Book;

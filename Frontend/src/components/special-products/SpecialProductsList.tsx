@@ -1,11 +1,12 @@
 "use client";
 import React, { useRef } from "react";
-import styles from "./styles.module.scss";
 import Link from "next/link";
+
 import BookList from "../../features/books/components/BookList";
-import { Book } from "@/features/books/types/book";
-import { useBookStore } from "@/features/books/store/book";
 import { Button } from "../ui/button/Button";
+import { useBookStore } from "@/features/books/store/book";
+import { Book } from "@/features/books/types/book";
+import styles from "./styles.module.scss";
 
 interface BookWrapperProps {
   books: Book[];

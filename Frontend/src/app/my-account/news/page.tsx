@@ -1,7 +1,7 @@
 import React from "react";
 
+import NewsWrapper from "@/features/news/components/NewsWrapper";
 import { newsApi } from "@/features/news/api/news";
-import NewsList from "@/features/news/components/NewsWrapper";
 
 type NewsItem = {
   id: string;
@@ -42,7 +42,7 @@ export default async function NewsPage({
 
     const newsData: NewsData = res.data;
 
-    return <NewsList newsData={newsData} />;
+    return <NewsWrapper newsData={newsData} />;
   } catch (error) {
     throw error;
   }

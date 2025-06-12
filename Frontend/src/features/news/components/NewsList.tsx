@@ -1,9 +1,9 @@
 "use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import styles from "./styles.module.scss";
+
 import { News } from "@/features/news/types/news";
+import styles from "./styles.module.scss";
 
 type NewsListProps = {
   news: News;

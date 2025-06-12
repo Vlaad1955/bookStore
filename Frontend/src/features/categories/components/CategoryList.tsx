@@ -1,18 +1,17 @@
 "use client";
 
+import Link from "next/link";
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 
-import { fetchCategories } from "@/features/categories/hooks/axios-categories";
+import { ButtonType } from "@/components/ui/button/button-type/button-type.enum";
 import { useCategoryListStore } from "@/features/categories/store/category";
 import { useBookStore } from "@/features/books/store/book";
+import { fetchCategories } from "@/features/categories/hooks/axiosCategories";
 import { buildCategoryTree } from "@/features/categories/hooks/useCategoryTree";
 import { Category } from "@/features/categories/types/category";
-import { ButtonType } from "@/components/ui/button/button-type/button-type.enum";
 import CloseIcon from "@/assets/icons/closeIcon";
-
 import styles from "./styles.module.scss";
-import Link from "next/link";
 
 export default function CategoryList() {
   const { isOpen, toggleList, closeList } = useCategoryListStore();

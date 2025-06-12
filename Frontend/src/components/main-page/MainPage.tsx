@@ -1,7 +1,8 @@
 import React from "react";
-import styles from "./styles.module.scss";
-import NewsSpecail from "../../features/news/components/NewsSpecail";
+
 import SpecialProducts from "../special-products/SpecialProducts";
+import NewsSpecail from "../../features/news/components/NewsSpecail";
+import styles from "./styles.module.scss";
 
 const MainPage = () => {
   return (

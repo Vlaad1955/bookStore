@@ -1,5 +1,6 @@
 import { JSX } from "react";
 import Link from "next/link";
+
 import { Category } from "@/features/categories/types/category";
 import ArrowIcon from "@/assets/icons/arrowIcon";
 

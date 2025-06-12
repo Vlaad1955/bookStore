@@ -1,8 +1,8 @@
-import { getBooksInOneCategory } from "@/features/books/api/books";
-import { cleanParams } from "@/shared/hooks/clean-params.hook.ts/cleanParams";
-import { Book } from "@/features/books/types/book";
 import BookWrapper from "@/features/books/components/BookWrapper";
+import { getBooksInOneCategory } from "@/features/books/api/books";
+import { Book } from "@/features/books/types/book";
 import { objectToCleanURLSearchParams } from "@/features/books/hooks/objectToCleanURLSearchParams";
+import { cleanParams } from "@/shared/hooks/clean-params.ts/cleanParams.hook";
 import { retryAsync } from "@/shared/hooks/retry/useRetry.hook";
 import {
   getBooleanParam,

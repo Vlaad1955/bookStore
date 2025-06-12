@@ -1,17 +1,18 @@
 "use client";
+import Form from "next/form";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
+
 import ProtectedRoute from "@/shared/protected-route/protectedRoute";
 import { authApi } from "@/shared/auth/auth-api/auth-api";
-import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
-import styles from "./styles.module.scss";
-import { Button } from "../../../components/ui/button/Button";
-import { ButtonType } from "@/components/ui/button/button-type/button-type.enum";
-import Form from "next/form";
-import { ButtonVariant } from "@/components/ui/button/button-type/button-variant.enum";
+import { userApi } from "@/user/user/user-api/user-api";
 import { useUserStore } from "@/user/user/store/UseUserStore";
 import { userService } from "@/user/user/user-service/user-service";
-import { userApi } from "@/user/user/user-api/user-api";
+import { Button } from "../../../components/ui/button/Button";
+import { ButtonType } from "@/components/ui/button/button-type/button-type.enum";
+import { ButtonVariant } from "@/components/ui/button/button-type/button-variant.enum";
+import styles from "./styles.module.scss";
 
 const ChangeAccountClient = () => {
   const router = useRouter();

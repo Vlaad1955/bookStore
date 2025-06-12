@@ -1,19 +1,20 @@
 "use client";
 
-import { UserSignUpRequestDto } from "@/shared/auth/authTypes/user-sign-up-request-dto";
 import React, { useState } from "react";
-import { DEFAULT_SIGN_UP_PAYLOAD } from "@/shared/auth/constants/DEFAULT_SIGN_UP_PAYLOAD";
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import Form from "next/form";
+
+import { Button } from "@/components/ui/button/Button";
+import { Input } from "../../ui/input/Input";
 import { useAuthStore } from "@/shared/auth/auth-store/use-auth-store";
 import { useAppForm } from "@/shared/hooks/use-app-form/useAppForm.hook";
-import { userSignUpValidationSchema } from "@/shared/validation-schemas/validation-schemas";
-import { Input } from "../../ui/input/Input";
-import { InputType } from "@/components/ui/input/input-type/input-type.enum";
-import styles from "./styles.module.scss";
-import { Button } from "@/components/ui/button/Button";
 import { ButtonType } from "@/components/ui/button/button-type/button-type.enum";
-import Form from "next/form";
-import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import { InputType } from "@/components/ui/input/input-type/input-type.enum";
+import { UserSignUpRequestDto } from "@/shared/auth/authTypes/user-sign-up-request-dto";
+import { userSignUpValidationSchema } from "@/shared/validation-schemas/validation-schemas";
+import { DEFAULT_SIGN_UP_PAYLOAD } from "@/shared/auth/constants/DEFAULT_SIGN_UP_PAYLOAD";
+import styles from "./styles.module.scss";
 
 const SignUpForm = () => {
   const router = useRouter();

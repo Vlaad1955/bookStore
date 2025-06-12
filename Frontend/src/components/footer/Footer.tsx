@@ -1,10 +1,11 @@
 "use client";
 
-import styles from "./styles.module.scss";
-import { FaInstagram, FaFacebook, FaTelegram } from "react-icons/fa";
-import { AppRoute } from "@/shared/auth/enums/app-route.enums";
 import Link from "next/link";
+import { FaInstagram, FaFacebook, FaTelegram } from "react-icons/fa";
+
+import { AppRoute } from "@/shared/auth/enums/app-route.enums";
 import PhoneIcon from "@/assets/icons/phoneIcon";
+import styles from "./styles.module.scss";
 
 export default function Footer() {
   const scrollToTop = () => {

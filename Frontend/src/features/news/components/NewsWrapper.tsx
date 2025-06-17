@@ -5,20 +5,11 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button/Button";
-import { News } from "../types/news";
+import { NewsDataProps } from "../types/news";
 import styles from "./styles.module.scss";
 
-type NewsData = {
-  page: number;
-  pages: number;
-  countItems: number;
-  entities: News[];
-};
-
-export default function NewsWrapper({ newsData }: { newsData: NewsData }) {
+export default function NewsWrapper({ newsData }: { newsData: NewsDataProps }) {
   const router = useRouter();
-
-  console.log(newsData);
 
   const handleClick = (id: string) => {
     router.push(`/my-account/news/${id}`);

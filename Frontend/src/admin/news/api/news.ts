@@ -8,7 +8,7 @@ export async function getAllNews(queryParams: unknown) {
   return response.data;
 }
 
-export async function getOneNews(id: number) {
+export async function getOneNews(id: string) {
   const response = await axiosInstance.get(`/news/find/id/${id}`);
   return response.data;
 }

@@ -2,21 +2,7 @@ import React from "react";
 
 import NewsWrapper from "@/features/news/components/NewsWrapper";
 import { newsApi } from "@/features/news/api/news";
-
-type NewsItem = {
-  id: string;
-  title: string;
-  content: string;
-  category: "general" | "promotion" | "event";
-  image?: string;
-};
-
-type NewsData = {
-  page: number;
-  pages: number;
-  countItems: number;
-  entities: NewsItem[];
-};
+import { NewsDataProps } from "@/features/news/types/news";
 
 export default async function NewsPage({
   searchParams,
@@ -30,17 +16,18 @@ export default async function NewsPage({
     limit?: string;
   };
 }) {
+  const params = await searchParams;
   try {
     const res = await newsApi.getNewsList({
-      title: searchParams.title,
-      category: searchParams.category,
-      sort: searchParams.sort,
-      order: searchParams.order,
-      page: Number(searchParams.page) || 1,
-      limit: Number(searchParams.limit) || 10,
+      title: params.title,
+      category: params.category,
+      sort: params.sort,
+      order: params.order,
+      page: Number(params.page) || 1,
+      limit: Number(params.limit) || 10,
     });
 
-    const newsData: NewsData = res.data;
+    const newsData: NewsDataProps = res.data;
 
     return <NewsWrapper newsData={newsData} />;
   } catch (error) {

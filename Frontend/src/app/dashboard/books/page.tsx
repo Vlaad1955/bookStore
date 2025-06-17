@@ -1,8 +1,8 @@
 import BookWrapper from "@/features/books/components/BookWrapper";
 import { getBooksInOneCategory } from "@/features/books/api/books";
 import { Book } from "@/features/books/types/book";
-import { objectToCleanURLSearchParams } from "@/features/books/hooks/objectToCleanURLSearchParams";
-import { cleanParams } from "@/shared/hooks/clean-params.ts/cleanParams.hook";
+import { cleanParams } from "@/shared/hooks/clean-params/cleanParams.hook";
+import { objectToCleanURLSearchParams } from "@/features/books/hooks/objectToCleanURLSearchParams.hook";
 import { retryAsync } from "@/shared/hooks/retry/useRetry.hook";
 import {
   getBooleanParam,
@@ -53,7 +53,7 @@ async function fetchBooksData(filters: ReturnType<typeof buildFilters>) {
 }
 
 export default async function BookPage({ searchParams }: BookProps) {
-  const filters = buildFilters(searchParams);
+  const filters = buildFilters(await searchParams);
   let books: Book[] = [];
   let allCategoryBooks: Book[] = [];
   let currentPage = 1;

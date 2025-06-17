@@ -6,7 +6,7 @@ import { toast } from "react-toastify";
 
 import { Button } from "@/components/ui/button/Button";
 import { Input } from "../../ui/input/Input";
-import { useAuthStore } from "@/shared/auth/auth-store/use-auth-store";
+import { useAuthStore } from "@/shared/auth/auth-store/useAuthStore";
 import { useAppForm } from "@/shared/hooks/use-app-form/useAppForm.hook";
 import { InputType } from "@/components/ui/input/input-type/input-type.enum";
 import { ButtonType } from "@/components/ui/button/button-type/button-type.enum";

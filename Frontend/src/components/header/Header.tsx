@@ -8,7 +8,7 @@ import Image from "next/image";
 import CategoryList from "../../features/categories/components/CategoryList";
 import SearchBar from "../search/SearchBar";
 import { Button } from "../ui/button/Button";
-import { useAuthStore } from "@/shared/auth/auth-store/use-auth-store";
+import { useAuthStore } from "@/shared/auth/auth-store/useAuthStore";
 import { useUserStore } from "@/user/user/store/UseUserStore";
 import { useBasketStore } from "@/features/basket/store/basket";
 import { useCategoryListStore } from "@/features/categories/store/category";

@@ -1,5 +1,5 @@
 import { User } from "../store/UseUserStore";
-import { userApi } from "../user-api/user-api";
+import { userApi } from "../user-api/userApi";
 
 class UserService {
   async getCurrentUser(): Promise<User | undefined> {

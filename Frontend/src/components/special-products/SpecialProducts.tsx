@@ -3,7 +3,7 @@ import React from "react";
 import SpecialProductsList from "./SpecialProductsList";
 import { getCategoryList } from "@/features/categories/api/category";
 import { getBooksInOneCategory } from "@/features/books/api/books";
-import { cleanParams } from "@/shared/hooks/clean-params.ts/cleanParams.hook";
+import { cleanParams } from "@/shared/hooks/clean-params/cleanParams.hook";
 
 type SpecialProductsProps = {
   categoryName: string;

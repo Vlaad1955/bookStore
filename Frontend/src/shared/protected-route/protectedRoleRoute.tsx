@@ -31,7 +31,7 @@ export const ProtectedRouteRole = ({allowedRoles, children}: Props) => {
     const role = user?.role;
 
     useEffect(() => {
-        if (!authLoading || !userLoading) {
+        if (!authLoading && !userLoading) {
             if (!isAuthenticated) {
                 router.push("/auth/sign-in");
             } else if (!role || !allowedRoles.includes(role)) {

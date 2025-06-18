@@ -98,3 +98,13 @@ export class LoginDto {
   @ApiProperty({ required: true })
   password: string;
 }
+
+export class ResetDto {
+  @IsString()
+  @IsNotEmpty()
+  @IsEmail()
+  @ApiProperty({ required: true })
+  @Transform(({ value }) => value.trim().toLowerCase())
+  @MaxLength(20, { message: 'Email must not exceed 20 characters' })
+  email: string;
+}

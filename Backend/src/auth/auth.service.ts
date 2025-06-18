@@ -4,7 +4,12 @@ import {
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
-import { CreateUserDto, LoginDto, TokenDto } from './dto/create-auth.dto';
+import {
+  CreateUserDto,
+  LoginDto,
+  ResetDto,
+  TokenDto,
+} from './dto/create-auth.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { User } from '../database/entities/user.entity';
 import { Repository } from 'typeorm';
@@ -49,8 +54,10 @@ export class AuthService {
 
     await this.emailService.sendEmail(EmailTypeEnum.WELCOME, user.email, {
       name: user.firstName || 'користувачу',
-      frontUrl: 'config.frontUrl',
-      actionToken: token.accessToken,
+      frontUrl:
+        this.configService.get<string>('config.front.frontUrl') ??
+        'http://localhost:3000',
+      imageUrl: user.image,
     });
     return token;
   }
@@ -286,5 +293,72 @@ export class AuthService {
     await this.storeTokenInRedis(userId, tokens.accessToken);
 
     return tokens;
+  }
+
+  async resetPassword(dto: ResetDto) {
+    const user = await this.userRepository.findOne({
+      where: { email: dto.email },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    const newPassword = this.generateRandomPassword();
+    const hashed = await bcrypt.hash(newPassword, 10);
+    await this.userRepository.update(
+      { email: dto.email },
+      { password: hashed },
+    );
+    await this.emailService.sendEmail(
+      EmailTypeEnum.FORGOT_PASSWORD,
+      user.email,
+      {
+        name: user.firstName || 'користувачу',
+        frontUrl:
+          this.configService.get<string>('config.front.frontUrl') ??
+          'http://localhost:3000',
+        password: newPassword,
+        imageUrl: user.image,
+      },
+    );
+
+    return { message: 'new password sent' };
+  }
+
+  private generateRandomPassword(length: number = 10): string {
+    const uppercaseChars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+    const lowercaseChars = 'abcdefghijklmnopqrstuvwxyz';
+    const digitChars = '0123456789';
+    const specialChars = '!@#$%^&*()_+-=[]{};:,.<>?';
+    const allChars =
+      uppercaseChars + lowercaseChars + digitChars + specialChars;
+
+    const randomUpper =
+      uppercaseChars[Math.floor(Math.random() * uppercaseChars.length)];
+    const randomLower =
+      lowercaseChars[Math.floor(Math.random() * lowercaseChars.length)];
+    const randomDigit =
+      digitChars[Math.floor(Math.random() * digitChars.length)];
+    const randomSpecial =
+      specialChars[Math.floor(Math.random() * specialChars.length)];
+
+    let password = randomUpper + randomLower + randomDigit + randomSpecial;
+
+    for (let i = password.length; i < length; i++) {
+      const randomChar = allChars[Math.floor(Math.random() * allChars.length)];
+      password += randomChar;
+    }
+
+    return this.shuffleString(password);
+  }
+
+  private shuffleString(str: string): string {
+    const arr = str.split('');
+    for (let i = arr.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [arr[i], arr[j]] = [arr[j], arr[i]];
+    }
+    return arr.join('');
   }
 }

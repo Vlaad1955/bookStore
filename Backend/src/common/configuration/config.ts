@@ -28,4 +28,7 @@ export default registerAs('config', () => ({
     smtpEmail: process.env.SMTP_EMAIL,
     smtpPassword: process.env.SMTP_PASSWORD,
   },
+  front: {
+    frontUrl: process.env.CLIENT_ORIGIN,
+  },
 }));

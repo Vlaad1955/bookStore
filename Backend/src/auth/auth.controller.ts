@@ -87,7 +87,6 @@ export class AuthController {
     return this.authService.logOutUser(authHeader);
   }
 
-  @UseGuards(AuthGuard())
   @Post(`/refresh`)
   async refreshToken(
     @Req() req: Request,

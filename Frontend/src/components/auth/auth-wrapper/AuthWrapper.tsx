@@ -1,9 +1,10 @@
 "use client";
 
-import styles from "./styles.module.scss";
-import { getText } from "@/helpers/get-text-to-path/getTextToPath";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+
+import { getText } from "@/helpers/get-text-to-path/getTextToPath";
+import styles from "./styles.module.scss";
 
 type AuthWrapperProps = {
   authPath: string;

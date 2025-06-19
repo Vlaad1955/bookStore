@@ -1,13 +1,14 @@
 "use client";
+import Link from "next/link";
+import Image from "next/image";
+import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button/Button";
 import { useCallback, useEffect, useState } from "react";
-import { toast } from "react-toastify";
-import styles from "./styles.module.scss";
-import Image from "next/image";
-import { ButtonVariant } from "@/components/ui/button/button-type/button-variant.enum";
-import Link from "next/link";
-import { useBasketStore } from "../store/basket";
+
 import { useUserStore } from "@/user/user/store/UseUserStore";
+import { useBasketStore } from "../store/basket";
+import { ButtonVariant } from "@/components/ui/button/button-type/button-variant.enum";
+import styles from "./styles.module.scss";
 
 const BasketClient = () => {
   const user = useUserStore((state) => state.user);
@@ -107,9 +108,12 @@ const BasketClient = () => {
                 />
 
                 <div className={styles.book_item_details}>
-                  <div className={styles.basket_item_title}>
+                  <Link
+                    href={`/dashboard/books/${item.book.id}`}
+                    className={styles.basket_item_title}
+                  >
                     {item.book.title}
-                  </div>
+                  </Link>
 
                   <div className={styles.basket_item_author}>
                     Автор: {item.book.author}

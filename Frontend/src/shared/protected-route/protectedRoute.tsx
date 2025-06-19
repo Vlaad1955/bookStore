@@ -2,19 +2,23 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "../auth/auth-store/use-auth-store";
+import { useAuthStore } from "../auth/auth-store/useAuthStore";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
-  const { isAuthenticated } = useAuthStore();
+  const { isAuthenticated, isInitialized } = useAuthStore();
   const router = useRouter();
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (isInitialized && !isAuthenticated) {
       router.push("/auth/sign-in");
     }
-  }, [isAuthenticated, router]);
+  }, [isInitialized, isAuthenticated, router]);
 
-  return isAuthenticated ? children : null;
+  if (!isInitialized) {
+    return <p>Завантаження...</p>;
+  }
+
+  return isAuthenticated ? <>{children}</> : null;
 };
 
 export default ProtectedRoute;

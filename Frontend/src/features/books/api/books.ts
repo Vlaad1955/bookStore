@@ -24,7 +24,7 @@ export async function getBooksInOneCategory(
   );
 }
 
-export async function getOneBook(id: number): Promise<Book> {
+export async function getOneBook(id: string): Promise<Book> {
   return retryAsync(() =>
     axiosInstance.get<Book>(`/books/find/${id}`).then((res) => res.data)
   );

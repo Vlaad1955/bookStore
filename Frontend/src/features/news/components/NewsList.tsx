@@ -1,9 +1,9 @@
 "use client";
-
 import Image from "next/image";
 import Link from "next/link";
-import styles from "./styles.module.scss";
+
 import { News } from "@/features/news/types/news";
+import styles from "./styles.module.scss";
 
 type NewsListProps = {
   news: News;
@@ -21,8 +21,8 @@ const NewsList = ({ news }: NewsListProps) => {
             <Image
               src={news.image}
               alt={news.title}
-              width={100}
-              height={100}
+              width={500}
+              height={500}
               className={styles.imggg}
             />
           </div>

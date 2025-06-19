@@ -1,13 +1,13 @@
 "use client";
 
-import {useEffect, useState} from "react";
-import {useRouter} from "next/navigation";
-import {useAuthStore} from "@/shared/auth/auth-store/use-auth-store";
-import {useUserStore} from "@/user/user/store/UseUserStore";
+import { useEffect } from "react";
+import { useRouter } from "next/navigation";
+import { useUserStore } from "@/user/user/store/UseUserStore";
+import { useAuthStore } from "../auth/auth-store/useAuthStore";
 
 interface Props {
-    allowedRoles: string[];
-    children: React.ReactNode;
+  allowedRoles: string[];
+  children: React.ReactNode;
 }
 
 export const ProtectedRouteRole = ({allowedRoles, children}: Props) => {
@@ -43,6 +43,18 @@ export const ProtectedRouteRole = ({allowedRoles, children}: Props) => {
     if (authLoading || userLoading || !isAuthenticated || !role) {
         return <p>Завантаження...</p>;
     }
+  }, [
+    isInitialized,
+    isUserInitialized,
+    isAuthenticated,
+    role,
+    allowedRoles,
+    router,
+  ]);
 
-    return <>{children}</>;
+  if (!isInitialized || !isUserInitialized) {
+    return <p>Завантаження...</p>;
+  }
+
+  return <>{children}</>;
 };

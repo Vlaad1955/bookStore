@@ -1,9 +1,9 @@
 "use client";
+import Link from "next/link";
+import React from "react";
 
 import { useBookStore } from "@/features/books/store/book";
-import React from "react";
 import styles from "./styles.module.scss";
-import Link from "next/link";
 
 type CategoryLinkProps = {
   basePath?: string;

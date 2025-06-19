@@ -1,35 +1,25 @@
-import { authApi } from "../auth-api/auth-api";
+import { authApi } from "../auth-api/authApi";
 import { isTokenValid } from "@/shared/token/decodeToken";
 import { UserSignInRequestDto } from "@/shared/auth/authTypes/user-sign-in-request-dto";
 import { UserSignUpRequestDto } from "@/shared/auth/authTypes/user-sign-up-request-dto";
 import axiosInstance from "../auth-axios-instance/axiosInstance";
 import { tokenStorage } from "@/shared/token/UseTokenStore";
-import { useUserStore } from "@/user/user/store/UseUserStore";
-import { userApi } from "@/user/user/user-api/user-api";
 
 class AuthService {
-  private token: string | null = null;
-  private user: unknown | null = null;
-  private isAuthenticated = false;
   private isLoading = false;
   private error: string | null = null;
 
   async signIn(payload: UserSignInRequestDto) {
-    this.isLoading = true;
-    this.error = null;
     try {
       const response = await authApi.signIn(payload);
       const { accessToken } = response.data;
+
       if (!isTokenValid(accessToken)) throw new Error("Invalid token");
 
-      this.token = accessToken;
       tokenStorage.setToken(accessToken);
       axiosInstance.defaults.headers.Authorization = `Bearer ${accessToken}`;
 
-      const { data } = await userApi.fetchCurrentUser();
-      useUserStore.getState().setUser(data);
-
-      this.isAuthenticated = true;
+      return accessToken;
     } catch (error) {
       this.error = "Помилка входу";
       throw error;
@@ -46,14 +36,10 @@ class AuthService {
       const { accessToken } = response.data;
       if (!isTokenValid(accessToken)) throw new Error("Invalid token");
 
-      this.token = accessToken;
       tokenStorage.setToken(accessToken);
       axiosInstance.defaults.headers.Authorization = `Bearer ${accessToken}`;
 
-      const { data } = await userApi.fetchCurrentUser();
-      useUserStore.getState().setUser(data);
-
-      this.isAuthenticated = true;
+      return accessToken;
     } catch (error) {
       this.error = "Помилка реєстрації";
       throw error;
@@ -62,28 +48,32 @@ class AuthService {
     }
   }
 
-  async logout() {
+  async refreshToken(): Promise<string> {
     try {
-      await authApi.logout();
-    } catch (error) {
-      console.error("Помилка при виході:", error);
-    } finally {
-      this.isAuthenticated = false;
-      this.token = null;
+      const { data } = await axiosInstance.post("/auth/refresh", {});
+      const { accessToken } = data;
+
+      if (!isTokenValid(accessToken)) {
+        throw new Error("Invalid refreshed token");
+      }
+
+      tokenStorage.setToken(accessToken);
+      axiosInstance.defaults.headers.Authorization = `Bearer ${accessToken}`;
+      return accessToken;
+    } catch {
       tokenStorage.removeToken();
-      useUserStore.getState().setUser(null);
-      this.user = null;
       delete axiosInstance.defaults.headers.Authorization;
+      throw new Error("Failed to refresh token");
     }
   }
 
-  getState() {
-    return {
-      isAuthenticated: this.isAuthenticated,
-      isLoading: this.isLoading,
-      token: this.token,
-      error: this.error,
-    };
+  async logout() {
+    try {
+      await authApi.logout();
+    } finally {
+      tokenStorage.removeToken();
+      delete axiosInstance.defaults.headers.Authorization;
+    }
   }
 }
 

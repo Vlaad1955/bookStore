@@ -2,8 +2,9 @@
 
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-import styles from "./styles.module.scss";
+
 import { Button } from "../../../components/ui/button/Button";
+import styles from "./styles.module.scss";
 
 type BookFiltersProps = {
   authors: string[];

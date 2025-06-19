@@ -21,41 +21,51 @@ type Properties = {
   onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-const Button = ({
-  children,
-  type,
-  className,
-  variant = ButtonVariant.PRIMARY,
-  size = ButtonSize.MEDIUM,
-  disabled = false,
-  unstyled = false,
-  onClick,
-  name = "",
-}: Properties) => {
-  const buttonClasses = !unstyled
-    ? classNames(
-        styles.button,
-        variant === "round" ? styles.equalRounded : styles[size],
-        variant === "primary" && size === "small" ? styles.primarySmall : "",
-        variant === "primary" && size === "medium" ? styles.primaryMedium : "",
-        variant === "delete" && size === "small" ? styles.deleteSmall : "",
-        variant === "transparent" ? styles.transparent : "",
-        styles[variant + (disabled ? "Disabled" : "")],
-        className
-      )
-    : className;
+const Button = React.forwardRef<HTMLButtonElement, Properties>(
+  (
+    {
+      children,
+      type,
+      className,
+      variant = ButtonVariant.PRIMARY,
+      size = ButtonSize.MEDIUM,
+      disabled = false,
+      unstyled = false,
+      onClick,
+      name = "",
+    },
+    ref
+  ) => {
+    const buttonClasses = !unstyled
+      ? classNames(
+          styles.button,
+          variant === "round" ? styles.equalRounded : styles[size],
+          variant === "primary" && size === "small" ? styles.primarySmall : "",
+          variant === "primary" && size === "medium"
+            ? styles.primaryMedium
+            : "",
+          variant === "delete" && size === "small" ? styles.deleteSmall : "",
+          variant === "transparent" ? styles.transparent : "",
+          styles[variant + (disabled ? "Disabled" : "")],
+          className
+        )
+      : className;
 
-  return (
-    <button
-      name={name}
-      type={type}
-      className={buttonClasses}
-      disabled={disabled}
-      onClick={onClick}
-    >
-      {children}
-    </button>
-  );
-};
+    return (
+      <button
+        ref={ref}
+        name={name}
+        type={type}
+        className={buttonClasses}
+        disabled={disabled}
+        onClick={onClick}
+      >
+        {children}
+      </button>
+    );
+  }
+);
+
+Button.displayName = "Button";
 
 export { Button };

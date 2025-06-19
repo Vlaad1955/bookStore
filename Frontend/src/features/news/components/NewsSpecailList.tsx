@@ -1,9 +1,10 @@
 "use client";
 import React, { useRef } from "react";
-import styles from "./styles.module.scss";
+
 import { Button } from "../../../components/ui/button/Button";
 import { News } from "@/features/news/types/news";
 import NewsList from "./NewsList";
+import styles from "./styles.module.scss";
 
 type NewsSpecialListProps = {
   news: News[];

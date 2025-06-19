@@ -1,17 +1,18 @@
 "use client";
-import React, { useState } from "react";
-import Image from "next/image";
-import { Book } from "@/features/books/types/book";
-import CategoryProps from "../../categories/components/CategoryProps";
-import styles from "./styles.module.scss";
-import { Button } from "../../../components/ui/button/Button";
 import Link from "next/link";
-import ModalBasket from "../../../components/ui/modal/modal-basket/ModalBasket";
+import Image from "next/image";
 import { useRouter } from "next/navigation";
-import DeleteBasket from "@/assets/icons/deleteBasket";
+import React, { useState } from "react";
+
+import CategoryProps from "../../categories/components/CategoryProps";
+import ModalBasket from "../../../components/ui/modal/modal-basket/ModalBasket";
+import { Button } from "../../../components/ui/button/Button";
+import { useUserStore } from "@/user/user/store/UseUserStore";
 import { useBookStore } from "@/features/books/store/book";
 import { useBasketStore } from "@/features/basket/store/basket";
-import { useUserStore } from "@/user/user/store/UseUserStore";
+import { Book } from "@/features/books/types/book";
+import DeleteBasket from "@/assets/icons/deleteBasket";
+import styles from "./styles.module.scss";
 
 type BooksItemProps = {
   book: Book;
@@ -25,6 +26,8 @@ const BookItem = ({ book }: BooksItemProps) => {
   const setSelectedCategories = useBookStore(
     (state) => state.setSelectedCategories
   );
+
+  console.log("book", book);
 
   const basketItem = basket?.items.find((item) => item.book.id === book.id);
 

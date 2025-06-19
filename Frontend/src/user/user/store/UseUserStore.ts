@@ -1,5 +1,5 @@
 import { create } from "zustand";
-import { userService } from "../user-service/user-service";
+import { userService } from "../user-service/userService";
 
 export interface User {
   id: string;
@@ -17,6 +17,7 @@ export interface User {
 
 interface UserState {
   user: User | null;
+  isUserInitialized: boolean;
   setUser: (user: User | null) => void;
   loadUser: () => Promise<void>;
   updateUserFields: (data: Partial<User>) => void;
@@ -25,12 +26,19 @@ interface UserState {
 
 export const useUserStore = create<UserState>((set) => ({
   user: null,
+  isUserInitialized: false,
 
-  setUser: (user) => set({ user }),
+  setUser: (user) => {
+    set({ user, isUserInitialized: true });
+  },
 
   loadUser: async () => {
-    const user = await userService.getCurrentUser();
-    set({ user: user ?? null });
+    try {
+      const user = await userService.getCurrentUser();
+      set({ user: user ?? null, isUserInitialized: true });
+    } catch {
+      set({ user: null, isUserInitialized: true }); // навіть у разі помилки
+    }
   },
 
   updateUserFields: (data) =>
@@ -38,5 +46,5 @@ export const useUserStore = create<UserState>((set) => ({
       user: state.user ? { ...state.user, ...data } : state.user,
     })),
 
-  resetUser: () => set({ user: null }),
+  resetUser: () => set({ user: null, isUserInitialized: true }),
 }));

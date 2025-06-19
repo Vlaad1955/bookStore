@@ -1,12 +1,13 @@
 import React from "react";
-import CategoryProps from "../../categories/components/CategoryProps";
-import BookFilters from "./BookFilters";
+
 import BookList from "./BookList";
+import Pagination from "@/admin/other/components/pagination/Pagination";
+import BookFilters from "./BookFilters";
+import NewsSpecail from "../../news/components/NewsSpecail";
+import CategoryProps from "../../categories/components/CategoryProps";
+import SpecialProducts from "../../../components/special-products/SpecialProducts";
 import { Book } from "@/features/books/types/book";
 import styles from "./styles.module.scss";
-import SpecialProducts from "../../../components/special-products/SpecialProducts";
-import NewsSpecail from "../../news/components/NewsSpecail";
-import Pagination from "@/admin/other/components/pagination/Pagination";
 
 type BookWrapperProps = {
   initialAuthor: string[];

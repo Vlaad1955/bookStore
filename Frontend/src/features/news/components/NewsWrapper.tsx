@@ -1,23 +1,14 @@
 "use client";
-
+import Link from "next/link";
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import { Button } from "@/components/ui/button/Button";
-
+import { NewsDataProps } from "../types/news";
 import styles from "./styles.module.scss";
-import Link from "next/link";
-import { News } from "../types/news";
 
-type NewsData = {
-  page: number;
-  pages: number;
-  countItems: number;
-  entities: News[];
-};
-
-export default function NewsWrapper({ newsData }: { newsData: NewsData }) {
+export default function NewsWrapper({ newsData }: { newsData: NewsDataProps }) {
   const router = useRouter();
 
   const handleClick = (id: string) => {

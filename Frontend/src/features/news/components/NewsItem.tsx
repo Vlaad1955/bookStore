@@ -28,7 +28,7 @@ const NewsItem = ({ news }: NewsItemProps) => {
         <div>
           <div className={styles.news_title}>{news.title}</div>
           <div className={styles.news_category}>Категорія: {news.category}</div>
-          <div className={styles.news_description}>Короткий опис книги</div>
+          <div className={styles.news_description}>Короткий опис :</div>
           <div className={styles.news_content}>{news.content}</div>
         </div>
       </div>

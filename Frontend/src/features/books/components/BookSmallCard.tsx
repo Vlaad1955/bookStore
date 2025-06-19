@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Book } from "@/features/books/types/book";
 import styles from "@/features/books/components/styles.module.scss";
 
-const bookSmallCard = ({ book }: { book: Book }) => {
+const BookSmallCard = ({ book }: { book: Book }) => {
   return (
     <Link
       href={`/dashboard/books/${book.id}`}
@@ -39,4 +39,4 @@ const bookSmallCard = ({ book }: { book: Book }) => {
   );
 };
 
-export default bookSmallCard;
+export default BookSmallCard;

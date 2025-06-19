@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 
@@ -12,7 +12,6 @@ import { useAuthStore } from "@/shared/auth/auth-store/useAuthStore";
 import { useUserStore } from "@/user/user/store/UseUserStore";
 import { useBasketStore } from "@/features/basket/store/basket";
 import { useCategoryListStore } from "@/features/categories/store/category";
-import { useClickOutside } from "@/features/categories/hooks/useClickOutSide";
 import { AppRoute } from "@/shared/auth/enums/app-route.enums";
 import MenuIcon from "@/assets/icons/menuIcon";
 import UserIcon from "@/assets/icons/userIcon";
@@ -24,33 +23,24 @@ import { ButtonVariant } from "@/components/ui/button/button-type/button-variant
 import styles from "./styles.module.scss";
 
 const Header = () => {
+  const router = useRouter();
+  const { toggleList } = useCategoryListStore();
   const { isAuthenticated, logout } = useAuthStore();
+  const user = useUserStore((state) => state.user);
   const basket = useBasketStore((state) => state.basket);
+  const loadUser = useUserStore((state) => state.loadUser);
+
+  const [searchTerm, setSearchTerm] = useState("");
+  const [isOpenUser, setIsOpenUser] = useState(false);
 
   const totalQuantity = basket?.items.reduce(
     (acc, item) => acc + item.quantity,
     0
   );
 
-  const user = useUserStore((state) => state.user);
-  const loadUser = useUserStore((state) => state.loadUser);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [isOpenUser, setIsOpenUser] = useState(false);
-  const { isOpen, toggleList, closeList } = useCategoryListStore();
-
-  const router = useRouter();
-
   const handleLogout = () => {
     logout();
   };
-
-  const userMenuRef = useRef<HTMLButtonElement>(null);
-  const userListRef = useRef<HTMLDivElement>(null);
-  const catalogButtonRef = useRef<HTMLButtonElement>(null);
-  const catalogListRef = useRef<HTMLDivElement>(null);
-
-  useClickOutside(catalogListRef, () => closeList(), isOpen);
-  useClickOutside(userListRef, () => setIsOpenUser(false), isOpenUser);
 
   useEffect(() => {
     if (isAuthenticated && !user) {
@@ -75,7 +65,7 @@ const Header = () => {
           <Link href={AppRoute.ROOT}>BookOutFit</Link>
         </div>
         <Button
-          ref={catalogButtonRef}
+          // ref={catalogButtonRef}
           className={styles.header_category}
           onClick={toggleList}
         >
@@ -83,7 +73,10 @@ const Header = () => {
           <span>Каталог книг</span>
         </Button>
 
-        <div ref={catalogListRef} className={styles.category_list_container}>
+        <div
+          //  ref={catalogListRef}
+          className={styles.category_list_container}
+        >
           <CategoryList />
         </div>
 
@@ -118,23 +111,20 @@ const Header = () => {
 
         {isAuthenticated ? (
           <>
-            <Button
-              ref={userMenuRef}
-              onClick={() => setIsOpenUser(!isOpenUser)}
-            >
+            <Button onClick={() => setIsOpenUser(!isOpenUser)}>
               {user?.firstName[0].toUpperCase()}
               {user?.lastName[0].toUpperCase()}
             </Button>
 
             {isOpenUser && user && (
-              <aside className={styles.header_user} ref={userListRef}>
+              <aside className={styles.header_user}>
                 {" "}
                 <Image
                   src={user.image}
                   alt={user.firstName}
                   className={styles.img}
-                  width={300}
-                  height={300}
+                  width={500}
+                  height={500}
                 />
                 <p>
                   {user?.firstName} {user?.lastName}

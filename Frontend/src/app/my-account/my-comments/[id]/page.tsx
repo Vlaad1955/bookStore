@@ -17,18 +17,30 @@ export default async function MyCommentsPage({
   const { page } = await searchParams;
 
   const data = await getComments({
-    page,
+    page: page ? Number(page) : undefined,
     user_id: id,
   });
 
+  const hasComments = data.entities.length > 0;
+
+  console.log("Fetched comments data:", data);
+
   return (
     <ProtectedRoute>
-      <MyCommentsList comments={data.entities} />
-      <Pagination
-        currentPage={data.page}
-        totalPages={data.pages}
-        userName={id}
-      />
+      {hasComments ? (
+        <>
+          <MyCommentsList comments={data.entities} />
+          <Pagination
+            currentPage={data.page}
+            totalPages={data.pages}
+            userName={id}
+          />
+        </>
+      ) : (
+        <div style={{ textAlign: "center", marginTop: "20px" }}>
+          <h2>Коментарі відсутні</h2>
+        </div>
+      )}
     </ProtectedRoute>
   );
 }

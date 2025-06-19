@@ -28,11 +28,11 @@ const SignInForm = () => {
     try {
       await signIn(user);
       if (useAuthStore.getState().isAuthenticated) {
-        toast.success("you are log-in");
+        toast.success("Ви увійшли в систему");
         router.push("/");
       }
-    } catch (error) {
-      toast.error(error.message || "you are not login");
+    } catch {
+      toast.error("Ви не увійшли в систему");
       setFormError("Помилка входу. Перевірте дані.");
       throw error;
     }

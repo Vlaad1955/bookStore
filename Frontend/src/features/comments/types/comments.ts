@@ -1,3 +1,5 @@
+import { Book } from "@/features/books/types/book";
+
 export interface Comment {
   id: string;
   text: string;
@@ -6,9 +8,7 @@ export interface Comment {
     firstName: string;
     role?: string;
   };
-  book: {
-    id: string;
-  };
+  book: Book;
   createdAt?: string;
   updatedAt?: string;
 }

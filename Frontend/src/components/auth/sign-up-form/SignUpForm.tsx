@@ -24,7 +24,7 @@ const SignUpForm = () => {
 
   const { control, handleSubmit, errors } = useAppForm<UserSignUpRequestDto>({
     defaultValues: DEFAULT_SIGN_UP_PAYLOAD,
-    // validationSchema: userSignUpValidationSchema,
+    validationSchema: userSignUpValidationSchema,
     mode: "onBlur",
   });
 
@@ -37,11 +37,11 @@ const SignUpForm = () => {
     try {
       await signUp(user);
       if (useAuthStore.getState().isAuthenticated) {
-        toast.success("you are register successfully");
+        toast.success("Регістрація успішна");
         router.push("/");
       }
-    } catch (error) {
-      toast.error(error.message || "you are not login");
+    } catch {
+      toast.error("Регістрація не вдалася");
       setFormError("Помилка входу. Перевірте дані.");
       throw error;
     }

@@ -116,6 +116,10 @@
   font-weight: 400;
   line-height: 120%;
   font-style: normal;
+
+  &:hover {
+    text-decoration: underline;
+  }
 }
 
 .basket_item_author {

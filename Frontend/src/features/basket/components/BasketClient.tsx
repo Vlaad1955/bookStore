@@ -108,9 +108,12 @@ const BasketClient = () => {
                 />
 
                 <div className={styles.book_item_details}>
-                  <div className={styles.basket_item_title}>
+                  <Link
+                    href={`/dashboard/books/${item.book.id}`}
+                    className={styles.basket_item_title}
+                  >
                     {item.book.title}
-                  </div>
+                  </Link>
 
                   <div className={styles.basket_item_author}>
                     Автор: {item.book.author}

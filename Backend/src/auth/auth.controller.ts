@@ -7,9 +7,15 @@ import {
   UnauthorizedException,
   Headers,
   UseGuards,
+  Patch,
 } from '@nestjs/common';
 import { AuthService } from './auth.service';
-import { CreateUserDto, LoginDto, TokenDto } from './dto/create-auth.dto';
+import {
+  CreateUserDto,
+  LoginDto,
+  ResetDto,
+  TokenDto,
+} from './dto/create-auth.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { Express } from 'express';
 import { AuthGuard } from '@nestjs/passport';
@@ -31,7 +37,7 @@ export class AuthController {
       const uploadResult = await this.authService.uploadFile(file);
       Dto.image =
         uploadResult?.data?.publicUrl ||
-        'https://ziqxesyaovpowhccmwiw.supabase.co/storage/v1/object/public/user-covers//Empty_avatar.jpg';
+        'https://ziqxesyaovpowhccmwiw.supabase.co/storage/v1/object/public/user-covers/Empty_avatar.jpg';
     }
 
     const { accessToken, refreshToken } =
@@ -103,5 +109,10 @@ export class AuthController {
     });
 
     return { accessToken };
+  }
+
+  @Patch('resetPassword')
+  async resetPassword(@Body() dto: ResetDto) {
+    return this.authService.resetPassword(dto);
   }
 }

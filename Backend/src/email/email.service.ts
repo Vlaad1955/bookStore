@@ -58,7 +58,7 @@ export class EmailService {
     const compiledBody = template(context);
 
     const layout = handlebars.compile(layoutContent);
-    return layout({ body: compiledBody });
+    return layout({ body: compiledBody, ...context });
   }
 
   public async sendEmail<T extends EmailTypeEnum>(

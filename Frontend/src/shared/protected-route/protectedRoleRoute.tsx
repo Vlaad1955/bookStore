@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useUserStore } from "@/features/user/store/UseUserStore";
 import { useAuthStore } from "@/features/auth/auth-store/useAuthStore";
@@ -10,49 +10,37 @@ interface Props {
   children: React.ReactNode;
 }
 
-export const ProtectedRouteRole = ({allowedRoles, children}: Props) => {
-    const router = useRouter();
-    const {isAuthenticated, isLoading: authLoading} = useAuthStore();
-    const {user, loadUser} = useUserStore();
+export const ProtectedRouteRole = ({ allowedRoles, children }: Props) => {
+  const router = useRouter();
+  const { isAuthenticated, isLoading: authLoading } = useAuthStore();
+  const { user, loadUser } = useUserStore();
 
-    const [userLoading, setUserLoading] = useState(!user);
+  const [userLoading, setUserLoading] = useState(!user);
 
-    useEffect(() => {
-        const fetchUser = async () => {
-            if (!user) {
-                setUserLoading(true);
-                await loadUser();
-                setUserLoading(false);
-            }
-        };
-        fetchUser();
-    }, [user, loadUser]);
+  useEffect(() => {
+    const fetchUser = async () => {
+      if (!user) {
+        setUserLoading(true);
+        await loadUser();
+        setUserLoading(false);
+      }
+    };
+    fetchUser();
+  }, [user, loadUser]);
 
-    const role = user?.role;
+  const role = user?.role;
 
-    useEffect(() => {
-        if (!authLoading && !userLoading) {
-            if (!isAuthenticated) {
-                router.push("/auth/sign-in");
-            } else if (!role || !allowedRoles.includes(role)) {
-                router.push("/403");
-            }
-        }
-    }, [authLoading, userLoading, isAuthenticated, role, router, allowedRoles]);
-
-    if (authLoading || userLoading || !isAuthenticated || !role) {
-        return <p>Завантаження...</p>;
+  useEffect(() => {
+    if (!authLoading && !userLoading) {
+      if (!isAuthenticated) {
+        router.push("/auth/sign-in");
+      } else if (!role || !allowedRoles.includes(role)) {
+        router.push("/403");
+      }
     }
-  }, [
-    isInitialized,
-    isUserInitialized,
-    isAuthenticated,
-    role,
-    allowedRoles,
-    router,
-  ]);
+  }, [authLoading, userLoading, isAuthenticated, role, router, allowedRoles]);
 
-  if (!isInitialized || !isUserInitialized) {
+  if (authLoading || userLoading || !isAuthenticated || !role) {
     return <p>Завантаження...</p>;
   }
 

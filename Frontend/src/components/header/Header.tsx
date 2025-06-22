@@ -64,21 +64,25 @@ const Header = () => {
           <MenuIcon />
           <Link href={AppRoute.ROOT}>BookOutFit</Link>
         </div>
-        <Button
-          // ref={catalogButtonRef}
-          className={styles.header_category}
-          onClick={toggleList}
-        >
-          <CategoriesIcon />
-          <span>Каталог книг</span>
-        </Button>
 
-        <div
-          //  ref={catalogListRef}
-          className={styles.category_list_container}
-        >
-          <CategoryList />
-        </div>
+        <nav aria-label="Каталог книг">
+          <Button
+            // ref={catalogButtonRef}
+            className={styles.header_category}
+            onClick={toggleList}
+            aria-controls="category-list"
+          >
+            <CategoriesIcon />
+            <span>Каталог книг</span>
+          </Button>
+
+          <div
+            //  ref={catalogListRef}
+            className={styles.category_list_container}
+          >
+            <CategoryList />
+          </div>
+        </nav>
 
         <SearchBar
           value={searchTerm}
@@ -98,6 +102,7 @@ const Header = () => {
           className={styles.header_cart}
           variant={ButtonVariant.TRANSPARENT}
           size={ButtonSize.SMALL}
+          aria-label="Перейти в кошик"
           onClick={() => router.push(AppRoute.BASKET)}
         >
           <ShoppingCartIcon />
@@ -111,7 +116,11 @@ const Header = () => {
 
         {isAuthenticated ? (
           <>
-            <Button onClick={() => setIsOpenUser(!isOpenUser)}>
+            <Button
+              aria-haspopup="true"
+              aria-expanded={isOpenUser ? "true" : "false"}
+              onClick={() => setIsOpenUser(!isOpenUser)}
+            >
               {user?.firstName[0].toUpperCase()}
               {user?.lastName[0].toUpperCase()}
             </Button>

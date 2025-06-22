@@ -12,7 +12,7 @@ type NewsItemProps = {
 
 const NewsItem = ({ news }: NewsItemProps) => {
   return (
-    <>
+    <section>
       <Link href={`/my-account/news/`}>
         <div className={styles.news_title}>Новини та нові надходження</div>
       </Link>
@@ -32,7 +32,7 @@ const NewsItem = ({ news }: NewsItemProps) => {
           <div className={styles.news_content}>{news.content}</div>
         </div>
       </div>
-    </>
+    </section>
   );
 };
 

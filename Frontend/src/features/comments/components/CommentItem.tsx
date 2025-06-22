@@ -46,7 +46,7 @@ const CommentItem = ({ comment, onDelete, onUpdate }: CommentItemProps) => {
   };
 
   return (
-    <div className={styles.comment_item_container}>
+    <article className={styles.comment_item_container}>
       {isEditing ? (
         <>
           <div className={styles.comment_item_description}>
@@ -107,7 +107,7 @@ const CommentItem = ({ comment, onDelete, onUpdate }: CommentItemProps) => {
           )}
         </>
       )}
-    </div>
+    </article>
   );
 };
 

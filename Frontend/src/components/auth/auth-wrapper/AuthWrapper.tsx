@@ -15,7 +15,7 @@ const AuthWrapper = ({ authPath, screen }: AuthWrapperProps) => {
   const pathname = usePathname();
 
   return (
-    <div className={styles.auth_container}>
+    <article className={styles.auth_container}>
       <div className={styles.auth_wrapper}>
         <div className={styles.auth_header}>
           <h2 className={styles.header_title}>{getText(pathname, "title")}</h2>
@@ -28,7 +28,7 @@ const AuthWrapper = ({ authPath, screen }: AuthWrapperProps) => {
           </div>
         </div>
       </div>
-    </div>
+    </article>
   );
 };
 

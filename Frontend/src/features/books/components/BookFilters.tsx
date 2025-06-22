@@ -59,7 +59,7 @@ const BookFilters = ({ authors }: BookFiltersProps) => {
 
   return (
     <div>
-      <div className={styles.filter_container}>
+      <section className={styles.filter_container}>
         <h3 className={styles.filter_books}>Фільтри</h3>
         <Link href={getUpdatedSearch("published", "true")}>
           <label className={styles.filter_checkbox}>
@@ -82,9 +82,9 @@ const BookFilters = ({ authors }: BookFiltersProps) => {
             <span className={styles.filter_item}>Подарункові</span>
           </label>
         </Link>
-      </div>
+      </section>
 
-      <div className={styles.filter_container}>
+      <section className={styles.filter_container}>
         <h3 className={styles.filter_books}>Обкладинка</h3>
         <Link href={getUpdatedSearch("cover", "soft")}>
           <label className={styles.filter_checkbox}>
@@ -106,11 +106,11 @@ const BookFilters = ({ authors }: BookFiltersProps) => {
             <span className={styles.filter_item}>Тверда</span>
           </label>
         </Link>
-      </div>
+      </section>
 
       {authors.length > 0 && (
         <>
-          <div className={styles.filter_container}>
+          <section className={styles.filter_container}>
             <h3 className={styles.filter_books}>Автори</h3>
             {authors.map((author) => (
               <Link
@@ -127,7 +127,7 @@ const BookFilters = ({ authors }: BookFiltersProps) => {
                 </label>
               </Link>
             ))}
-          </div>
+          </section>
           <Button onClick={resetFilters} className={styles.filter_reset_button}>
             Скинути фільтри
           </Button>

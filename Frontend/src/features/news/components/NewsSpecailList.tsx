@@ -22,7 +22,7 @@ const NewsSpecailList = ({ news }: NewsSpecialListProps) => {
   };
 
   return (
-    <div className={styles.news_list_container}>
+    <section className={styles.news_list_container}>
       <div className={styles.news_scroll_wrapper}>
         <Button
           unstyled
@@ -32,11 +32,11 @@ const NewsSpecailList = ({ news }: NewsSpecialListProps) => {
           ←
         </Button>
 
-        <div ref={scrollRef} className={styles.news_list}>
+        <article ref={scrollRef} className={styles.news_list}>
           {news.map((item) => (
             <NewsList key={item.id} news={item} />
           ))}
-        </div>
+        </article>
 
         <Button
           unstyled
@@ -46,7 +46,7 @@ const NewsSpecailList = ({ news }: NewsSpecialListProps) => {
           →
         </Button>
       </div>
-    </div>
+    </section>
   );
 };
 

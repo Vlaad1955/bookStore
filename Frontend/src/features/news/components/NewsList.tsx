@@ -11,7 +11,7 @@ type NewsListProps = {
 
 const NewsList = ({ news }: NewsListProps) => {
   return (
-    <div className={styles.news_item}>
+    <section className={styles.news_item}>
       <div className={styles.news_card}>
         <Link
           className={styles.news_card_item}
@@ -43,7 +43,7 @@ const NewsList = ({ news }: NewsListProps) => {
 
         <div className={styles.news_list_description}>{news.content}</div>
       </div>
-    </div>
+    </section>
   );
 };
 

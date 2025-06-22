@@ -8,33 +8,32 @@ import styles from "@/features/books/components/styles.module.scss";
 
 const BookSmallCard = ({ book }: { book: Book }) => {
   return (
-    <Link
-      href={`/dashboard/books/${book.id}`}
-      className={styles.book_item_wrapper}
-    >
-      <div>
-        <Image
-          className={styles.book_item_image}
-          src={book.image}
-          alt={book.title}
-          width={500}
-          height={500}
-        />
-      </div>
+    <Link href={`/dashboard/books/${book.id}`}>
+      <article className={styles.book_item_wrapper}>
+        <figure>
+          <Image
+            className={styles.book_item_image}
+            src={book.image}
+            alt={book.title}
+            width={500}
+            height={500}
+          />
+        </figure>
 
-      <div>
-        <div className={styles.book_item_title}>{book.title}</div>
-        <div className={styles.book_item_author}>{book.author}</div>
+        <div>
+          <div className={styles.book_item_title}>{book.title}</div>
+          <div className={styles.book_item_author}>{book.author}</div>
 
-        <div className={styles.book_item_description_title}>
-          Короткий опис книги
+          <div className={styles.book_item_description_title}>
+            Короткий опис книги
+          </div>
+          <div className={styles.book_item_description_body}>
+            {book.description}
+          </div>
         </div>
-        <div className={styles.book_item_description_body}>
-          {book.description}
-        </div>
-      </div>
 
-      <div className={styles.book_item_isbn}></div>
+        <div className={styles.book_item_isbn}></div>
+      </article>
     </Link>
   );
 };

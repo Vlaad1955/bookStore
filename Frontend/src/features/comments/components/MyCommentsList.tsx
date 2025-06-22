@@ -8,7 +8,7 @@ const MyCommentsList = ({ comments }: { comments: Comment[] }) => {
   const groupedByBook = groupCommentsByBook(comments);
 
   return (
-    <div>
+    <article>
       <div className={styles.comments_title}>
         <span>Коментарі користувача</span>
       </div>
@@ -18,7 +18,7 @@ const MyCommentsList = ({ comments }: { comments: Comment[] }) => {
           <ClientCommentsSection comments={comments} bookId={`${book.id}`} />
         </div>
       ))}
-    </div>
+    </article>
   );
 };
 export default MyCommentsList;

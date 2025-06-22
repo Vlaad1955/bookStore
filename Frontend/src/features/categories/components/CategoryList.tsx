@@ -50,8 +50,8 @@ export default function CategoryList() {
   return (
     <>
       {isOpen && (
-        <div className={styles.book_menu_wrapper}>
-          <div className={styles.book_menu_hat}>
+        <aside className={styles.book_menu_wrapper}>
+          <section className={styles.book_menu_hat}>
             <div className={styles.book_menu_top}>
               <div className={styles.book_menu_title}>
                 <div>Категорії книг</div>
@@ -71,9 +71,9 @@ export default function CategoryList() {
                 <CloseIcon />
               </button>
             </div>
-          </div>
+          </section>
           <ul className={styles.book_main_menu}>{tree(null)}</ul>
-        </div>
+        </aside>
       )}
     </>
   );

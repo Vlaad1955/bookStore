@@ -30,13 +30,13 @@ const BookList = ({ book }: BookListProps) => {
   };
 
   return (
-    <div className={styles.book_item}>
+    <article className={styles.book_item}>
       <div className={styles.book_card}>
         <Link
           className={styles.book_card_item}
           href={`/dashboard/books/${book.id}`}
         >
-          <div>
+          <figure>
             <Image
               src={book.image}
               alt={book.title}
@@ -44,7 +44,7 @@ const BookList = ({ book }: BookListProps) => {
               height={500}
               className={styles.imggg}
             />
-          </div>
+          </figure>
         </Link>
       </div>
 
@@ -75,7 +75,7 @@ const BookList = ({ book }: BookListProps) => {
         onClose={() => setIsModalOpen(false)}
         onConfirm={() => router.push("/auth/sign-in")}
       />
-    </div>
+    </article>
   );
 };
 

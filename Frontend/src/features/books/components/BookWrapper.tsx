@@ -25,15 +25,15 @@ const BookWrapper = ({
   params,
 }: BookWrapperProps) => {
   return (
-    <div>
+    <main>
       <CategoryProps basePath="books" />
 
       <div className={styles.wrapper}>
-        <div className={styles.filters}>
+        <aside className={styles.filters}>
           <BookFilters authors={initialAuthor} />
-        </div>
+        </aside>
 
-        <div className={styles.books_container_right_site}>
+        <section className={styles.books_container_right_site}>
           {books.length > 0 ? (
             <div className={styles.books}>
               <div className={styles.book_list}>
@@ -56,9 +56,9 @@ const BookWrapper = ({
           <NewsSpecail />
           <SpecialProducts categoryName="Дитяча література" />
           <SpecialProducts categoryName="Книги-іграшки" />
-        </div>
+        </section>
       </div>
-    </div>
+    </main>
   );
 };
 

@@ -6,7 +6,7 @@ import { useRouter } from "next/navigation";
 
 import ModalBasket from "../../../components/ui/modal/modal-basket/ModalBasket";
 import { Button } from "../../../components/ui/button/Button";
-import { useUserStore } from "@/user/user/store/UseUserStore";
+import { useUserStore } from "@/features/user/store/UseUserStore";
 import { useBasketStore } from "@/features/basket/store/basket";
 import { Book } from "@/features/books/types/book";
 import styles from "./styles.module.scss";

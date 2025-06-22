@@ -5,14 +5,14 @@ import { useRouter } from "next/navigation";
 import { useState, useEffect, useCallback } from "react";
 
 import ProtectedRoute from "@/shared/protected-route/protectedRoute";
-import { authApi } from "@/shared/auth/auth-api/authApi";
-import { userApi } from "@/user/user/user-api/userApi";
-import { useUserStore } from "@/user/user/store/UseUserStore";
-import { userService } from "@/user/user/user-service/userService";
+import { userApi } from "@/features/user/user-api/userApi";
+import { useUserStore } from "@/features/user/store/UseUserStore";
+import { userService } from "@/features/user/user-service/userService";
 import { Button } from "../../../components/ui/button/Button";
 import { ButtonType } from "@/components/ui/button/button-type/button-type.enum";
 import { ButtonVariant } from "@/components/ui/button/button-type/button-variant.enum";
 import styles from "./styles.module.scss";
+import { authApi } from "@/features/auth/auth-api/authApi";
 
 const ChangeAccountClient = () => {
   const router = useRouter();

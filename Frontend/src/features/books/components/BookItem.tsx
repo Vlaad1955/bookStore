@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import CategoryProps from "../../categories/components/CategoryProps";
 import ModalBasket from "../../../components/ui/modal/modal-basket/ModalBasket";
 import { Button } from "../../../components/ui/button/Button";
-import { useUserStore } from "@/user/user/store/UseUserStore";
+import { useUserStore } from "@/features/user/store/UseUserStore";
 import { useBookStore } from "@/features/books/store/book";
 import { useBasketStore } from "@/features/basket/store/basket";
 import { Book } from "@/features/books/types/book";
@@ -26,8 +26,6 @@ const BookItem = ({ book }: BooksItemProps) => {
   const setSelectedCategories = useBookStore(
     (state) => state.setSelectedCategories
   );
-
-  console.log("book", book);
 
   const basketItem = basket?.items.find((item) => item.book.id === book.id);
 

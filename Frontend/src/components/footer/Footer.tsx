@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { FaInstagram, FaFacebook, FaTelegram } from "react-icons/fa";
 
-import { AppRoute } from "@/shared/auth/enums/app-route.enums";
 import PhoneIcon from "@/assets/icons/phoneIcon";
 import styles from "./styles.module.scss";
+import { AppRoute } from "@/features/auth/enums/app-route.enums";
 
 export default function Footer() {
   const scrollToTop = () => {

@@ -1,6 +1,6 @@
 import joi from "joi";
 
-import { UserValidationMessage } from "../../user/user-validation-message.enum";
+import { UserValidationMessage } from "../../features/user/user-validation-message.enum";
 import { type UserSignUpRequestDto } from "../auth/authTypes/user-sign-up-request-dto";
 
 const userSignUp = joi.object<UserSignUpRequestDto, true>({

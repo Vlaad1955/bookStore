@@ -2,8 +2,8 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useUserStore } from "@/user/user/store/UseUserStore";
-import { useAuthStore } from "../auth/auth-store/useAuthStore";
+import { useUserStore } from "@/features/user/store/UseUserStore";
+import { useAuthStore } from "@/features/auth/auth-store/useAuthStore";
 
 interface Props {
   allowedRoles: string[];

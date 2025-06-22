@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button/Button";
 import { useCallback, useEffect, useState } from "react";
 
-import { useUserStore } from "@/user/user/store/UseUserStore";
+import { useUserStore } from "@/features/user/store/UseUserStore";
 import { useBasketStore } from "../store/basket";
 import { ButtonVariant } from "@/components/ui/button/button-type/button-variant.enum";
 import styles from "./styles.module.scss";

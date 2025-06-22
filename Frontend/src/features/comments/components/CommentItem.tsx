@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button/Button";
 import { Comment } from "@/features/comments/types/comments";
 import { deleteComment, updateComment } from "@/features/comments/api/comments";
-import { useUserStore } from "@/user/user/store/UseUserStore";
+import { useUserStore } from "@/features/user/store/UseUserStore";
 import { ButtonVariant } from "@/components/ui/button/button-type/button-variant.enum";
 import styles from "./styles.module.scss";
 

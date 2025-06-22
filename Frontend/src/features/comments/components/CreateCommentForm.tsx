@@ -7,7 +7,7 @@ import { useRouter } from "next/navigation";
 import ModalBasket from "@/components/ui/modal/modal-basket/ModalBasket";
 import { Button } from "@/components/ui/button/Button";
 import { createComment } from "@/features/comments/api/comments";
-import { useUserStore } from "@/user/user/store/UseUserStore";
+import { useUserStore } from "@/features/user/store/UseUserStore";
 import { Comment } from "@/features/comments/types/comments";
 import { ButtonType } from "@/components/ui/button/button-type/button-type.enum";
 import styles from "./styles.module.scss";

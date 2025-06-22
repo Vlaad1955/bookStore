@@ -137,6 +137,7 @@ const Header = () => {
                 </Link>
                 <Link href={AppRoute.NEWS}>Новини</Link>
                 <Link href={AppRoute.CHANGE_ACCOUNT}>Редагувати акаунт</Link>
+                <Link href={AppRoute.PASSWORD}>Оновити пароль</Link>
                 <Button onClick={() => setIsOpenUser(false)}>Закрити</Button>
                 <Button onClick={handleLogout}>Вийти</Button>
               </aside>

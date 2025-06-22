@@ -9,6 +9,7 @@ const AppRoute = {
   CHANGE_ACCOUNT: "/my-account/change-account",
   BASKET: "/my-account/basket",
   ADMIN: "/admin",
+  RESET:"/auth/reset-password"
 } as const;
 
 export { AppRoute };

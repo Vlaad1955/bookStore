@@ -6,55 +6,46 @@ import { useUserStore } from "@/user/user/store/UseUserStore";
 import { useAuthStore } from "../auth/auth-store/useAuthStore";
 
 interface Props {
-  allowedRoles: string[];
-  children: React.ReactNode;
+    allowedRoles: string[];
+    children: React.ReactNode;
 }
 
-export const ProtectedRouteRole = ({allowedRoles, children}: Props) => {
+export const ProtectedRouteRole = ({ allowedRoles, children }: Props) => {
     const router = useRouter();
-    const {isAuthenticated, isLoading: authLoading} = useAuthStore();
-    const {user, loadUser} = useUserStore();
-
-    const [userLoading, setUserLoading] = useState(!user);
-
-    useEffect(() => {
-        const fetchUser = async () => {
-            if (!user) {
-                setUserLoading(true);
-                await loadUser();
-                setUserLoading(false);
-            }
-        };
-        fetchUser();
-    }, [user, loadUser]);
+    const { isAuthenticated, isInitialized } = useAuthStore();
+    const { user, isUserInitialized, loadUser } = useUserStore();
 
     const role = user?.role;
 
     useEffect(() => {
-        if (!authLoading && !userLoading) {
+        const initialize = async () => {
+            if (!isUserInitialized) {
+                await loadUser();
+            }
+        };
+        initialize();
+    }, [isUserInitialized, loadUser]);
+
+    useEffect(() => {
+        if (isInitialized && isUserInitialized) {
             if (!isAuthenticated) {
                 router.push("/auth/sign-in");
             } else if (!role || !allowedRoles.includes(role)) {
                 router.push("/403");
             }
         }
-    }, [authLoading, userLoading, isAuthenticated, role, router, allowedRoles]);
+    }, [
+        isInitialized,
+        isUserInitialized,
+        isAuthenticated,
+        role,
+        allowedRoles,
+        router,
+    ]);
 
-    if (authLoading || userLoading || !isAuthenticated || !role) {
+    if (!isInitialized || !isUserInitialized) {
         return <p>Завантаження...</p>;
     }
-  }, [
-    isInitialized,
-    isUserInitialized,
-    isAuthenticated,
-    role,
-    allowedRoles,
-    router,
-  ]);
 
-  if (!isInitialized || !isUserInitialized) {
-    return <p>Завантаження...</p>;
-  }
-
-  return <>{children}</>;
+    return <>{children}</>;
 };

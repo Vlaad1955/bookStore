@@ -5,6 +5,7 @@ import { usePathname } from "next/navigation";
 
 import { getText } from "@/helpers/get-text-to-path/getTextToPath";
 import styles from "./styles.module.scss";
+import {AppRoute} from "@/shared/auth/enums/app-route.enums";
 
 type AuthWrapperProps = {
   authPath: string;
@@ -26,6 +27,14 @@ const AuthWrapper = ({ authPath, screen }: AuthWrapperProps) => {
               {getText(pathname, "authLink")}
             </Link>
           </div>
+          {pathname === AppRoute.SIGN_IN && (
+              <div className={styles.header_text}>
+                <span>{getText(pathname, "forgotText")}</span>
+                <Link className={styles.header_link} href={AppRoute.RESET}>
+                  {getText(pathname, "forgotLink")}
+                </Link>
+              </div>
+          )}
         </div>
       </div>
     </div>

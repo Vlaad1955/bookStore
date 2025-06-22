@@ -13,6 +13,7 @@ import { AuthService } from './auth.service';
 import {
   CreateUserDto,
   LoginDto,
+  PasswordDto,
   ResetDto,
   TokenDto,
 } from './dto/create-auth.dto';
@@ -114,5 +115,20 @@ export class AuthController {
   @Patch('resetPassword')
   async resetPassword(@Body() dto: ResetDto) {
     return this.authService.resetPassword(dto);
+  }
+
+  @UseGuards(AuthGuard())
+  @Patch('newPassword')
+  async newPassword(
+    @Body() dto: PasswordDto,
+    @Headers() headers: Record<string, string>,
+  ): Promise<{ message: string }> {
+    const authHeader = headers['authorization'];
+
+    if (!authHeader) {
+      throw new UnauthorizedException('Authorization token is missing');
+    }
+
+    return this.authService.passwordUpdate(dto, authHeader);
   }
 }

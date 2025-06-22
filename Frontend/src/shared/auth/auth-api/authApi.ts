@@ -22,4 +22,7 @@ export const authApi = {
     });
   },
   logout: () => axiosInstance.post("/auth/logout"),
+
+  resetPassword: (email: string) =>
+      axiosInstance.patch("/auth/resetPassword", { email }),
 };

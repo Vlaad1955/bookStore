@@ -18,6 +18,14 @@ const getText = (pathname: string, type: string): string => {
     [AppRoute.SIGN_UP]: "Вхід",
   };
 
+  const forgotPasswordText: Properties = {
+    [AppRoute.SIGN_IN]: "Забули пароль?",
+  };
+
+  const forgotPasswordLink: Properties = {
+    [AppRoute.SIGN_IN]: "Скинути пароль",
+  };
+
   switch (type) {
     case "title": {
       return titles[pathname] || "";
@@ -27,6 +35,12 @@ const getText = (pathname: string, type: string): string => {
     }
     case "authLink": {
       return authLink[pathname] || "";
+    }
+    case "forgotText": {
+      return forgotPasswordText[pathname] || "";
+    }
+    case "forgotLink": {
+      return forgotPasswordLink[pathname] || "";
     }
     default: {
       return "";

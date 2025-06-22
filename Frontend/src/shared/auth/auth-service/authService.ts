@@ -75,6 +75,15 @@ class AuthService {
       delete axiosInstance.defaults.headers.Authorization;
     }
   }
+
+  async resetPassword(email: string): Promise<void> {
+    try {
+      await authApi.resetPassword(email);
+    } catch (error) {
+      this.error = "Помилка скидання паролю";
+      throw error;
+    }
+  }
 }
 
 export const authService = new AuthService();

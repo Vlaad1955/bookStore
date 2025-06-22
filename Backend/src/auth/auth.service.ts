@@ -6,7 +6,7 @@ import {
 } from '@nestjs/common';
 import {
   CreateUserDto,
-  LoginDto,
+  LoginDto, PasswordDto,
   ResetDto,
   TokenDto,
 } from './dto/create-auth.dto';
@@ -301,7 +301,7 @@ export class AuthService {
     });
 
     if (!user) {
-      throw new UnauthorizedException('User not found');
+      throw new BadRequestException('User not found');
     }
 
     const newPassword = this.generateRandomPassword();
@@ -360,5 +360,39 @@ export class AuthService {
       [arr[i], arr[j]] = [arr[j], arr[i]];
     }
     return arr.join('');
+  }
+
+  async passwordUpdate(dto: PasswordDto, authHeader: string) {
+    const accessToken = authHeader.split(' ')[1];
+    if (!accessToken) {
+      throw new UnauthorizedException('Access token is missing');
+    }
+
+    let decodedAccessToken;
+    try {
+      decodedAccessToken = this.jwtService.verify(accessToken);
+    } catch (error) {
+      throw new UnauthorizedException('Invalid access token');
+    }
+
+    const userId = decodedAccessToken.id;
+
+    const user = await this.userRepository.findOne({
+      where: { id: userId },
+    });
+
+    if (!user) {
+      throw new UnauthorizedException('User not found');
+    }
+
+    const isPasswordValid = await bcrypt.compare(dto.lostPassword, user.password);
+    if (!isPasswordValid) {
+      throw new UnauthorizedException('Invalid credentials');
+    }
+
+    const hashedPassword = await bcrypt.hash(dto.newPassword, 10);
+    await this.userRepository.update(userId, { password: hashedPassword });
+
+    return { message: 'Password updated successfully' };
   }
 }

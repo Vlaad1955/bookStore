@@ -13,6 +13,7 @@ export default registerAs('config', () => ({
     bucket: process.env.SUPABASE_BUCKET ?? 'user-covers',
     bucketBook: process.env.SUPABASE_BUCKET_BOOK ?? 'book-covers',
     bucketNews: process.env.SUPABASE_BUCKET_NEWS ?? 'news-covers',
+
   },
   redis: {
     userKey: process.env.REDIS_USER_KEY ?? 'user-token',

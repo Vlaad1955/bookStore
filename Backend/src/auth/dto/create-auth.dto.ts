@@ -17,10 +17,12 @@ export class ReturnUserDto {
   @ApiProperty()
   id?: string;
 
+
   @IsOptional()
   @IsString()
   @ApiProperty({ required: false })
   firstName?: string;
+
 
   @IsOptional()
   @IsString()
@@ -37,11 +39,12 @@ export class ReturnUserDto {
   @ApiProperty()
   phone?: string;
 
+
   @IsOptional()
   @IsString()
   @ApiProperty({ required: false })
   image?: string;
-}
+
 
 export class CreateUserDto extends ReturnUserDto {
   @IsString()

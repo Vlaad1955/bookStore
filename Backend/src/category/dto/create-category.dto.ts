@@ -7,6 +7,7 @@ import {
   IsUUID,
 } from 'class-validator';
 
+
 export class CreateCategoryDto {
   @IsString()
   @IsNotEmpty()
@@ -19,6 +20,7 @@ export class CreateCategoryDto {
   @IsUUID('4', { message: 'parentId must be a valid UUID' })
   @ApiProperty({ required: false })
   parentId?: string;
+
 }
 
 export class ReturnCategoryDto extends CreateCategoryDto {

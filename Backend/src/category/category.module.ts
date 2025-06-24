@@ -12,6 +12,7 @@ import { PassportModule } from '@nestjs/passport';
     PassportModule.register({
       defaultStrategy: `bearer`,
     }),
+
     TypeOrmModule.forFeature([Category]),
     ConfigModule.forRoot({
       isGlobal: true,

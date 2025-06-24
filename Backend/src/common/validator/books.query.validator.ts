@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
   IsArray,
+
   IsBoolean,
   IsEnum,
   IsNumber,
@@ -8,6 +9,7 @@ import {
   IsOptional,
   IsString,
   IsUUID,
+
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 
@@ -35,6 +37,7 @@ export class BookQueryDto {
   @ApiProperty({ required: false, default: true })
   @IsOptional()
   @Transform(({ value }) => value === 'true' || value === true)
+
   @IsBoolean()
   published?: boolean;
 
@@ -66,6 +69,7 @@ export class BookQueryDto {
   @IsString({ each: true })
   author?: string[];
 
+
   @ApiProperty({ required: false })
   @IsOptional()
   @IsEnum(['soft', 'firm'])
@@ -93,4 +97,5 @@ export class BookQueryDto {
   @IsArray()
   @IsUUID('all', { each: true })
   categories?: string[];
+
 }

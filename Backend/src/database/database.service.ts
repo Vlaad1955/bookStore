@@ -11,6 +11,7 @@ import { Basket } from './entities/basket.entity';
 import { BasketItem } from './entities/basket.item.entity';
 import { News } from './entities/news.entity';
 
+
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
   constructor(private readonly configService: ConfigService) {}
@@ -21,6 +22,7 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
       type: 'postgres',
       url: postgresUrl,
       entities: [User, Category, Book, Comment, Basket, BasketItem, News],
+
       migrations: [
         path.join(process.cwd(), 'src', 'database', 'migrations', '*.ts'),
       ],

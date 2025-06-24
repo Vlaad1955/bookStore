@@ -1,15 +1,17 @@
-import { IsNotEmpty, IsOptional, IsString, MaxLength } from 'class-validator';
+
+import { IsOptional, IsString, IsUUID, MaxLength } from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 
 export class UpdateCategoryDto {
+  @IsOptional()
   @IsString()
-  @IsNotEmpty()
-  @ApiProperty({ required: true })
   @MaxLength(20, { message: 'Name category must not exceed 20 characters' })
-  name: string;
+  @ApiProperty({ required: false })
+  name?: string;
 
   @IsOptional()
   @IsString()
+  @IsUUID('4', { message: 'parentId must be a valid UUID' })
   @ApiProperty({ required: false })
-  parentId: string;
+  parentId?: string;
 }

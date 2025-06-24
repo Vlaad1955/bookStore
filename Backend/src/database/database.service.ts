@@ -6,17 +6,23 @@ import * as path from 'path';
 import * as process from 'process';
 import { Category } from './entities/category.entity';
 import { Book } from './entities/book.entity';
+import { Comment } from './entities/comment.entity';
+import { Basket } from './entities/basket.entity';
+import { BasketItem } from './entities/basket.item.entity';
+import { News } from './entities/news.entity';
+
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
   constructor(private readonly configService: ConfigService) {}
 
   createTypeOrmOptions(): TypeOrmModuleOptions {
-    const postgresUrl = this.configService.get<string>('config.databaseUrl'); // Використовуємо змінну середовища для URL
+    const postgresUrl = this.configService.get<string>('config.databaseUrl');
     return {
       type: 'postgres',
       url: postgresUrl,
-      entities: [User, Category, Book],
+      entities: [User, Category, Book, Comment, Basket, BasketItem, News],
+
       migrations: [
         path.join(process.cwd(), 'src', 'database', 'migrations', '*.ts'),
       ],

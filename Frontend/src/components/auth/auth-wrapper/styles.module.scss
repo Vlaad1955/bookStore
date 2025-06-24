@@ -1,0 +1,56 @@
+@import url(../../../assets/variables/variables.scss);
+
+.auth_container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  background-color: var(--color-blue-600);
+  border-radius: 8px;
+}
+
+.auth_wrapper {
+  margin: 20px;
+  padding: var(--p-6) var(--p-7);
+  background: var(--gradient-1);
+  border-radius: 1.625rem;
+}
+
+.auth_header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.header_title {
+  margin: 0;
+  color: var(--color-white-100);
+  font-weight: 500;
+  font-size: var(--font-size-level-2-heading);
+  line-height: var(--line-height-sub-heading);
+}
+
+.header_text {
+  display: flex;
+  align-items: center;
+  gap: var(--m-2);
+  color: var(--color-white-100);
+  font-size: var(--font-size-level-6-heading);
+}
+
+.header_link,
+.header_link:visited {
+  color: var(--color-white-100);
+  font-size: var(--font-size-level-6-heading);
+  text-decoration: none;
+}
+
+.header_link:hover {
+  text-decoration: underline;
+}
+
+.auth_body {
+  width: 100%;
+  margin-top: var(--m-4);
+  margin-bottom: var(--m-5);
+}

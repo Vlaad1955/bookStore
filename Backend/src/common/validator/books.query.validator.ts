@@ -1,11 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsArray,
+
   IsBoolean,
   IsEnum,
   IsNumber,
   IsNumberString,
   IsOptional,
   IsString,
+  IsUUID,
+
 } from 'class-validator';
 import { Transform, Type } from 'class-transformer';
 
@@ -32,6 +36,8 @@ export class BookQueryDto {
 
   @ApiProperty({ required: false, default: true })
   @IsOptional()
+  @Transform(({ value }) => value === 'true' || value === true)
+
   @IsBoolean()
   published?: boolean;
 
@@ -46,10 +52,23 @@ export class BookQueryDto {
   @IsString()
   search: string;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: false, type: [String], isArray: true })
   @IsOptional()
-  @IsString()
-  author?: string;
+  @Transform(({ value }: { value: string | string[] }) => {
+    let values: string[] = [];
+
+    if (Array.isArray(value)) {
+      values = value.flatMap((val) => val.split(','));
+    } else if (typeof value === 'string') {
+      values = value.split(',');
+    }
+
+    return values.map((v) => v.trim()).filter(Boolean);
+  })
+  @IsArray()
+  @IsString({ each: true })
+  author?: string[];
+
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -71,4 +90,12 @@ export class BookQueryDto {
   @Transform(({ value }) => value === 'true')
   @IsBoolean()
   gift?: boolean;
+
+  @ApiProperty({ required: false, type: [String] })
+  @IsOptional()
+  @Transform(({ value }) => (Array.isArray(value) ? value : [value]))
+  @IsArray()
+  @IsUUID('all', { each: true })
+  categories?: string[];
+
 }

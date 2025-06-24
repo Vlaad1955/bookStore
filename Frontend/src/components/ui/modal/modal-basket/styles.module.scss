@@ -1,0 +1,54 @@
+.overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+  border-radius: 8px;
+}
+
+.modal {
+  background-color: white;
+  padding: 1rem;
+  border-radius: 8px;
+  width: 90%;
+  max-width: 400px;
+  text-align: center;
+}
+
+.text {
+  margin-bottom: 1rem;
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.buttons {
+  display: flex;
+  justify-content: space-between;
+  flex-direction: column;
+}
+
+.confirm {
+  font-size: 14px;
+  border-radius: 8px;
+  margin-bottom: 5px;
+}
+
+.cancel {
+  font-size: 14px;
+
+  background-color: transparent;
+  color: #333;
+  border: 1px solid #ccc;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+
+  &:hover {
+    background-color: inherit;
+  }
+}

@@ -1,0 +1,77 @@
+.change_account_container {
+  max-width: 500px;
+  margin: 40px auto;
+  padding: 32px;
+  background-color: #f8f9fa;
+  border-radius: 16px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+}
+
+.change_account_title {
+  font-size: 24px;
+  font-weight: 600;
+  margin-bottom: 24px;
+  text-align: center;
+  color: #333;
+}
+
+.change_account_input {
+  width: 100%;
+  padding: 12px 16px;
+  margin-bottom: 16px;
+  border: 1px solid #ccc;
+  border-radius: 12px;
+  font-size: 16px;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+  &:focus {
+    border-color: #4f46e5;
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.2);
+    outline: none;
+  }
+
+  &:disabled {
+    background-color: #e9ecef;
+    cursor: not-allowed;
+  }
+}
+
+.change_account_button_submit {
+  width: 100%;
+  padding: 14px;
+  border-radius: 12px;
+  transition: background-color 0.3s ease;
+
+  &:hover:not(:disabled) {
+    background-color: #512ac7;
+  }
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.change_account_button_delete {
+  width: 100%;
+  padding: 14px;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: 500;
+  border-radius: 12px;
+  transition: background-color 0.3s ease;
+
+  &:disabled {
+    opacity: 0.7;
+    cursor: not-allowed;
+  }
+}
+
+.change_account_label {
+  color: #626b77;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 120%;
+  font-style: normal;
+  margin-bottom: 15px;
+}

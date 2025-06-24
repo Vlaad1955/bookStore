@@ -9,6 +9,7 @@ import { RedisModule } from '../redis/redis.module';
 import { JwtModule } from '@nestjs/jwt';
 import { BearerStrategy } from './bearer.strategy';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { EmailService } from '../email/email.service';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
     }),
   ],
   controllers: [AuthController],
-  providers: [AuthService, SupabaseService, BearerStrategy],
+  providers: [AuthService, SupabaseService, BearerStrategy, EmailService],
+  exports: [AuthService, JwtModule],
 })
 export class AuthModule {}

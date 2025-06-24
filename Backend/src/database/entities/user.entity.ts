@@ -1,5 +1,14 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import {
+  Column,
+  Entity,
+  OneToMany,
+  OneToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 import { BaseEntity } from './base.entity';
+import { Comment } from './comment.entity';
+import { Exclude } from 'class-transformer';
+import { Basket } from './basket.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -15,11 +24,12 @@ export class User extends BaseEntity {
   @Column('text', { nullable: false, unique: true })
   email: string;
 
+  @Exclude()
   @Column('text', { nullable: false })
   password: string;
 
-  @Column('integer', { nullable: true })
-  phone: number;
+  @Column('text', { nullable: true })
+  phone: string;
 
   @Column('integer', { nullable: true })
   age: number;
@@ -36,4 +46,10 @@ export class User extends BaseEntity {
 
   @Column({ default: 'User' })
   role: string;
+
+  @OneToMany(() => Comment, (comment) => comment.user, { cascade: true })
+  comments: Comment[];
+
+  @OneToOne(() => Basket, (basket) => basket.user, { cascade: true })
+  basket: Basket;
 }

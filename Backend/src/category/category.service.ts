@@ -1,8 +1,6 @@
-import {
-  Injectable,
-  NotFoundException,
-  UnauthorizedException,
-} from '@nestjs/common';
+
+import { Injectable, NotFoundException } from '@nestjs/common';
+
 import { CreateCategoryDto } from './dto/create-category.dto';
 import { UpdateCategoryDto } from './dto/update-category.dto';
 import { InjectRepository } from '@nestjs/typeorm';
@@ -70,39 +68,34 @@ export class CategoryService {
     });
 
     if (!category) {
-      return null;
+      throw new NotFoundException('Category not found');
     }
 
     return category;
   }
 
   async update(id: string, Dto: UpdateCategoryDto) {
-    const category = await this.categoryRepository.findOne({
-      where: { id },
-    });
-
-    if (!category) {
-      throw new NotFoundException('Category not found');
-    }
+    const category = await this.findOne(id);
 
     category.name = Dto.name ?? category.name;
     category.parentId = Dto.parentId ?? category.parentId;
 
     await this.categoryRepository.save(category);
 
-    return { message: 'Category successfully updated' };
+    return 'Category successfully updated';
   }
 
   async remove(id: string) {
-    const category = await this.categoryRepository.findOne({
-      where: { id: id },
-    });
-
-    if (!category) {
-      throw new UnauthorizedException('Category not found');
-    }
-
+    await this.findOne(id);
     await this.categoryRepository.delete(id);
-    return { message: 'Category successfully deleted' };
+    return 'Category successfully deleted';
+  }
+
+  async findMainCategories() {
+    return await this.categoryRepository.find({
+      where: {
+        parentId: IsNull(),
+      },
+    });
   }
 }

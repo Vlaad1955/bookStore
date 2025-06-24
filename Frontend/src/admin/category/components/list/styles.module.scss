@@ -1,0 +1,72 @@
+.card {
+    border: 1px solid #dee2e6;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+.mainCategory {
+    background-color: #ffffff;
+    padding: 12px;
+    border-radius: 8px;
+    margin-bottom: 12px;
+}
+
+.subcategory {
+    background-color: #f1f3f5;
+    padding: 10px;
+    border-radius: 8px;
+    margin-left: 20px;
+    margin-bottom: 8px;
+}
+
+.type {
+    font-size: 0.9rem;
+    color: #6c757d;
+    margin-bottom: 8px;
+}
+
+.buttons {
+    display: flex;
+    gap: 8px;
+}
+
+.buttons button {
+    padding: 6px 12px;
+    background-color: #007bff;
+    border: none;
+    border-radius: 4px;
+    color: white;
+    cursor: pointer;
+}
+
+.buttons button:hover {
+    background-color: #0056b3;
+}
+
+.buttons button:nth-child(2) {
+    background-color: #28a745;
+}
+
+.buttons button:nth-child(2):hover {
+    background-color: #1e7e34;
+}
+
+.subcategory .buttons button:nth-child(2) {
+    background-color: #dc3545;
+}
+
+.subcategory .buttons button:nth-child(2):hover {
+    background-color: #c82333;
+}
+
+@media (max-width: 600px) {
+    .card {
+        padding: 12px;
+    }
+
+    .mainCategory, .subcategory {
+        padding: 10px;
+    }
+}

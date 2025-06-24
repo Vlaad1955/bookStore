@@ -1,0 +1,187 @@
+@import url(../../assets/variables/variables.scss);
+
+.header {
+  width: 100%;
+  background: #ffffff;
+  color: black;
+  padding: 14px 16px;
+  display: block;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border-radius: 0 0 8px 8px;
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  border: 1px solid #eaeaea;
+}
+
+.header_container {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 28px;
+}
+
+.header_logo {
+  width: 100%;
+  max-width: 200px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.header_logo a {
+  color: #512ac7;
+  text-decoration: none;
+}
+
+.header_category {
+  max-width: 205px;
+  width: 100%;
+  height: 44px;
+  margin-right: 15px;
+}
+
+.category_list_container {
+  position: absolute;
+  top: 102%;
+  left: 0;
+}
+
+.header_search {
+  display: flex;
+  flex-grow: 1;
+  max-width: 776px;
+  border-radius: 4px;
+  color: black;
+  position: relative;
+}
+
+.header_search input {
+  border: 2px solid hsl(255, 65%, 47%);
+  outline: none;
+  color: #222;
+  font-family: "Mabry Pro", sans-serif;
+  font-weight: 400;
+  font-size: 15px;
+  line-height: 1;
+  font-style: normal;
+  padding-left: 38px;
+  padding-right: 48px;
+  width: 100%;
+  height: 44px;
+  caret-color: initial;
+  outline: none !important;
+  border-radius: 100px;
+  -webkit-transition: background-color 120ms ease;
+  -o-transition: background-color 120ms ease;
+  transition: background-color 120ms ease;
+  cursor: text;
+}
+
+.header_search svg {
+  position: absolute;
+  left: 16px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.header_search button {
+  border-radius: 0 100px 100px 0;
+  position: absolute;
+  right: 0;
+  width: 90px;
+  height: 44px;
+  font-size: 17px;
+}
+
+.header_about {
+  display: flex;
+  flex-direction: column;
+  max-width: 150px;
+}
+
+.header_about span {
+  font-size: 15px;
+  color: #666;
+  cursor: pointer;
+
+  &:hover {
+    color: #000;
+  }
+}
+
+.header_about_phone {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  margin-bottom: 5px;
+}
+
+.header_about_phone ~ span {
+  font-size: 14px;
+  color: #666;
+}
+
+.header_about,
+.header_cart,
+.header_login {
+  margin-left: 15px;
+  display: flex;
+  align-items: center;
+}
+
+.header_cart {
+  position: relative;
+  margin-right: 7px;
+}
+
+.header_cart_basket_quantity {
+  position: absolute;
+  top: -8px;
+  left: 25px;
+  background-color: #ff0000;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 12px;
+  position: absolute;
+  color: white;
+}
+
+.header_cart span,
+.header_login a {
+  font-size: 17px;
+  text-decoration: none;
+  color: #000;
+}
+
+.header_user {
+  position: absolute;
+  top: 60px;
+  right: 24px;
+  background-color: white;
+  color: black;
+  padding: 12px;
+  border-radius: 6px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  z-index: 1001;
+}
+
+.img {
+  margin-left: 4vh;
+  width: 7vh;
+  height: 7vh;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid #ccc;
+}

@@ -1,14 +1,7 @@
-"use client";
+import AuthWrapper from "@/components/auth/auth-wrapper/AuthWrapper";
+import SignUpForm from "@/components/auth/sign-up-form/SignUpForm";
+import { AppRoute } from "@/shared/auth/enums/app-route.enums";
 
-import { AppRoute } from "@/shared/enums/app-route.enums";
-import AuthWrapper from "@/components/auth/AuthWrapper";
-import SignUpForm from "@/components/auth/SignUpForm";
-
-export default function SignInPage() {
-  return (
-    <AuthWrapper
-      authPath={AppRoute.SIGN_IN}
-      screen={<SignUpForm onSubmit={(data) => console.log("Login:", data)} />}
-    />
-  );
+export default async function SignInPage() {
+  return <AuthWrapper authPath={AppRoute.SIGN_IN} screen={<SignUpForm />} />;
 }

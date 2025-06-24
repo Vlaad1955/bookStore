@@ -1,0 +1,175 @@
+.book_menu_wrapper {
+  width: 350px;
+  overflow-y: visible;
+  overflow-x: visible;
+  position: relative;
+  top: 0;
+  left: 0;
+  z-index: 1000;
+  display: flex;
+  flex-direction: column;
+  background-color: #cdddba;
+  font-family: sans-serif;
+  background-color: #ffffff;
+  border-top: 1px solid #eaeaea;
+  border-right: 1px solid #eaeaea;
+  border-left: 1px solid #eaeaea;
+  border-radius: 8px;
+}
+
+.book_menu_top {
+  display: flex;
+  justify-content: space-between;
+  box-sizing: border-box;
+  align-items: center;
+  width: 100%;
+  height: auto;
+  color: black;
+  padding: 15px 15px 0 15px;
+}
+
+.book_menu_title {
+  display: flex;
+  flex-direction: column;
+  font-size: 18px;
+  line-height: 1;
+  color: #222;
+  font-family: "Mabry Pro", sans-serif;
+  font-weight: 700;
+  gap: 10px;
+}
+
+.book_menu_all_books {
+  width: 85px;
+  text-align: center;
+  padding: 5px;
+  cursor: pointer;
+  color: #5b636f;
+  font-size: 15px;
+  line-height: 1;
+  border: 1px solid #5b636f;
+  border-radius: 8px;
+
+  &:hover {
+    background: #5b636f;
+    color: white;
+  }
+}
+
+.book_main_menu {
+  list-style: none;
+  width: 100%;
+  padding-top: 20px;
+}
+
+.category_item {
+  width: 100%;
+}
+
+.category_item::before {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #e9e4e4;
+}
+
+.category_item:last-child::after {
+  content: "";
+  display: block;
+  width: 100%;
+  height: 1px;
+  background-color: #e9e4e4;
+}
+
+.category_item_list {
+  display: flex;
+  justify-content: space-between;
+  padding: 20px 20px 20px 0;
+}
+
+.category_item_list:hover {
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.category_title {
+  cursor: pointer;
+  color: #5b636f;
+  font-size: 15px;
+  line-height: 1;
+  padding: 0 0 0 15px;
+}
+
+.category_sub_menu {
+  border-radius: 8px;
+
+  list-style: none;
+  margin-left: 0.5px;
+  position: absolute;
+  top: 0;
+  left: 100.4%;
+  background-color: #fff;
+  width: 250px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  z-index: 100;
+
+  opacity: 0;
+  transform: translateX(10px);
+  pointer-events: none;
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+.category_item:hover .category_sub_menu {
+  opacity: 1;
+  transform: translateX(0);
+  pointer-events: auto;
+}
+
+.ui_btn_close {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: none;
+  background: inherit;
+}
+
+.ui_btn_close:hover {
+  background-color: #b7b7b8;
+  transition: all 0.5s ease;
+}
+
+.category_props {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: auto;
+  margin-bottom: 20px;
+}
+
+.category_books {
+  color: #4f4f4f;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 130%;
+  font-family: "Mabry Pro", sans-serif;
+  font-style: normal;
+  width: 100px;
+}
+
+.category_name {
+  width: 100%;
+  height: auto;
+  font-size: 24px;
+  line-height: 100%;
+  color: #5b636f;
+  font-family: "Mabry Pro", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+  color: #222;
+  padding-top: 10px;
+}

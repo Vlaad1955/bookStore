@@ -1,0 +1,62 @@
+.sidebar {
+    width: 250px;
+    height: 80vh;
+    background: #ffffff;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    padding: 20px;
+    margin-top: 5vh;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eaeaea;
+}
+
+.menu {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.sign_out {
+    background: none;
+    border: 1px solid #777;
+    color: black;
+    padding: 10px;
+    text-align: center;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.sign_out:hover {
+    background-color: #f0f0f0;
+}
+
+.menu h4 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 15px;
+    color: #666;
+}
+
+.adminLayout {
+    display: flex;      /* флекс-контейнер */
+    height: 100vh;      /* повна висота вікна */
+}
+
+.mainContent {
+    flex: 1;
+    padding: 20px;
+    margin-top: 5vh;
+    margin-left: 5vh;
+    overflow-y: auto;
+    height: 80vh;
+    background: #ffffff;
+    color: black;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    box-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    border: 1px solid #eaeaea;
+}

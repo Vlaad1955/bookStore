@@ -1,20 +1,38 @@
 "use client";
 
-import {useState, useEffect} from "react";
-import {useRouter} from "next/navigation";
-import {createNews} from "@/admin/news/api/news";
-import styles from "@/admin/news/components/edit-form/styles.module.scss";
+import { useForm } from "react-hook-form";
+import { joiResolver } from "@hookform/resolvers/joi";
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import Image from "next/image";
+import { createNewsSchema } from "@/shared/validation-schemas/create-news.validation-schema";
+import { createNews } from "@/admin/news/api/news";
+import styles from "@/admin/news/components/edit-form/styles.module.scss";
+
+interface FormFields {
+    title: string;
+    content: string;
+    category: "general" | "promotion" | "event";
+}
 
 export default function CreateNewsForm() {
     const router = useRouter();
-
-    const [title, setTitle] = useState("");
-    const [content, setContent] = useState("");
-    const [category, setCategory] = useState("general");
     const [image, setImage] = useState<File | null>(null);
     const [imagePreview, setImagePreview] = useState<string | null>(null);
-    const [error, setError] = useState("");
+    const [submitError, setSubmitError] = useState("");
+
+    const {
+        register,
+        handleSubmit,
+        formState: { errors },
+    } = useForm<FormFields>({
+        resolver: joiResolver(createNewsSchema),
+        defaultValues: {
+            title: "",
+            content: "",
+            category: "general",
+        },
+    });
 
     useEffect(() => {
         if (!image) {
@@ -28,64 +46,54 @@ export default function CreateNewsForm() {
         return () => URL.revokeObjectURL(objectUrl);
     }, [image]);
 
-    const handleSubmit = async (e: React.FormEvent) => {
-        e.preventDefault();
-        setError("");
+    const onSubmit = async (data: FormFields) => {
+        setSubmitError("");
 
         if (!image) {
-            setError("Зображення обов'язкове");
+            setSubmitError("Зображення обов'язкове");
             return;
         }
 
         try {
-            const newsData = {title, content, category};
-            await createNews(newsData, image);
-
+            await createNews(data, image);
             router.push("/admin/news/1");
         } catch (err: any) {
-            setError(err.response?.data?.message || "Помилка при створенні новини");
-        } finally {
+            setSubmitError(err.response?.data?.message || "Помилка при створенні новини");
         }
     };
 
     return (
-        <form onSubmit={handleSubmit} className={styles.form}>
+        <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
             <h2 className={styles.title}>Створити новину</h2>
-            {error && <p className={styles.error}>{error}</p>}
+
+            {submitError && <p className={styles.error}>{submitError}</p>}
 
             <input
                 type="text"
                 placeholder="🖉 Заголовок"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
+                {...register("title")}
                 className={styles.input}
             />
+            {errors.title && <p className={styles.error}>{errors.title.message}</p>}
 
             <textarea
                 placeholder="🖉 Контент"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                required
+                {...register("content")}
                 className={styles.textarea}
             />
+            {errors.content && <p className={styles.error}>{errors.content.message}</p>}
 
-            <select
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                required
-                className={styles.input}
-            >
+            <select {...register("category")} className={styles.input}>
                 <option value="general">Загальна</option>
                 <option value="promotion">Акція</option>
                 <option value="event">Подія</option>
             </select>
+            {errors.category && <p className={styles.error}>{errors.category.message}</p>}
 
             <input
                 type="file"
                 accept="image/*"
                 onChange={(e) => setImage(e.target.files?.[0] || null)}
-                required
                 className={styles.file}
             />
 
@@ -102,7 +110,9 @@ export default function CreateNewsForm() {
                 </div>
             )}
 
-            <button type="submit" className={styles.submitButton}></button>
+            <button type="submit" className={styles.submitButton}>
+                Створити
+            </button>
         </form>
     );
 }

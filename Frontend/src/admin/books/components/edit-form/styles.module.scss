@@ -1,3 +1,8 @@
+.error {
+    color: red;
+    font-size: 14px;
+    margin-top: 4px;
+}
 
 .form {
     max-width: 900px;
@@ -22,7 +27,7 @@
     color: #fff;
 }
 
-/* Додаємо іконку 🖉 перед текстом label */
+
 .label::before {
     content: "🖉 ";
     display: inline-block;
@@ -42,7 +47,7 @@
     flex-direction: column;
 }
 
-/* Другий ряд - для чекбокса */
+
 .colCheckbox {
     display: flex;
     align-items: center;

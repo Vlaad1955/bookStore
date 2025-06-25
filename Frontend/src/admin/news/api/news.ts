@@ -1,5 +1,5 @@
 import axiosInstance from "@/features/auth/auth-axios-instance/axiosInstance";
-import { News, UpdateNewsDto } from "@/features/news/types/news";
+import { UpdateNewsDto } from "@/features/news/types/news";
 
 export async function getAllNews(queryParams: unknown) {
   const response = await axiosInstance.get("/news/list", {
@@ -13,7 +13,7 @@ export async function getOneNews(id: string) {
   return response.data;
 }
 
-export async function createNews(newsData: News, imageFile: File) {
+export async function createNews(newsData: UpdateNewsDto, imageFile: File) {
   const formData = new FormData();
   formData.append("image", imageFile);
   formData.append("title", newsData.title);

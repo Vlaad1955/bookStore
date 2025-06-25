@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import { authService } from "@/shared/auth/auth-service/authService";
+import { authService } from "@/features/auth/auth-service/authService";
 import { Input } from "../../ui/input/Input";
 import { Button } from "@/components/ui/button/Button";
 import styles from "./styles.module.scss";

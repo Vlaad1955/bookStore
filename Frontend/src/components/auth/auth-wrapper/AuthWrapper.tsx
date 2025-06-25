@@ -5,7 +5,7 @@ import { usePathname } from "next/navigation";
 
 import { getText } from "@/helpers/get-text-to-path/getTextToPath";
 import styles from "./styles.module.scss";
-import {AppRoute} from "@/shared/auth/enums/app-route.enums";
+import {AppRoute} from "@/features/auth/enums/app-route.enums";
 
 type AuthWrapperProps = {
   authPath: string;

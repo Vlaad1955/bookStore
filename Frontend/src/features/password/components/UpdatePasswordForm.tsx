@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button/Button";
 import { InputType } from "@/components/ui/input/input-type/input-type.enum";
 import { ButtonType } from "@/components/ui/button/button-type/button-type.enum";
 import {updatePasswordSchema} from "@/shared/validation-schemas/update-password.validation-schema";
-import {userApi} from "@/user/user/user-api/userApi";
+import {userApi} from "@/features/user/user-api/userApi";
 import {useRouter} from "next/navigation";
 
 interface UpdatePasswordFormFields {

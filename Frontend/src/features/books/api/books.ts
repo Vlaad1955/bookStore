@@ -1,4 +1,4 @@
-import axiosInstance from "@/shared/auth/auth-axios-instance/axiosInstance";
+import axiosInstance from "@/features/auth/auth-axios-instance/axiosInstance";
 import { FetchBooksOptions, Book } from "@/features/books/types/book";
 import { retryAsync } from "@/shared/hooks/retry/useRetry.hook";
 

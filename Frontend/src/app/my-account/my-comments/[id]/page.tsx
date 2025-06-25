@@ -23,8 +23,6 @@ export default async function MyCommentsPage({
 
   const hasComments = data.entities.length > 0;
 
-  console.log("Fetched comments data:", data);
-
   return (
     <ProtectedRoute>
       {hasComments ? (

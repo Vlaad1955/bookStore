@@ -1,4 +1,4 @@
-import axiosInstance from "@/shared/auth/auth-axios-instance/axiosInstance";
+import axiosInstance from "@/features/auth/auth-axios-instance/axiosInstance";
 
 export const newsApi = {
   getNewsList: (params: {

@@ -3,9 +3,9 @@
 import Link from "next/link";
 import { FaInstagram, FaFacebook, FaTelegram } from "react-icons/fa";
 
-import { AppRoute } from "@/shared/auth/enums/app-route.enums";
 import PhoneIcon from "@/assets/icons/phoneIcon";
 import styles from "./styles.module.scss";
+import { AppRoute } from "@/features/auth/enums/app-route.enums";
 
 export default function Footer() {
   const scrollToTop = () => {
@@ -16,7 +16,7 @@ export default function Footer() {
     <footer className={styles.footer}>
       <div className={styles.container}>
         <div className={styles.container}>
-          <div className={styles.icons}>
+          <nav className={styles.icons}>
             <a href="#">
               <FaInstagram />
             </a>
@@ -26,10 +26,10 @@ export default function Footer() {
             <a href="#">
               <FaTelegram />
             </a>
-          </div>
+          </nav>
         </div>
 
-        <div className={styles.column}>
+        <section className={styles.column} aria-labelledby="buyers-title">
           <h3>Покупцям</h3>
           <ul>
             <li>
@@ -43,21 +43,21 @@ export default function Footer() {
             </li>
           </ul>
           <div className={styles.year}>© 2025</div>
-        </div>
+        </section>
 
-        <div className={styles.column}>
+        <section className={styles.column} aria-labelledby="contacts-title">
           <h3>Контакти</h3>
           <p>
             <PhoneIcon /> 0-800-800-800
           </p>
           <p>wylf1312@gmail.com</p>
-        </div>
+        </section>
 
-        <div className={styles.column}>
+        <section className={styles.column}>
           <button onClick={scrollToTop} className={styles.scroll_button}>
             Нагору
           </button>
-        </div>
+        </section>
       </div>
     </footer>
   );

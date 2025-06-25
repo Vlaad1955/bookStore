@@ -1,4 +1,4 @@
-import axiosInstance from "@/shared/auth/auth-axios-instance/axiosInstance";
+import axiosInstance from "@/features/auth/auth-axios-instance/axiosInstance";
 import { News, UpdateNewsDto } from "@/features/news/types/news";
 
 export async function getAllNews(queryParams: unknown) {

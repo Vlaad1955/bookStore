@@ -7,13 +7,14 @@ import Form from "next/form";
 
 import { Button } from "@/components/ui/button/Button";
 import { Input } from "../../ui/input/Input";
-import { useAuthStore } from "@/shared/auth/auth-store/useAuthStore";
+import { useAuthStore } from "@/features/auth/auth-store/useAuthStore";
 import { useAppForm } from "@/shared/hooks/use-app-form/useAppForm.hook";
 import { ButtonType } from "@/components/ui/button/button-type/button-type.enum";
 import { InputType } from "@/components/ui/input/input-type/input-type.enum";
-import { UserSignUpRequestDto } from "@/shared/auth/authTypes/user-sign-up-request-dto";
+import { UserSignUpRequestDto } from "@/features/auth/authTypes/user-sign-up-request-dto";
+import { DEFAULT_SIGN_UP_PAYLOAD } from "@/features/auth/constants/DEFAULT_SIGN_UP_PAYLOAD";
 import { userSignUpValidationSchema } from "@/shared/validation-schemas/validation-schemas";
-import { DEFAULT_SIGN_UP_PAYLOAD } from "@/shared/auth/constants/DEFAULT_SIGN_UP_PAYLOAD";
+
 import styles from "./styles.module.scss";
 
 const SignUpForm = () => {

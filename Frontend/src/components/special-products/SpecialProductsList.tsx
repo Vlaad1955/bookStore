@@ -36,7 +36,7 @@ const SpecialProductsList: React.FC<BookWrapperProps> = ({
   };
 
   return (
-    <div className={styles.specialproducts_container}>
+    <section className={styles.specialproducts_container}>
       <div className={styles.specialproducts_title}>
         <Link
           onClick={() => handleClick(categoryName)}
@@ -66,7 +66,7 @@ const SpecialProductsList: React.FC<BookWrapperProps> = ({
           →
         </Button>
       </div>
-    </div>
+    </section>
   );
 };
 

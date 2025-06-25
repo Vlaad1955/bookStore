@@ -8,11 +8,11 @@ import Image from "next/image";
 import CategoryList from "../../features/categories/components/CategoryList";
 import SearchBar from "../search/SearchBar";
 import { Button } from "../ui/button/Button";
-import { useAuthStore } from "@/shared/auth/auth-store/useAuthStore";
-import { useUserStore } from "@/user/user/store/UseUserStore";
+import { useAuthStore } from "@/features/auth/auth-store/useAuthStore";
+import { useUserStore } from "@/features/user/store/UseUserStore";
 import { useBasketStore } from "@/features/basket/store/basket";
 import { useCategoryListStore } from "@/features/categories/store/category";
-import { AppRoute } from "@/shared/auth/enums/app-route.enums";
+import { AppRoute } from "@/features/auth/enums/app-route.enums";
 import MenuIcon from "@/assets/icons/menuIcon";
 import UserIcon from "@/assets/icons/userIcon";
 import PhoneIcon from "@/assets/icons/phoneIcon";
@@ -64,21 +64,25 @@ const Header = () => {
           <MenuIcon />
           <Link href={AppRoute.ROOT}>BookOutFit</Link>
         </div>
-        <Button
-          // ref={catalogButtonRef}
-          className={styles.header_category}
-          onClick={toggleList}
-        >
-          <CategoriesIcon />
-          <span>Каталог книг</span>
-        </Button>
 
-        <div
-          //  ref={catalogListRef}
-          className={styles.category_list_container}
-        >
-          <CategoryList />
-        </div>
+        <nav aria-label="Каталог книг">
+          <Button
+            // ref={catalogButtonRef}
+            className={styles.header_category}
+            onClick={toggleList}
+            aria-controls="category-list"
+          >
+            <CategoriesIcon />
+            <span>Каталог книг</span>
+          </Button>
+
+          <div
+            //  ref={catalogListRef}
+            className={styles.category_list_container}
+          >
+            <CategoryList />
+          </div>
+        </nav>
 
         <SearchBar
           value={searchTerm}
@@ -98,6 +102,7 @@ const Header = () => {
           className={styles.header_cart}
           variant={ButtonVariant.TRANSPARENT}
           size={ButtonSize.SMALL}
+          aria-label="Перейти в кошик"
           onClick={() => router.push(AppRoute.BASKET)}
         >
           <ShoppingCartIcon />
@@ -111,7 +116,11 @@ const Header = () => {
 
         {isAuthenticated ? (
           <>
-            <Button onClick={() => setIsOpenUser(!isOpenUser)}>
+            <Button
+              aria-haspopup="true"
+              aria-expanded={isOpenUser ? "true" : "false"}
+              onClick={() => setIsOpenUser(!isOpenUser)}
+            >
               {user?.firstName[0].toUpperCase()}
               {user?.lastName[0].toUpperCase()}
             </Button>

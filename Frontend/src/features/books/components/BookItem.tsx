@@ -7,7 +7,7 @@ import React, { useState } from "react";
 import CategoryProps from "../../categories/components/CategoryProps";
 import ModalBasket from "../../../components/ui/modal/modal-basket/ModalBasket";
 import { Button } from "../../../components/ui/button/Button";
-import { useUserStore } from "@/user/user/store/UseUserStore";
+import { useUserStore } from "@/features/user/store/UseUserStore";
 import { useBookStore } from "@/features/books/store/book";
 import { useBasketStore } from "@/features/basket/store/basket";
 import { Book } from "@/features/books/types/book";
@@ -27,8 +27,6 @@ const BookItem = ({ book }: BooksItemProps) => {
     (state) => state.setSelectedCategories
   );
 
-  console.log("book", book);
-
   const basketItem = basket?.items.find((item) => item.book.id === book.id);
 
   const handleBuyClick = () => {
@@ -47,11 +45,11 @@ const BookItem = ({ book }: BooksItemProps) => {
   const bookCover = book.cover === "firm" ? "Тверда" : "Мяка";
 
   return (
-    <div>
+    <article>
       <CategoryProps basePath="/dashboard/books" />
 
       <div className={styles.book_item_wrapper}>
-        <div>
+        <figure>
           <Image
             className={styles.book_item_image}
             src={book.image}
@@ -59,13 +57,13 @@ const BookItem = ({ book }: BooksItemProps) => {
             width={500}
             height={500}
           />
-        </div>
+        </figure>
 
-        <div>
+        <section>
           <div className={styles.book_item_title}>{book.title}</div>
           <div className={styles.book_item_author}>{book.author}</div>
 
-          <div className={styles.book_item_price}>
+          <section className={styles.book_item_price}>
             <span className={styles.book_item_price_format}>Формат</span>
             <div className={styles.book_item_price_details}>
               <div className={styles.book_item_price_details_cover}>
@@ -73,7 +71,7 @@ const BookItem = ({ book }: BooksItemProps) => {
               </div>
               <div>{book.price} грн</div>
             </div>
-          </div>
+          </section>
 
           {book.gift && (
             <div className={styles.book_item_gift}>Подарункове</div>
@@ -83,7 +81,7 @@ const BookItem = ({ book }: BooksItemProps) => {
             <div className={styles.book_item_published}>В наявності</div>
           )}
 
-          <div>
+          <section>
             <div className={styles.book_item_category}>Категорії</div>
             <div className={styles.book_item_category_list}>
               {book.categories.map((category) => (
@@ -97,18 +95,18 @@ const BookItem = ({ book }: BooksItemProps) => {
                 </Link>
               ))}
             </div>
-          </div>
+          </section>
 
-          <div className={styles.book_item_description}>
+          <section className={styles.book_item_description}>
             <div className={styles.book_item_description_title}>
               Короткий опис книги
             </div>
             <div className={styles.book_item_description_body}>
               {book.description}
             </div>
-          </div>
+          </section>
 
-          <div className={styles.book_item_isbn}>
+          <section className={styles.book_item_isbn}>
             <Button
               className={styles.book_item_basket}
               onClick={handleBuyClick}
@@ -133,16 +131,16 @@ const BookItem = ({ book }: BooksItemProps) => {
                 <DeleteBasket />
               </Button>
             )}
-          </div>
+          </section>
 
           <ModalBasket
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
             onConfirm={() => router.push("/auth/sign-in")}
           />
-        </div>
+        </section>
       </div>
-    </div>
+    </article>
   );
 };
 

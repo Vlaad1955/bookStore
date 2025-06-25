@@ -1,10 +1,10 @@
 import { create } from "zustand";
 import { authService } from "../auth-service/authService";
-import { UserSignInRequestDto } from "@/shared/auth/authTypes/user-sign-in-request-dto";
-import { UserSignUpRequestDto } from "@/shared/auth/authTypes/user-sign-up-request-dto";
-import { userApi } from "@/user/user/user-api/userApi";
-import { useUserStore } from "@/user/user/store/UseUserStore";
+import { userApi } from "@/features/user/user-api/userApi";
+import { useUserStore } from "@/features/user/store/UseUserStore";
 import { tokenStorage } from "@/shared/token/UseTokenStore";
+import { UserSignInRequestDto } from "../authTypes/user-sign-in-request-dto";
+import { UserSignUpRequestDto } from "../authTypes/user-sign-up-request-dto";
 
 interface AuthState {
   isAuthenticated: boolean;

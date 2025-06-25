@@ -18,9 +18,9 @@ export default function NewsWrapper({ newsData }: { newsData: NewsDataProps }) {
   return (
     <>
       <div className={styles.news_list_title}>Новини та нові надходження</div>
-      <div className={styles.news_list_container}>
+      <article className={styles.news_list_container}>
         {newsData.entities.map((item) => (
-          <div className={styles.news_list_item_container} key={item.id}>
+          <section className={styles.news_list_item_container} key={item.id}>
             {item.image && (
               <Link href={`/my-account/news/${item.id}`}>
                 <Image
@@ -53,9 +53,9 @@ export default function NewsWrapper({ newsData }: { newsData: NewsDataProps }) {
                 Перейти до новини
               </Button>
             </div>
-          </div>
+          </section>
         ))}
-      </div>
+      </article>
     </>
   );
 }

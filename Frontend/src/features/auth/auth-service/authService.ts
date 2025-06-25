@@ -1,9 +1,9 @@
 import { authApi } from "../auth-api/authApi";
 import { isTokenValid } from "@/shared/token/decodeToken";
-import { UserSignInRequestDto } from "@/shared/auth/authTypes/user-sign-in-request-dto";
-import { UserSignUpRequestDto } from "@/shared/auth/authTypes/user-sign-up-request-dto";
 import axiosInstance from "../auth-axios-instance/axiosInstance";
 import { tokenStorage } from "@/shared/token/UseTokenStore";
+import { UserSignInRequestDto } from "../authTypes/user-sign-in-request-dto";
+import { UserSignUpRequestDto } from "../authTypes/user-sign-up-request-dto";
 
 class AuthService {
   private isLoading = false;

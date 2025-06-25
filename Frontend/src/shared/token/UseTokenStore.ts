@@ -1,6 +1,6 @@
-const SECRET_KEY = "simple_key_123"; // 🔐 Замінити у продакшні на надійний ключ
+const SECRET_KEY = process.env.NEXT_PUBLIC_ENCRYPTION_KEY;
 const TOKEN_KEY = "accessToken";
-const TOKEN_SEPARATOR = "::"; // 🔍 Явно вказаний роздільник
+const TOKEN_SEPARATOR = "::";
 
 function encrypt(text: string): string {
   return btoa(`${SECRET_KEY}${TOKEN_SEPARATOR}${text}`);

@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
-import { useAuthStore } from "../auth/auth-store/useAuthStore";
+import { useAuthStore } from "@/features/auth/auth-store/useAuthStore";
 
 const ProtectedRoute = ({ children }: { children: React.ReactNode }) => {
   const { isAuthenticated, isInitialized } = useAuthStore();

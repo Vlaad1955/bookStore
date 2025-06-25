@@ -5,7 +5,7 @@ import { useState } from "react";
 import { Button } from "@/components/ui/button/Button";
 import { Comment } from "@/features/comments/types/comments";
 import { deleteComment, updateComment } from "@/features/comments/api/comments";
-import { useUserStore } from "@/user/user/store/UseUserStore";
+import { useUserStore } from "@/features/user/store/UseUserStore";
 import { ButtonVariant } from "@/components/ui/button/button-type/button-variant.enum";
 import styles from "./styles.module.scss";
 
@@ -46,7 +46,7 @@ const CommentItem = ({ comment, onDelete, onUpdate }: CommentItemProps) => {
   };
 
   return (
-    <div className={styles.comment_item_container}>
+    <article className={styles.comment_item_container}>
       {isEditing ? (
         <>
           <div className={styles.comment_item_description}>
@@ -107,7 +107,7 @@ const CommentItem = ({ comment, onDelete, onUpdate }: CommentItemProps) => {
           )}
         </>
       )}
-    </div>
+    </article>
   );
 };
 

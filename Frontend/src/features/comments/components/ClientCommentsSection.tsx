@@ -27,7 +27,7 @@ const ClientCommentsSection = ({
     setComments((prev) => prev.map((c) => (c.id === id ? { ...c, text } : c)));
 
   return (
-    <div className={styles.comment_section_container}>
+    <section className={styles.comment_section_container}>
       <div className={styles.comment_section_title}>
         Відгуки {comments.length > 0 ? comments.length : "відсутні"}
       </div>
@@ -45,7 +45,7 @@ const ClientCommentsSection = ({
           />
         ))
       )}
-    </div>
+    </section>
   );
 };
 

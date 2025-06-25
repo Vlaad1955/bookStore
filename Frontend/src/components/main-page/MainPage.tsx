@@ -6,7 +6,7 @@ import styles from "./styles.module.scss";
 
 const MainPage = () => {
   return (
-    <div className={styles.main_container}>
+    <section className={styles.main_container}>
       <div className={styles.main_side_bar}>
         <div className={styles.main_title}>Знайди себе між рядків</div>
       </div>
@@ -14,7 +14,7 @@ const MainPage = () => {
       <NewsSpecail />
       <SpecialProducts categoryName="Дитяча література" />
       <SpecialProducts categoryName="Книги-іграшки" />
-    </div>
+    </section>
   );
 };
 

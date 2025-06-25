@@ -1,4 +1,4 @@
-import { AppRoute } from "@/shared/auth/enums/app-route.enums";
+import { AppRoute } from "@/features/auth/enums/app-route.enums";
 
 const getText = (pathname: string, type: string): string => {
   type Properties = Record<string, string>;

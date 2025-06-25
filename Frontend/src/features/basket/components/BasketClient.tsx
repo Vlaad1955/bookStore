@@ -5,7 +5,7 @@ import { toast } from "react-toastify";
 import { Button } from "@/components/ui/button/Button";
 import { useCallback, useEffect, useState } from "react";
 
-import { useUserStore } from "@/user/user/store/UseUserStore";
+import { useUserStore } from "@/features/user/store/UseUserStore";
 import { useBasketStore } from "../store/basket";
 import { ButtonVariant } from "@/components/ui/button/button-type/button-variant.enum";
 import styles from "./styles.module.scss";
@@ -71,18 +71,18 @@ const BasketClient = () => {
   }, [clearBasket]);
 
   return (
-    <>
-      <div className={styles.basket_container}>
+    <article>
+      <section className={styles.basket_container}>
         <div className={styles.basket_title}>Кошик</div>
         <Button className={styles.basket_button_delete} onClick={handleClear}>
           Очистити корзину повністю
         </Button>
-      </div>
+      </section>
 
-      <div className={styles.basket_items}>
+      <section className={styles.basket_items}>
         {" "}
         {!basket?.items?.length && (
-          <div className={styles.basket_items_empty_container}>
+          <section className={styles.basket_items_empty_container}>
             <div className={styles.basket_items_empty}>Кошик порожній</div>
             <Link
               className={styles.basket_items_add_button}
@@ -93,12 +93,12 @@ const BasketClient = () => {
                 <div className={styles.basket_items_add_book_plus}>+</div>
               </div>
             </Link>
-          </div>
+          </section>
         )}
-        <div className={styles.basket_items_list}>
+        <section className={styles.basket_items_list}>
           {basket?.items?.map((item) => (
             <div key={item.id} className={styles.basket_item}>
-              <div className={styles.basket_item_content}>
+              <section className={styles.basket_item_content}>
                 <Image
                   className={styles.book_item_image}
                   src={item.book.image}
@@ -123,10 +123,10 @@ const BasketClient = () => {
                     <div>Ціна: {item.book.price} грн</div>
                   </div>
                 </div>
-              </div>
+              </section>
 
-              <div className={styles.basket_item_button_container}>
-                <div className={styles.basket_item_quantity}>
+              <section className={styles.basket_item_button_container}>
+                <section className={styles.basket_item_quantity}>
                   <Button
                     className={styles.basket_item_quantity_button}
                     onClick={() =>
@@ -154,7 +154,7 @@ const BasketClient = () => {
                   >
                     +
                   </Button>
-                </div>
+                </section>
 
                 <Button
                   variant={ButtonVariant.DELETE}
@@ -166,12 +166,12 @@ const BasketClient = () => {
                     ? "Видаляю..."
                     : "Видалити з кошика"}
                 </Button>
-              </div>
+              </section>
             </div>
           ))}
-        </div>
-      </div>
-    </>
+        </section>
+      </section>
+    </article>
   );
 };
 

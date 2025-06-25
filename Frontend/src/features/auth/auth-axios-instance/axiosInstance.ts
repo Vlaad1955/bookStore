@@ -2,7 +2,11 @@ import axios from "axios";
 import { useAuthStore } from "../auth-store/useAuthStore";
 import { tokenStorage } from "@/shared/token/UseTokenStore";
 
-const API_URL = "http://localhost:4000"; // Заміни на свій бекенд URL
+const API_URL = process.env.NEXT_PUBLIC_API_URL;
+
+if (!API_URL) {
+  throw new Error("API URL is not defined in environment variables");
+}
 
 const axiosInstance = axios.create({
   baseURL: API_URL,

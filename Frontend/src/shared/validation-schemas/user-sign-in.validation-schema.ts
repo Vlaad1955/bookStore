@@ -1,7 +1,7 @@
 import joi from "joi";
 
-import { UserValidationMessage } from "../../user/user-validation-message.enum";
-import { type UserSignInRequestDto } from "../auth/authTypes/user-sign-in-request-dto";
+import { UserValidationMessage } from "../../features/user/user-validation-message.enum";
+import { type UserSignInRequestDto } from "@/features/auth/authTypes/user-sign-in-request-dto";
 
 const userSignIn = joi.object<UserSignInRequestDto, true>({
   email: joi

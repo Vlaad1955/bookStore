@@ -1,5 +1,6 @@
 import {
   BadRequestException,
+  ForbiddenException,
   Injectable,
   NotFoundException,
   UnauthorizedException,
@@ -11,6 +12,8 @@ import { FindOptionsWhere, Repository } from 'typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { UsersQueryDto } from '../common/validator/users.query.validator';
 import { plainToClass } from 'class-transformer';
+import { ConfigService } from '@nestjs/config';
+import { SupabaseService } from '../database/supabase.service';
 
 @Injectable()
 export class UsersService {
@@ -18,6 +21,8 @@ export class UsersService {
     @InjectRepository(User)
     private readonly userRepository: Repository<User>,
     private readonly jwtService: JwtService,
+    private readonly configService: ConfigService,
+    private readonly supabaseService: SupabaseService,
   ) {}
 
   async findAll(query: UsersQueryDto = {} as UsersQueryDto) {
@@ -124,15 +129,11 @@ export class UsersService {
   }
 
   async remove(id: string, userId: string) {
-    const user = await this.findOne(id);
-
-    if (user.id !== userId) {
-      throw new UnauthorizedException('Only the user can delete his account');
+    if (id !== userId) {
+      throw new ForbiddenException('Only the user can delete his account');
     }
 
-    await this.userRepository.delete(id);
-
-    return 'Account successfully deleted';
+    return this.exclude(id);
   }
 
   async findOneTo(userId: string) {
@@ -150,5 +151,26 @@ export class UsersService {
     });
 
     return usersWithoutPassword;
+  }
+
+  async exclude(id: string) {
+    const user = await this.findOne(id);
+
+    const defaultImageUrl = this.configService.get<string>(
+      'config.supabase.defaultImageUrl',
+    );
+    const bucketName = this.configService.get<string>('config.supabase.bucket');
+
+    if (!defaultImageUrl || !bucketName) {
+      throw new Error('Supabase config values are missing');
+    }
+
+    if (user.image && user.image !== defaultImageUrl) {
+      await this.supabaseService.removeFile(user.image, bucketName);
+    }
+
+    await this.userRepository.delete(id);
+
+    return 'Account successfully deleted';
   }
 }

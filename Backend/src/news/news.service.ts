@@ -21,8 +21,8 @@ export class NewsService {
   ) {}
 
   async create(Dto: CreateNewsDto) {
-    const news = await this.newsRepository.create(Dto);
-    this.newsRepository.save(news);
+    const news = this.newsRepository.create(Dto);
+    await this.newsRepository.save(news);
     return 'Creat News successfully';
   }
 
@@ -121,6 +121,18 @@ export class NewsService {
 
     if (!news) {
       throw new NotFoundException('News not found');
+    }
+
+    const bucketName = this.configService.get<string>(
+      'config.supabase.bucketNews',
+    );
+
+    if (!bucketName) {
+      throw new Error('Supabase config values are missing');
+    }
+
+    if (news.image) {
+      await this.supabaseService.removeFile(news.image, bucketName);
     }
 
     await this.newsRepository.delete(id);

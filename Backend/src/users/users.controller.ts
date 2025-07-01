@@ -58,4 +58,11 @@ export class UsersController {
   remove(@Param('id') id: string, @User('id') userId: string) {
     return this.usersService.remove(id, userId);
   }
+
+  @Roles('Admin')
+  @UseGuards(AuthGuard(), RoleGuard)
+  @Delete('exclude/:id')
+  exclude(@Param('id') id: string) {
+    return this.usersService.exclude(id);
+  }
 }

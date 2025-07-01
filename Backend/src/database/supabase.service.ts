@@ -27,4 +27,25 @@ export class SupabaseService implements OnModuleInit {
     }
     return this.supabase;
   }
+
+  async removeFile(publicUrl: string, bucketName: string): Promise<void> {
+    try {
+      const url = new URL(publicUrl);
+      const path = decodeURIComponent(
+        url.pathname.replace(`/storage/v1/object/public/${bucketName}/`, ''),
+      );
+
+      const { error } = await this.supabase.storage
+        .from(bucketName)
+        .remove([path]);
+
+      if (error) {
+        console.warn(
+          `⚠️ Failed to delete file from Supabase: ${error.message}`,
+        );
+      }
+    } catch (err) {
+      console.error('❌ Error removing file from Supabase:', err);
+    }
+  }
 }

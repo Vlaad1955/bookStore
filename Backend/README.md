@@ -537,3 +537,11 @@ DELETE /users/delete/:id
 Authorization: Bearer <accessToken>
 
 >Користувач може видалити свій профіль.
+
+### Видалення користувача адмінстратором
+
+DELETE /users/exclude/:id
+
+Authorization: Bearer <accessToken>
+
+>Адміністратор може видаляти тільки користувачів, role = User.

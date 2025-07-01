@@ -36,7 +36,6 @@ export class BooksController {
   ): Promise<string> {
     if (file) {
       const uploadResult = await this.booksService.uploadFile(file);
-      console.log(uploadResult);
       Dto.image = uploadResult?.data?.publicUrl;
     } else {
       Dto.image = `https://ziqxesyaovpowhccmwiw.supabase.co/storage/v1/object/public/book-covers//Empty_book.jpg`;

@@ -13,6 +13,12 @@ export default registerAs('config', () => ({
     bucket: process.env.SUPABASE_BUCKET ?? 'user-covers',
     bucketBook: process.env.SUPABASE_BUCKET_BOOK ?? 'book-covers',
     bucketNews: process.env.SUPABASE_BUCKET_NEWS ?? 'news-covers',
+    defaultImageUrlBook:
+      process.env.DEFAULT_IMAGE_URL_BOOK ??
+      'https://ziqxesyaovpowhccmwiw.supabase.co/storage/v1/object/public/book-covers//Empty_book.jpg',
+    defaultImageUrl:
+      process.env.DEFAULT_IMAGE_URL ??
+      'https://ziqxesyaovpowhccmwiw.supabase.co/storage/v1/object/public/user-covers//Empty_avatar.jpg',
   },
   redis: {
     userKey: process.env.REDIS_USER_KEY ?? 'user-token',

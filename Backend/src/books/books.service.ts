@@ -32,7 +32,7 @@ export class BooksService {
       throw new BadRequestException('Some categories were not found');
     }
 
-    const book = await this.bookRepository.create({
+    const book = this.bookRepository.create({
       ...Dto,
       categories: categories,
     });
@@ -188,7 +188,23 @@ export class BooksService {
   }
 
   async remove(id: string) {
-    await this.findOne(id);
+    const book = await this.findOne(id);
+
+    const defaultImageUrl = this.configService.get<string>(
+      'config.supabase.defaultImageUrlBook',
+    );
+    const bucketName = this.configService.get<string>(
+      'config.supabase.bucketBook',
+    );
+
+    if (!defaultImageUrl || !bucketName) {
+      throw new Error('Supabase config values are missing');
+    }
+
+    if (book.image && book.image !== defaultImageUrl) {
+      await this.supabaseService.removeFile(book.image, bucketName);
+    }
+
     await this.bookRepository.delete(id);
     return 'Book successfully deleted';
   }

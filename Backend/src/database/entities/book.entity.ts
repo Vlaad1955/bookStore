@@ -9,6 +9,7 @@ import {
 import { BaseEntity } from './base.entity';
 import { Category } from './category.entity';
 import { Comment } from './comment.entity';
+import { LikedBook } from './like.entity';
 
 @Entity()
 export class Book extends BaseEntity {
@@ -53,4 +54,10 @@ export class Book extends BaseEntity {
 
   @OneToMany(() => Comment, (comment) => comment.book)
   comments: Comment[];
+
+  @OneToMany(() => LikedBook, (liked) => liked.book)
+  likes: LikedBook[];
+
+  @Column({ default: 0 })
+  likesCount: number;
 }

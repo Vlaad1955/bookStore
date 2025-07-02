@@ -10,6 +10,7 @@ import { Comment } from './entities/comment.entity';
 import { Basket } from './entities/basket.entity';
 import { BasketItem } from './entities/basket.item.entity';
 import { News } from './entities/news.entity';
+import { LikedBook } from './entities/like.entity';
 
 @Injectable()
 export class TypeOrmConfigService implements TypeOrmOptionsFactory {
@@ -20,7 +21,16 @@ export class TypeOrmConfigService implements TypeOrmOptionsFactory {
     return {
       type: 'postgres',
       url: postgresUrl,
-      entities: [User, Category, Book, Comment, Basket, BasketItem, News],
+      entities: [
+        User,
+        Category,
+        Book,
+        Comment,
+        Basket,
+        BasketItem,
+        News,
+        LikedBook,
+      ],
       migrations: [
         path.join(process.cwd(), 'src', 'database', 'migrations', '*.ts'),
       ],

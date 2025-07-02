@@ -10,6 +10,7 @@ import { CommentsModule } from './comments/comments.module';
 import { UsersModule } from './users/users.module';
 import { BasketModule } from './basket/basket.module';
 import { NewsModule } from './news/news.module';
+import { LikesModule } from './likes/likes.module';
 import config from './common/configuration/config';
 
 @Module({
@@ -26,6 +27,7 @@ import config from './common/configuration/config';
     UsersModule,
     BasketModule,
     NewsModule,
+    LikesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

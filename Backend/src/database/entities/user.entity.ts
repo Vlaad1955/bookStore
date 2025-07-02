@@ -9,6 +9,7 @@ import { BaseEntity } from './base.entity';
 import { Comment } from './comment.entity';
 import { Exclude } from 'class-transformer';
 import { Basket } from './basket.entity';
+import { LikedBook } from './like.entity';
 
 @Entity()
 export class User extends BaseEntity {
@@ -52,4 +53,7 @@ export class User extends BaseEntity {
 
   @OneToOne(() => Basket, (basket) => basket.user, { cascade: true })
   basket: Basket;
+
+  @OneToMany(() => LikedBook, (liked) => liked.user)
+  likedBooks: LikedBook[];
 }

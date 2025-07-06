@@ -10,7 +10,8 @@ const AppRoute = {
   BASKET: "/my-account/basket",
   ADMIN: "/admin",
   RESET:"/auth/reset-password",
-  PASSWORD:"/my-account/update-password"
+  PASSWORD:"/my-account/update-password",
+  LIKES:"/dashboard/likes",
 } as const;
 
 export { AppRoute };

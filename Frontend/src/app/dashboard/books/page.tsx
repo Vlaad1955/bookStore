@@ -43,7 +43,7 @@ async function fetchBooksData(filters: ReturnType<typeof buildFilters>) {
 
   return retryAsync(
     async () => {
-      const data = await getBooksInOneCategory(cleanParams(filters))
+      const data = await getBooksInOneCategory(cleanParams(filters));
       const all = await getBooksInOneCategory(cleanParams(baseParams));
       return { data, all };
     },

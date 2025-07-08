@@ -1,12 +1,12 @@
 import React from "react";
 
-import BookList from "./BookList";
 import Pagination from "@/admin/other/components/pagination/Pagination";
-import BookFilters from "./BookFilters";
 import { Book } from "@/features/books/types/book";
 import styles from "./styles.module.scss";
+import BookFilters from "@/features/books/components/BookFilters";
+import BookList from "@/features/books/components/BookList";
 
-type BookWrapperProps = {
+type FavoriteWrapperProps = {
   initialAuthor: string[];
   books: Book[];
   currentPage: number;
@@ -14,13 +14,13 @@ type BookWrapperProps = {
   params?: URLSearchParams;
 };
 
-const BookLikes = ({
+const FavoriteWrapper = ({
   initialAuthor,
   books,
   currentPage,
   totalPages,
   params,
-}: BookWrapperProps) => {
+}: FavoriteWrapperProps) => {
   return (
     <main>
       <h1>Ваші вподобання</h1>
@@ -55,4 +55,4 @@ const BookLikes = ({
   );
 };
 
-export default BookLikes;
+export default FavoriteWrapper;

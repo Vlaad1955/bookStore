@@ -10,6 +10,8 @@ import { useUserStore } from "@/features/user/store/UseUserStore";
 import { useBasketStore } from "@/features/basket/store/basket";
 import { Book } from "@/features/books/types/book";
 import styles from "./styles.module.scss";
+import { HeartButton } from "@/features/favorite/components/FavoriteHeartButton";
+import { LikesCounter } from "@/features/favorite/components/FavoriteLikesCounter";
 
 type BookListProps = {
   book: Book;
@@ -29,23 +31,36 @@ const BookList = ({ book }: BookListProps) => {
     }
   };
 
+  const isAuthenticated = Boolean(user);
+
+  const handleFavoriteClick = () => {
+    if (!isAuthenticated) {
+      setIsModalOpen(true);
+    }
+  };
+
   return (
     <article className={styles.book_item}>
       <div className={styles.book_card}>
-        <Link
-          className={styles.book_card_item}
-          href={`/dashboard/books/${book.id}`}
-        >
-          <figure>
-            <Image
-              src={book.image}
-              alt={book.title}
-              width={500}
-              height={500}
-              className={styles.imggg}
-            />
-          </figure>
-        </Link>
+        <div className={styles.book_card_item}>
+          <HeartButton
+            bookId={book.id.toString()}
+            isAuthenticated={isAuthenticated}
+            onUnauthenticatedClick={handleFavoriteClick}
+          />
+
+          <Link href={`/dashboard/books/${book.id}`}>
+            <figure>
+              <Image
+                src={book.image}
+                alt={book.title}
+                width={500}
+                height={500}
+                className={styles.imggg}
+              />
+            </figure>
+          </Link>
+        </div>
       </div>
 
       <div className={styles.book_content}>
@@ -61,6 +76,7 @@ const BookList = ({ book }: BookListProps) => {
         </div>
         <div className={styles.book_price}>
           <span>Ціна: {book.price} грн.</span>
+          <LikesCounter bookId={book.id.toString()} />
         </div>
       </div>
       {book.published && (

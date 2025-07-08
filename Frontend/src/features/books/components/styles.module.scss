@@ -183,6 +183,9 @@
 }
 
 .book_price {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
   font-family: "Mabry Pro", sans-serif;
   font-weight: 500;
   font-size: 16px;
@@ -208,7 +211,7 @@
   border-radius: 0px 0px 8px 8px;
   position: absolute;
   left: 0;
-  top: 62%;
+  top: 60%;
   background-color: #fff;
   color: #512ac7;
   border: 1px solid #512ac7;

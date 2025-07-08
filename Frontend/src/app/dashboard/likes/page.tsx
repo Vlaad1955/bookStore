@@ -1,4 +1,4 @@
-import LikesClient from "@/features/books/components/LikesClient";
+import LikesClient from "@/features/favorite/components/FavoriteLikesItems";
 
 export default async function LikesPage({
   searchParams,

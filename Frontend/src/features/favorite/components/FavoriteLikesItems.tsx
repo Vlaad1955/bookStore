@@ -1,11 +1,11 @@
 "use client";
 
 import React, { useEffect, useState } from "react";
-import { getLikedBooks } from "@/features/books/api/books";
 import { Book } from "@/features/books/types/book";
 import { cleanParams } from "@/shared/hooks/clean-params/cleanParams.hook";
 import { objectToCleanURLSearchParams } from "@/features/books/hooks/objectToCleanURLSearchParams.hook";
-import BookLikes from "@/features/books/components/BookLikes";
+import FavoriteWrapper from "./FavoriteWrapper";
+import { getLikedBooks } from "../api/favorite";
 
 type SearchParams = {
   page?: string;
@@ -43,6 +43,7 @@ export default function LikesClient({
     const loadBooks = async () => {
       try {
         const data = await getLikedBooks(cleanParams(filters));
+        console.log(data);
         const all = await getLikedBooks(
           cleanParams({
             ...filters,
@@ -55,8 +56,8 @@ export default function LikesClient({
           })
         );
 
-        setBooks(data.entities);
-        setAllBooks(all.entities);
+        setBooks(data);
+        setAllBooks(all);
       } catch (e) {
         console.error("Помилка при завантаженні", e);
       } finally {
@@ -66,6 +67,8 @@ export default function LikesClient({
     loadBooks();
   }, [searchParams]);
 
+  console.log(books);
+
   const initialAuthors = Array.from(
     new Set(allBooks.map((book) => book.author))
   ).sort((a, b) => a.localeCompare(b));
@@ -73,7 +76,7 @@ export default function LikesClient({
   const urlParams = objectToCleanURLSearchParams(filters);
 
   return (
-    <BookLikes
+    <FavoriteWrapper
       initialAuthor={initialAuthors}
       books={books}
       currentPage={filters.page}

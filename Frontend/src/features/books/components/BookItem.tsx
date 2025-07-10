@@ -13,6 +13,9 @@ import { useBasketStore } from "@/features/basket/store/basket";
 import { Book } from "@/features/books/types/book";
 import DeleteBasket from "@/assets/icons/deleteBasket";
 import styles from "./styles.module.scss";
+import { HeartButton } from "@/features/favorite/components/FavoriteHeartButton";
+import { BooksModal } from "../enum/books-modal.enum";
+import { LikesCounter } from "@/features/favorite/components/FavoriteLikesCounter";
 
 type BooksItemProps = {
   book: Book;
@@ -23,14 +26,17 @@ const BookItem = ({ book }: BooksItemProps) => {
   const { user } = useUserStore();
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
   const setSelectedCategories = useBookStore(
     (state) => state.setSelectedCategories
   );
+  const isAuthenticated = Boolean(user);
 
   const basketItem = basket?.items.find((item) => item.book.id === book.id);
 
   const handleBuyClick = () => {
-    if (!user) {
+    if (!isAuthenticated) {
+      setModalMessage(BooksModal.BUY);
       setIsModalOpen(true);
     } else {
       addToBasket(book.id.toString(), 1);
@@ -42,6 +48,13 @@ const BookItem = ({ book }: BooksItemProps) => {
     router.push(`/dashboard/books?categories=${id}`);
   };
 
+  const handleFavoriteClick = () => {
+    if (!isAuthenticated) {
+      setModalMessage(BooksModal.FAVORITE);
+      setIsModalOpen(true);
+    }
+  };
+
   const bookCover = book.cover === "firm" ? "Тверда" : "Мяка";
 
   return (
@@ -49,15 +62,22 @@ const BookItem = ({ book }: BooksItemProps) => {
       <CategoryProps basePath="/dashboard/books" />
 
       <div className={styles.book_item_wrapper}>
-        <figure>
-          <Image
-            className={styles.book_item_image}
-            src={book.image}
-            alt={book.title}
-            width={500}
-            height={500}
+        <div className={styles.book_item_image_wrapper}>
+          <HeartButton
+            book={book}
+            isAuthenticated={isAuthenticated}
+            onUnauthenticatedClick={handleFavoriteClick}
           />
-        </figure>
+          <figure>
+            <Image
+              className={styles.book_item_image}
+              src={book.image}
+              alt={book.title}
+              width={500}
+              height={500}
+            />
+          </figure>
+        </div>
 
         <section>
           <div className={styles.book_item_title}>{book.title}</div>
@@ -83,17 +103,22 @@ const BookItem = ({ book }: BooksItemProps) => {
 
           <section>
             <div className={styles.book_item_category}>Категорії</div>
-            <div className={styles.book_item_category_list}>
-              {book.categories.map((category) => (
-                <Link
-                  onClick={() => handleClick(category.name, category.id)}
-                  href={`/dashboard/books?categories=${category.id}`}
-                  key={category.id}
-                  className={styles.book_item_category_list_item}
-                >
-                  {category.name}
-                </Link>
-              ))}
+            <div className={styles.book_item_category_list_wrapper}>
+              <div className={styles.book_item_category_list}>
+                {book.categories.map((category) => (
+                  <Link
+                    onClick={() => handleClick(category.name, category.id)}
+                    href={`/dashboard/books?categories=${category.id}`}
+                    key={category.id}
+                    className={styles.book_item_category_list_item}
+                  >
+                    {category.name}
+                  </Link>
+                ))}
+              </div>
+              <div>
+                <LikesCounter bookId={book.id.toString()} />
+              </div>
             </div>
           </section>
 
@@ -137,6 +162,7 @@ const BookItem = ({ book }: BooksItemProps) => {
             isOpen={isModalOpen}
             onClose={() => setIsModalOpen(false)}
             onConfirm={() => router.push("/auth/sign-in")}
+            message={modalMessage}
           />
         </section>
       </div>

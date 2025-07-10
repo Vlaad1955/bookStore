@@ -7,17 +7,16 @@ type ModalProps = {
   isOpen: boolean;
   onClose: () => void;
   onConfirm: () => void;
+  message?: string;
 };
 
-const Modal = ({ isOpen, onClose, onConfirm }: ModalProps) => {
+const Modal = ({ isOpen, onClose, onConfirm, message }: ModalProps) => {
   if (!isOpen) return null;
 
   return (
     <div className={styles.overlay}>
       <div className={styles.modal}>
-        <p className={styles.text}>
-          Щоб придбати книжку, потрібно бути авторизованим.
-        </p>
+        <p className={styles.text}>{message}</p>
         <div className={styles.buttons}>
           <Button onClick={onConfirm} className={styles.confirm}>
             Перейти до входу

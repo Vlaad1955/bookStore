@@ -6,10 +6,13 @@ export const LikesCounter = ({ bookId }: { bookId: string }) => {
     (state) => state.fetchLikesCount
   );
   const likesCount = useFavoriteBooksStore((state) => state.likesCount);
+  const count = likesCount[bookId];
 
   useEffect(() => {
     fetchLikesCount(bookId);
   }, [bookId, fetchLikesCount]);
 
-  return <span>{likesCount[bookId] ?? 0} в улюблених</span>;
+  if (!count || count === 0) return null;
+
+  return <span>{count} ❤️</span>;
 };

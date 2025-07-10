@@ -12,6 +12,7 @@ import { Book } from "@/features/books/types/book";
 import styles from "./styles.module.scss";
 import { HeartButton } from "@/features/favorite/components/FavoriteHeartButton";
 import { LikesCounter } from "@/features/favorite/components/FavoriteLikesCounter";
+import { BooksModal } from "../enum/books-modal.enum";
 
 type BookListProps = {
   book: Book;
@@ -22,19 +23,22 @@ const BookList = ({ book }: BookListProps) => {
   const { user } = useUserStore();
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [modalMessage, setModalMessage] = useState("");
+
+  const isAuthenticated = Boolean(user);
 
   const handleBuyClick = () => {
-    if (!user) {
+    if (!isAuthenticated) {
+      setModalMessage(BooksModal.BUY);
       setIsModalOpen(true);
     } else {
       addToBasket(book.id.toString(), 1);
     }
   };
 
-  const isAuthenticated = Boolean(user);
-
   const handleFavoriteClick = () => {
     if (!isAuthenticated) {
+      setModalMessage(BooksModal.FAVORITE);
       setIsModalOpen(true);
     }
   };
@@ -44,7 +48,7 @@ const BookList = ({ book }: BookListProps) => {
       <div className={styles.book_card}>
         <div className={styles.book_card_item}>
           <HeartButton
-            bookId={book.id.toString()}
+            book={book}
             isAuthenticated={isAuthenticated}
             onUnauthenticatedClick={handleFavoriteClick}
           />
@@ -90,6 +94,7 @@ const BookList = ({ book }: BookListProps) => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         onConfirm={() => router.push("/auth/sign-in")}
+        message={modalMessage}
       />
     </article>
   );

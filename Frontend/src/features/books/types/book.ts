@@ -9,7 +9,7 @@ export interface Book {
   cover: "soft" | "firm";
   published: boolean;
   categories: CategoryDto[];
-  liked?: boolean;
+  likesCount?: number;
 }
 
 export interface FetchBooksOptions {

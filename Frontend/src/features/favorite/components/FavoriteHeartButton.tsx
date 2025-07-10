@@ -1,15 +1,16 @@
 import HeartIcon from "@/assets/icons/heartIcon";
 import styles from "./styles.module.scss";
 import { useFavoriteBooksStore } from "../store/favorite";
+import { Book } from "@/features/books/types/book";
 
 interface HeartButtonProps {
-  bookId: string;
-  isAuthenticated: boolean;
+  book: Book;
+  isAuthenticated?: boolean;
   onUnauthenticatedClick?: () => void;
 }
 
 export const HeartButton = ({
-  bookId,
+  book,
   isAuthenticated,
   onUnauthenticatedClick,
 }: HeartButtonProps) => {
@@ -20,10 +21,10 @@ export const HeartButton = ({
       onUnauthenticatedClick?.();
       return;
     }
-    toggleFavorite(bookId);
+    toggleFavorite(book.id.toString());
   };
 
-  const active = isFavorite(bookId);
+  const active = isFavorite(book.id.toString());
 
   return (
     <HeartIcon

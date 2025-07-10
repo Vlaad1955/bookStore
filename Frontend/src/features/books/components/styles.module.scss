@@ -184,14 +184,14 @@
 
 .book_price {
   display: flex;
-  flex-direction: column;
-  gap: 5px;
+  justify-content: space-between;
   font-family: "Mabry Pro", sans-serif;
   font-weight: 500;
   font-size: 16px;
   line-height: 1;
   font-style: normal;
   color: #333373;
+  padding-right: 15px;
 
   margin-bottom: 10px;
 }
@@ -211,7 +211,7 @@
   border-radius: 0px 0px 8px 8px;
   position: absolute;
   left: 0;
-  top: 60%;
+  top: 62%;
   background-color: #fff;
   color: #512ac7;
   border: 1px solid #512ac7;
@@ -254,6 +254,10 @@
   color: #222;
   border-radius: 8px;
   box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 3px, rgba(0, 0, 0, 0.24) 0px 1px 2px;
+}
+
+.book_item_image_wrapper {
+  position: relative;
 }
 
 .book_item_image {
@@ -316,6 +320,10 @@
   color: #512ac7;
   text-decoration: none;
   text-transform: none;
+}
+
+.book_item_gift {
+  padding-bottom: 5px;
 }
 
 .book_item_published {
@@ -389,13 +397,20 @@
   font-style: normal;
   color: #222;
   text-align: left;
+  margin-bottom: 10px;
+}
+
+.book_item_category_list_wrapper {
+  display: flex;
+  gap: 15px;
+  align-items: center;
 }
 
 .book_item_category_list {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
-  margin: 10px 0 20px 0;
+  // margin: 10px 0 20px 0;
 }
 
 .book_item_category_list_item {
@@ -410,4 +425,8 @@
   border-radius: 8px;
   border: 1px solid #7a5fcc;
   cursor: pointer;
+}
+
+.book_item_description {
+  margin-top: 20px;
 }

@@ -6,6 +6,7 @@ import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import TokenInit from "@/shared/token/tokenInit";
 import "./globals.css";
+import { FavoriteInit } from "@/features/favorite/components/FavoriteInit";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -31,6 +32,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <TokenInit />
+        <FavoriteInit />
         <div className="container">
           <Header />
           <div className="layout-container">

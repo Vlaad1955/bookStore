@@ -10,6 +10,7 @@ interface AuthState {
   isAuthenticated: boolean;
   isLoading: boolean;
   isInitialized: boolean;
+  isLoggingOut: boolean;
   token: string | null;
   error: string | null;
   signIn: (payload: UserSignInRequestDto) => Promise<void>;
@@ -25,6 +26,7 @@ export const useAuthStore = create<AuthState>((set) => ({
   isLoading: false,
   error: null,
   isInitialized: false,
+  isLoggingOut: false,
 
   setToken: (token) => {
     set({ token, isAuthenticated: !!token, isInitialized: true });
@@ -76,10 +78,17 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
 
+  // logout: async () => {
+  //   await authService.logout();
+  //   tokenStorage.removeToken();
+  //   useUserStore.getState().setUser(null);
+  //   set({ token: null, isAuthenticated: false });
+  // },
   logout: async () => {
+    set({ isLoggingOut: true });
     await authService.logout();
     tokenStorage.removeToken();
     useUserStore.getState().setUser(null);
-    set({ token: null, isAuthenticated: false });
+    set({ token: null, isAuthenticated: false, isLoggingOut: false });
   },
 }));

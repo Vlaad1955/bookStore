@@ -5,8 +5,9 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Header from "@/components/header/Header";
 import Footer from "@/components/footer/Footer";
 import TokenInit from "@/shared/token/tokenInit";
-import "./globals.css";
+import { BasketInit } from "@/features/basket/components/BasketInit";
 import { FavoriteInit } from "@/features/favorite/components/FavoriteInit";
+import "./globals.css";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -32,6 +33,7 @@ export default function RootLayout({
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <TokenInit />
+        <BasketInit />
         <FavoriteInit />
         <div className="container">
           <Header />

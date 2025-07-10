@@ -1,5 +1,6 @@
 import { create } from "zustand";
 import { toggleLikeBook, getLikesCount, getLikedBooks } from "../api/favorite";
+import { useAuthStore } from "@/features/auth/auth-store/useAuthStore";
 
 interface FavoriteBooksStore {
   favorites: string[];
@@ -16,6 +17,12 @@ export const useFavoriteBooksStore = create<FavoriteBooksStore>((set, get) => ({
   likesCount: {},
 
   toggleFavorite: async (bookId: string) => {
+    const isAuthenticated = useAuthStore.getState().isAuthenticated;
+    if (!isAuthenticated) {
+      console.warn("Користувач не авторизований — запит не відправлено.");
+      return;
+    }
+
     try {
       await toggleLikeBook(bookId);
 

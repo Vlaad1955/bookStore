@@ -43,7 +43,6 @@ export default function LikesClient({
     const loadBooks = async () => {
       try {
         const data = await getLikedBooks(cleanParams(filters));
-        console.log(data);
         const all = await getLikedBooks(
           cleanParams({
             ...filters,
@@ -66,8 +65,6 @@ export default function LikesClient({
 
     loadBooks();
   }, [searchParams]);
-
-  console.log(books);
 
   const initialAuthors = Array.from(
     new Set(allBooks.map((book) => book.author))

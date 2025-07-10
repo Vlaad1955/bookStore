@@ -30,11 +30,15 @@ axiosInstance.interceptors.response.use(
   (response) => response,
   async (error) => {
     const originalRequest = error.config;
+    const { isLoggingOut } = useAuthStore.getState();
 
-    if (error.response?.status === 401 && !originalRequest._retry) {
+    if (
+      error.response?.status === 401 &&
+      !originalRequest._retry &&
+      !isLoggingOut
+    ) {
       originalRequest._retry = true;
       try {
-        // const { data } = await axiosInstance.post("/auth/refresh", {});
         const { data } = await axiosInstance.post(
           "/auth/refresh",
           {},
@@ -42,7 +46,6 @@ axiosInstance.interceptors.response.use(
         );
 
         if (data.accessToken) {
-          // useAuthStore.setState({ token: data.accessToken });
           useAuthStore.getState().setToken(data.accessToken);
 
           tokenStorage.setToken(data.accessToken);
@@ -55,8 +58,6 @@ axiosInstance.interceptors.response.use(
       } catch (refreshError) {
         console.error("Помилка оновлення токена:", refreshError);
         useAuthStore.getState().setToken(null);
-        // useAuthStore.getState().logout();
-        // window.location.href = "/login";
         if (useAuthStore.getState().logout) {
           await useAuthStore.getState().logout();
         }

@@ -24,7 +24,7 @@ export default async function NewsPage({
       sort: params.sort,
       order: params.order,
       page: Number(params.page) || 1,
-      limit: Number(params.limit) || 10,
+      limit: Number(params.limit) || 20,
     });
 
     const newsData: NewsDataProps = res.data;

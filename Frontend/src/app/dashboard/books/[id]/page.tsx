@@ -12,7 +12,7 @@ export default async function BookFindOne({
   return (
     <>
       <BookItem book={book} />
-      <CommentsServer bookId={book.id.toString()} />
+      <CommentsServer bookId={id} />
     </>
   );
 }

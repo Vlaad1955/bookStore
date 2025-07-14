@@ -10,8 +10,8 @@ export default async function MyCommentsPage({
   params,
   searchParams,
 }: {
-  params: Params;
-  searchParams: SearchParams;
+  params: Promise<Params>;
+  searchParams: Promise<SearchParams>;
 }) {
   const { id } = await params;
   const { page } = await searchParams;

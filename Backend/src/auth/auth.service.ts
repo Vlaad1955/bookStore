@@ -6,7 +6,8 @@ import {
 } from '@nestjs/common';
 import {
   CreateUserDto,
-  LoginDto, PasswordDto,
+  LoginDto,
+  PasswordDto,
   ResetDto,
   TokenDto,
 } from './dto/create-auth.dto';
@@ -296,8 +297,25 @@ export class AuthService {
   }
 
   async resetPassword(dto: ResetDto) {
+    const email = dto.email.trim().toLowerCase();
+    const key = `reset-password:${email}`;
+    const ttl = 60 * 10; // 10 хвилин
+    const maxAttempts = 3;
+
+    const attempts = await this.redisService.get(key);
+
+    if (attempts && +attempts >= maxAttempts) {
+      throw new BadRequestException('Забагато спроб. Спробуйте пізніше.');
+    }
+
+    if (!attempts) {
+      await this.redisService.set(key, '1', ttl);
+    } else {
+      await this.redisService.set(key, String(+attempts + 1), ttl);
+    }
+
     const user = await this.userRepository.findOne({
-      where: { email: dto.email },
+      where: { email },
     });
 
     if (!user) {
@@ -306,10 +324,9 @@ export class AuthService {
 
     const newPassword = this.generateRandomPassword();
     const hashed = await bcrypt.hash(newPassword, 10);
-    await this.userRepository.update(
-      { email: dto.email },
-      { password: hashed },
-    );
+
+    await this.userRepository.update({ email }, { password: hashed });
+
     await this.emailService.sendEmail(
       EmailTypeEnum.FORGOT_PASSWORD,
       user.email,
@@ -385,7 +402,10 @@ export class AuthService {
       throw new UnauthorizedException('User not found');
     }
 
-    const isPasswordValid = await bcrypt.compare(dto.lostPassword, user.password);
+    const isPasswordValid = await bcrypt.compare(
+      dto.lostPassword,
+      user.password,
+    );
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid credentials');
     }

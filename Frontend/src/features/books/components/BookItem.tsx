@@ -13,9 +13,9 @@ import { useBasketStore } from "@/features/basket/store/basket";
 import { Book } from "@/features/books/types/book";
 import DeleteBasket from "@/assets/icons/deleteBasket";
 import styles from "./styles.module.scss";
-import { HeartButton } from "@/features/favorite/components/FavoriteHeartButton";
+import { FavoriteHeartButton } from "@/features/favorite/components/FavoriteHeartButton";
 import { BooksModal } from "../enum/books-modal.enum";
-import { LikesCounter } from "@/features/favorite/components/FavoriteLikesCounter";
+import { FavoriteLikesCounter } from "@/features/favorite/components/FavoriteLikesCounter";
 
 type BooksItemProps = {
   book: Book;
@@ -63,7 +63,7 @@ const BookItem = ({ book }: BooksItemProps) => {
 
       <div className={styles.book_item_wrapper}>
         <div className={styles.book_item_image_wrapper}>
-          <HeartButton
+          <FavoriteHeartButton
             book={book}
             isAuthenticated={isAuthenticated}
             onUnauthenticatedClick={handleFavoriteClick}
@@ -117,7 +117,7 @@ const BookItem = ({ book }: BooksItemProps) => {
                 ))}
               </div>
               <div>
-                <LikesCounter bookId={book.id.toString()} />
+                <FavoriteLikesCounter bookId={book.id.toString()} />
               </div>
             </div>
           </section>

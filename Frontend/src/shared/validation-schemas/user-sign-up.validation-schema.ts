@@ -12,11 +12,19 @@ const userSignUp = joi.object<UserSignUpRequestDto, true>({
       "string.email": UserValidationMessage.EMAIL_WRONG,
       "string.empty": UserValidationMessage.EMAIL_REQUIRE,
     }),
-  password: joi.string().trim().min(8).max(30).required().messages({
-    "string.empty": UserValidationMessage.PASSWORD_REQUIRE,
-    "string.min": UserValidationMessage.PASSWORD_MIN,
-    "string.max": UserValidationMessage.PASSWORD_MAX,
-  }),
+  password: joi
+    .string()
+    .trim()
+    .min(8)
+    .max(30)
+    .required()
+    .pattern(/^(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*])/)
+    .messages({
+      "string.pattern.base": UserValidationMessage.PASSWORD_BASE,
+      "string.empty": UserValidationMessage.PASSWORD_REQUIRE,
+      "string.min": UserValidationMessage.PASSWORD_MIN,
+      "string.max": UserValidationMessage.PASSWORD_MAX,
+    }),
   firstName: joi.string().trim().min(2).max(30).required().messages({
     "string.empty": "First name is required",
     "string.min": "First name must be at least 2 characters",

@@ -70,6 +70,12 @@ const BasketClient = () => {
     }
   }, [clearBasket]);
 
+  const totalPrice =
+    basket?.items?.reduce(
+      (sum, item) => sum + item.book.price * item.quantity,
+      0
+    ) || 0;
+
   return (
     <article>
       <section className={styles.basket_container}>
@@ -171,6 +177,12 @@ const BasketClient = () => {
           ))}
         </section>
       </section>
+      {!!basket?.items && basket.items.length > 0 && (
+        <section className={styles.basket_total_container}>
+          <div className={styles.basket_total_label}>Загальна сума:</div>
+          <div className={styles.basket_total_value}>{totalPrice} грн</div>
+        </section>
+      )}
     </article>
   );
 };

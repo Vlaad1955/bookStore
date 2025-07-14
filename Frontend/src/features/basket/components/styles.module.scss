@@ -181,3 +181,23 @@
     color: white;
   }
 }
+
+.basket_total_container {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: 20px;
+  font-weight: bold;
+
+  color: #222;
+  font-size: 24px;
+  font-style: normal;
+  line-height: 120%;
+}
+
+.basket_total_label {
+  margin-right: 10px;
+}
+
+.basket_total_value {
+  color: #7a5fcc;
+}

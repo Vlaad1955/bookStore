@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useFavoriteBooksStore } from "../store/favorite";
 
-export const LikesCounter = ({ bookId }: { bookId: string }) => {
+export const FavoriteLikesCounter = ({ bookId }: { bookId: string }) => {
   const fetchLikesCount = useFavoriteBooksStore(
     (state) => state.fetchLikesCount
   );

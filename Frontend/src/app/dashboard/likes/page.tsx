@@ -1,17 +1,10 @@
-import LikesClient from "@/features/favorite/components/FavoriteLikesItems";
+import FavoriteLikesItems from "@/features/favorite/components/FavoriteLikesItems";
 import ProtectedRoute from "@/shared/protected-route/protectedRoute";
 
-export default async function LikesPage({
-  searchParams,
-}: {
-  searchParams: Record<string, string | string[]>;
-}) {
-  const awaitedParams = await searchParams;
-  const cleanParams = JSON.parse(JSON.stringify(awaitedParams));
-
+export default function LikesPage() {
   return (
     <ProtectedRoute>
-      <LikesClient searchParams={cleanParams} />
+      <FavoriteLikesItems />
     </ProtectedRoute>
   );
 }

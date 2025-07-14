@@ -23,7 +23,11 @@ const FavoriteWrapper = ({
 }: FavoriteWrapperProps) => {
   return (
     <main>
-      <h1>Ваші вподобання</h1>
+      <div className={styles.favorite_header}>
+        <span className={styles.favorite_title}>
+          Ваші вподобання ({books?.length})
+        </span>
+      </div>
 
       <div className={styles.wrapper}>
         <aside className={styles.filters}>

@@ -1,9 +1,10 @@
 import { create } from "zustand";
 import { toggleLikeBook, getLikesCount, getLikedBooks } from "../api/favorite";
 import { useAuthStore } from "@/features/auth/auth-store/useAuthStore";
+import { Book } from "@/features/books/types/book";
 
 interface FavoriteBooksStore {
-  favorites: string[];
+  favorites: Book[];
   likesCount: Record<string, number>;
 
   toggleFavorite: (bookId: string) => Promise<void>;
@@ -26,10 +27,24 @@ export const useFavoriteBooksStore = create<FavoriteBooksStore>((set, get) => ({
     try {
       await toggleLikeBook(bookId);
 
-      const isFav = get().favorites.includes(bookId);
-      const updatedFavorites = isFav
-        ? get().favorites.filter((id) => id !== bookId)
-        : [...get().favorites, bookId];
+      const currentFavorites = get().favorites;
+      const isFav = currentFavorites.some((book) => String(book.id) === bookId);
+
+      let updatedFavorites: Book[] = [];
+
+      if (isFav) {
+        updatedFavorites = currentFavorites.filter(
+          (book) => String(book.id) !== bookId
+        );
+      } else {
+        const updatedList = await getLikedBooks();
+        const newBook = updatedList.find((book) => String(book.id) === bookId);
+        if (newBook) {
+          updatedFavorites = [...currentFavorites, newBook];
+        } else {
+          updatedFavorites = currentFavorites;
+        }
+      }
 
       set({ favorites: updatedFavorites });
 
@@ -45,13 +60,14 @@ export const useFavoriteBooksStore = create<FavoriteBooksStore>((set, get) => ({
     }
   },
 
-  isFavorite: (bookId: string) => get().favorites.includes(bookId),
+  isFavorite: (bookId: string) => {
+    return get().favorites.some((book) => String(book.id) === bookId);
+  },
 
   fetchFavorites: async () => {
     try {
       const books = await getLikedBooks();
-      const ids = books.map((book) => book.id.toString());
-      set({ favorites: ids });
+      set({ favorites: books });
     } catch (e) {
       console.error("Failed to fetch favorites:", e);
     }

@@ -10,8 +10,8 @@ import { useUserStore } from "@/features/user/store/UseUserStore";
 import { useBasketStore } from "@/features/basket/store/basket";
 import { Book } from "@/features/books/types/book";
 import styles from "./styles.module.scss";
-import { HeartButton } from "@/features/favorite/components/FavoriteHeartButton";
-import { LikesCounter } from "@/features/favorite/components/FavoriteLikesCounter";
+import { FavoriteHeartButton } from "@/features/favorite/components/FavoriteHeartButton";
+import { FavoriteLikesCounter } from "@/features/favorite/components/FavoriteLikesCounter";
 import { BooksModal } from "../enum/books-modal.enum";
 
 type BookListProps = {
@@ -47,7 +47,7 @@ const BookList = ({ book }: BookListProps) => {
     <article className={styles.book_item}>
       <div className={styles.book_card}>
         <div className={styles.book_card_item}>
-          <HeartButton
+          <FavoriteHeartButton
             book={book}
             isAuthenticated={isAuthenticated}
             onUnauthenticatedClick={handleFavoriteClick}
@@ -80,7 +80,7 @@ const BookList = ({ book }: BookListProps) => {
         </div>
         <div className={styles.book_price}>
           <span>Ціна: {book.price} грн.</span>
-          <LikesCounter bookId={book.id.toString()} />
+          <FavoriteLikesCounter bookId={book.id.toString()} />
         </div>
       </div>
       {book.published && (

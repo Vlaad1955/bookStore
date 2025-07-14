@@ -45,8 +45,6 @@ const Header = () => {
   useEffect(() => {
     if (isAuthenticated && !user) {
       loadUser();
-      // useUserStore.getState().loadUser();
-      // setUser(null);
     }
   }, [isAuthenticated, loadUser, user]);
 
@@ -67,7 +65,6 @@ const Header = () => {
 
         <nav aria-label="Каталог книг">
           <Button
-            // ref={catalogButtonRef}
             className={styles.header_category}
             onClick={toggleList}
             aria-controls="category-list"
@@ -76,10 +73,7 @@ const Header = () => {
             <span>Каталог книг</span>
           </Button>
 
-          <div
-            //  ref={catalogListRef}
-            className={styles.category_list_container}
-          >
+          <div className={styles.category_list_container}>
             <CategoryList />
           </div>
         </nav>

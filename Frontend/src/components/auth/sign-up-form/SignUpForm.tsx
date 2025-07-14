@@ -20,7 +20,7 @@ import styles from "./styles.module.scss";
 const SignUpForm = () => {
   const router = useRouter();
 
-  const { signUp, isLoading, error } = useAuthStore();
+  const { signUp, isLoading } = useAuthStore();
   const [formError, setFormError] = useState<string | null>(null);
 
   const { control, handleSubmit, errors } = useAppForm<UserSignUpRequestDto>({
@@ -44,7 +44,6 @@ const SignUpForm = () => {
     } catch {
       toast.error("Регістрація не вдалася");
       setFormError("Помилка входу. Перевірте дані.");
-      throw error;
     }
   };
 
@@ -54,9 +53,14 @@ const SignUpForm = () => {
       onSubmit={handleSubmit(handleFormSubmit)}
       action={""}
     >
-      {formError && <p style={{ color: "red" }}>{formError}</p>}
-      {error && <p style={{ color: "red" }}>{error}</p>}
-      <p className={styles.input_wrapper}>
+      {formError && (
+        <p style={{ color: "red" }}>
+          {typeof formError === "string"
+            ? formError
+            : JSON.stringify(formError)}
+        </p>
+      )}
+      <div className={styles.input_wrapper}>
         <Input
           name="email"
           type={InputType.EMAIL}
@@ -66,8 +70,8 @@ const SignUpForm = () => {
           errors={errors}
           inputClassName={styles.input_pages}
         />
-      </p>
-      <p className={styles.input_wrapper}>
+      </div>
+      <div className={styles.input_wrapper}>
         <Input
           name="password"
           type={InputType.PASSWORD}
@@ -77,8 +81,8 @@ const SignUpForm = () => {
           errors={errors}
           inputClassName={styles.input_pages}
         />
-      </p>
-      <p className={styles.input_wrapper}>
+      </div>
+      <div className={styles.input_wrapper}>
         <Input
           name="firstName"
           type={InputType.TEXT}
@@ -88,8 +92,8 @@ const SignUpForm = () => {
           errors={errors}
           inputClassName={styles.input_pages}
         />
-      </p>
-      <p className={styles.input_wrapper}>
+      </div>
+      <div className={styles.input_wrapper}>
         <Input
           name="lastName"
           type={InputType.TEXT}
@@ -99,8 +103,8 @@ const SignUpForm = () => {
           errors={errors}
           inputClassName={styles.input_pages}
         />
-      </p>
-      <p className={styles.input_wrapper}>
+      </div>
+      <div className={styles.input_wrapper}>
         <Input
           name="age"
           type={InputType.NUMBER}
@@ -110,8 +114,8 @@ const SignUpForm = () => {
           errors={errors}
           inputClassName={styles.input_pages}
         />
-      </p>
-      <p className={styles.input_wrapper}>
+      </div>
+      <div className={styles.input_wrapper}>
         <Input
           name="phone"
           type={InputType.TEXT}
@@ -121,8 +125,8 @@ const SignUpForm = () => {
           errors={errors}
           inputClassName={styles.input_pages}
         />
-      </p>
-      <p className={styles.input_wrapper}>
+      </div>
+      <div className={styles.input_wrapper}>
         <Input
           name="image"
           type={InputType.FILE}
@@ -132,7 +136,7 @@ const SignUpForm = () => {
           errors={errors}
           inputClassName={styles.input_pages}
         />
-      </p>
+      </div>
       <Button
         className={styles.form_button}
         type={ButtonType.SUBMIT}

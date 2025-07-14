@@ -9,7 +9,7 @@ interface HeartButtonProps {
   onUnauthenticatedClick?: () => void;
 }
 
-export const HeartButton = ({
+export const FavoriteHeartButton = ({
   book,
   isAuthenticated,
   onUnauthenticatedClick,

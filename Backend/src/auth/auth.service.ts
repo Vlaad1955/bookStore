@@ -299,7 +299,7 @@ export class AuthService {
   async resetPassword(dto: ResetDto) {
     const email = dto.email.trim().toLowerCase();
     const key = `reset-password:${email}`;
-    const ttl = 60 * 10; // 10 хвилин
+    const ttl = 60 * 10;
     const maxAttempts = 3;
 
     const attempts = await this.redisService.get(key);

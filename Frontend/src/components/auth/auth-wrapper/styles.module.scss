@@ -30,6 +30,13 @@
   line-height: var(--line-height-sub-heading);
 }
 
+.header_wrapper {
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  gap: 10px;
+}
+
 .header_text {
   display: flex;
   align-items: center;

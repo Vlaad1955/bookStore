@@ -31,6 +31,17 @@
   left: 0;
   color: var(--color-warning);
   font-size: var(--font-size-level-6-heading);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  cursor: help;
+
+  &:hover {
+    white-space: wrap;
+    overflow: inherit;
+    height: 20px;
+  }
 }
 
 .input[type="password"],
@@ -39,9 +50,13 @@
   letter-spacing: 0.125em;
 }
 
+.hiddenFileInput {
+  display: none;
+}
+
 .input,
 .hasError {
-  display: block;
+  display: flex;
   height: 48px;
   padding: 0 var(--p-3);
   color: var(--color-blue-600);
@@ -54,6 +69,8 @@
   border-radius: var(--border-radius);
   outline: none;
   transition: box-shadow 0.2s linear;
+  cursor: pointer;
+  align-items: center;
 }
 
 .input:hover {

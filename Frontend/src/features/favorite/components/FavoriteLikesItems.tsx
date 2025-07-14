@@ -1,73 +1,55 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { Book } from "@/features/books/types/book";
-import { cleanParams } from "@/shared/hooks/clean-params/cleanParams.hook";
-import { objectToCleanURLSearchParams } from "@/features/books/hooks/objectToCleanURLSearchParams.hook";
+import { useEffect, useMemo, useState } from "react";
+import { useSearchParams } from "next/navigation";
 import FavoriteWrapper from "./FavoriteWrapper";
-import { getLikedBooks } from "../api/favorite";
+import { objectToCleanURLSearchParams } from "@/features/books/hooks/objectToCleanURLSearchParams.hook";
+import { useFavoriteBooksStore } from "../store/favorite";
 
-type SearchParams = {
-  page?: string;
-  limit?: string;
-  title?: string;
-  author?: string;
-  price?: string;
-  gift?: string;
-  cover?: string;
-  sort?: string;
-  order?: string;
-};
+export default function FavoriteLikesItems() {
+  const { favorites, fetchFavorites } = useFavoriteBooksStore();
+  const searchParams = useSearchParams();
 
-export default function LikesClient({
-  searchParams,
-}: {
-  searchParams: SearchParams;
-}) {
-  const [books, setBooks] = useState<Book[]>([]);
-  const [allBooks, setAllBooks] = useState<Book[]>([]);
+  const filters = useMemo(() => {
+    const get = (key: string) => searchParams.get(key) || "";
 
-  const filters = {
-    page: Number(searchParams.page) || 1,
-    limit: Number(searchParams.limit) || 18,
-    title: searchParams.title ?? "",
-    author: searchParams.author ?? "",
-    price: searchParams.price ?? "",
-    gift: searchParams.gift ?? "",
-    cover: searchParams.cover ?? "",
-    sort: searchParams.sort ?? "title",
-    order: searchParams.order ?? "ASC",
-  };
-
-  useEffect(() => {
-    const loadBooks = async () => {
-      try {
-        const data = await getLikedBooks(cleanParams(filters));
-        const all = await getLikedBooks(
-          cleanParams({
-            ...filters,
-            author: undefined,
-            gift: undefined,
-            cover: undefined,
-            title: undefined,
-            page: undefined,
-            limit: 10000,
-          })
-        );
-
-        setBooks(data);
-        setAllBooks(all);
-      } catch (e) {
-        console.error("Помилка при завантаженні", e);
-      } finally {
-      }
+    return {
+      page: Number(get("page")) || 1,
+      limit: Number(get("limit")) || 18,
+      title: get("title"),
+      author: get("author"),
+      price: get("price"),
+      gift: get("gift"),
+      cover: get("cover"),
+      sort: get("sort") || "title",
+      order: get("order") || "ASC",
     };
-
-    loadBooks();
   }, [searchParams]);
 
+  const [filteredBooks, setFilteredBooks] = useState(favorites);
+
+  useEffect(() => {
+    if (favorites.length === 0) {
+      fetchFavorites();
+    }
+  }, [favorites.length, fetchFavorites]);
+
+  useEffect(() => {
+    const filtered = favorites.filter((book) => {
+      const matchesTitle = filters.title
+        ? book.title.toLowerCase().includes(filters.title.toLowerCase())
+        : true;
+      const matchesAuthor = filters.author
+        ? book.author.toLowerCase().includes(filters.author.toLowerCase())
+        : true;
+      return matchesTitle && matchesAuthor;
+    });
+
+    setFilteredBooks(filtered);
+  }, [favorites, filters]);
+
   const initialAuthors = Array.from(
-    new Set(allBooks.map((book) => book.author))
+    new Set(favorites.map((book) => book.author))
   ).sort((a, b) => a.localeCompare(b));
 
   const urlParams = objectToCleanURLSearchParams(filters);
@@ -75,9 +57,9 @@ export default function LikesClient({
   return (
     <FavoriteWrapper
       initialAuthor={initialAuthors}
-      books={books}
+      books={filteredBooks}
       currentPage={filters.page}
-      totalPages={Math.ceil(allBooks.length / filters.limit)}
+      totalPages={Math.ceil(filteredBooks.length / filters.limit)}
       params={urlParams}
     />
   );

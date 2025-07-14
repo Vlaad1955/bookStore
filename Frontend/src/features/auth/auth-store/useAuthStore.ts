@@ -5,6 +5,7 @@ import { useUserStore } from "@/features/user/store/UseUserStore";
 import { tokenStorage } from "@/shared/token/UseTokenStore";
 import { UserSignInRequestDto } from "../authTypes/user-sign-in-request-dto";
 import { UserSignUpRequestDto } from "../authTypes/user-sign-up-request-dto";
+import { getErrorMessage } from "@/helpers/get-error-message/getErrorMessage";
 
 interface AuthState {
   isAuthenticated: boolean;
@@ -56,9 +57,10 @@ export const useAuthStore = create<AuthState>((set) => ({
       const { data } = await userApi.fetchCurrentUser();
       useUserStore.getState().setUser(data);
       set({ token, isAuthenticated: true });
-    } catch (err) {
-      set({ error: "Помилка реєстрації", isAuthenticated: false });
-      throw err;
+    } catch (err: unknown) {
+      const message = getErrorMessage(err);
+      set({ error: message, isAuthenticated: false });
+      throw new Error(message);
     } finally {
       set({ isLoading: false });
     }
@@ -78,12 +80,6 @@ export const useAuthStore = create<AuthState>((set) => ({
     }
   },
 
-  // logout: async () => {
-  //   await authService.logout();
-  //   tokenStorage.removeToken();
-  //   useUserStore.getState().setUser(null);
-  //   set({ token: null, isAuthenticated: false });
-  // },
   logout: async () => {
     set({ isLoggingOut: true });
     await authService.logout();

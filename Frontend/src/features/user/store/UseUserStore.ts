@@ -37,7 +37,7 @@ export const useUserStore = create<UserState>((set) => ({
       const user = await userService.getCurrentUser();
       set({ user: user ?? null, isUserInitialized: true });
     } catch {
-      set({ user: null, isUserInitialized: true }); // навіть у разі помилки
+      set({ user: null, isUserInitialized: true });
     }
   },
 

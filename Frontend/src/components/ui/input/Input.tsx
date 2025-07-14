@@ -63,17 +63,27 @@ const Input = <T extends FieldValues>({
     <label className={labelClasses}>
       <span className={styles.inputLabel}>{label}</span>
       {isFileInput ? (
-        <input
-          type="file"
-          name={name}
-          placeholder={placeholder}
-          disabled={isDisabled}
-          className={`${hasError ? inputClassesWithError : inputClasses}`}
-          onChange={(e) => {
-            const file = e.target.files?.[0] || null;
-            field.onChange?.(file);
-          }}
-        />
+        <>
+          <input
+            type="file"
+            name={name}
+            placeholder={placeholder}
+            disabled={isDisabled}
+            className={styles.hiddenFileInput}
+            onChange={(e) => {
+              const file = e.target.files?.[0] || null;
+              field.onChange?.(file);
+            }}
+          />
+          <div
+            className={`${hasError ? inputClassesWithError : inputClasses}`}
+            onClick={() => {
+              document.getElementById(name)?.click();
+            }}
+          >
+            {field.value?.name || placeholder || "Натисніть, щоб обрати файл"}
+          </div>
+        </>
       ) : (
         <input
           {...field}

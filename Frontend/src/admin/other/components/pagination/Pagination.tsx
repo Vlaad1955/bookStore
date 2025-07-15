@@ -7,9 +7,10 @@ type PaginationProps = {
     searchName?: string;
     params?: URLSearchParams;
     userName?: string;
+    likesPage?:string;
 };
 
-const Pagination = ({currentPage, totalPages, searchName, params, userName}: PaginationProps) => {
+const Pagination = ({currentPage, totalPages, searchName, params, userName, likesPage}: PaginationProps) => {
     const visiblePages = 3;
     const startPage = Math.max(1, currentPage - Math.floor(visiblePages / 2));
     const endPage = Math.min(totalPages, startPage + visiblePages - 1);
@@ -29,6 +30,10 @@ const Pagination = ({currentPage, totalPages, searchName, params, userName}: Pag
 
         if (userName){
             return `/my-account/my-comments/${userName}?${newParams.toString()}`;
+        }
+
+        if (likesPage){
+            return `/dashboard/likes?${newParams.toString()}`;
         }
 
         return `/dashboard/books?${newParams.toString()}`;

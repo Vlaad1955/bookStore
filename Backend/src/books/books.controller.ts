@@ -76,4 +76,10 @@ export class BooksController {
   remove(@Param('id') id: string): Promise<string> {
     return this.booksService.remove(id);
   }
+
+  @Get('max-price')
+  async getMaxPrice(@Query() query: BookQueryDto): Promise<{ maxPrice: number }> {
+    const maxPrice = await this.booksService.getMaxPrice(query);
+    return { maxPrice };
+  }
 }

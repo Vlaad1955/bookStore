@@ -68,8 +68,11 @@ export class LikesService {
       });
     }
 
-    if (query.price !== undefined) {
-      qb.andWhere('book.price = :price', { price: query.price });
+    if (query.price) {
+      qb.andWhere('book.price BETWEEN :min AND :max', {
+        min: query.price.min,
+        max: query.price.max,
+      });
     }
 
     if (query.author?.length) {
@@ -122,15 +125,20 @@ export class LikesService {
       );
     }
 
-    qb.skip((page - 1) * limit).take(limit);
-
     const [entities, total] = await qb.getManyAndCount();
+
+    let paginatedEntities = entities;
+
+    if (!query.noLimit) {
+      const startIndex = (page - 1) * limit;
+      paginatedEntities = entities.slice(startIndex, startIndex + limit);
+    }
 
     return {
       page,
-      pages: Math.ceil(total / limit),
+      pages: query.noLimit ? 1 : Math.ceil(total / limit),
       countItems: total,
-      entities,
+      entities: paginatedEntities,
     };
   }
 

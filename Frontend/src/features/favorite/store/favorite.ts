@@ -66,7 +66,7 @@ export const useFavoriteBooksStore = create<FavoriteBooksStore>((set, get) => ({
 
   fetchFavorites: async () => {
     try {
-      const books = await getLikedBooks();
+      const books = await getLikedBooks({ noLimit: true });
       set({ favorites: books });
     } catch (e) {
       console.error("Failed to fetch favorites:", e);

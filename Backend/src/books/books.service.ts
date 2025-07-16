@@ -231,4 +231,29 @@ export class BooksService {
     const result = await qb.getRawOne<{ maxPrice: string }>();
     return Number(result?.maxPrice) || 0;
   }
+
+  async getAllAuthors(
+    query: BookQueryDto = {} as BookQueryDto,
+  ): Promise<string[]> {
+    const qb = this.bookRepository
+      .createQueryBuilder('book')
+      .select('DISTINCT book.author', 'author')
+      .where('book.published = :published', {
+        published: query.published ?? true,
+      });
+
+    if (query.categories?.length) {
+      qb.leftJoin('book.categories', 'category');
+      qb.andWhere('category.id IN (:...categoryIds)', {
+        categoryIds: query.categories,
+      });
+    }
+
+    const results = await qb.getRawMany<{ author: string }>();
+
+    return results
+      .map((row) => row.author)
+      .filter(Boolean)
+      .sort((a, b) => a.localeCompare(b));
+  }
 }

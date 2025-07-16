@@ -78,8 +78,18 @@ export class BooksController {
   }
 
   @Get('max-price')
-  async getMaxPrice(@Query() query: BookQueryDto): Promise<{ maxPrice: number }> {
+  async getMaxPrice(
+    @Query() query: BookQueryDto,
+  ): Promise<{ maxPrice: number }> {
     const maxPrice = await this.booksService.getMaxPrice(query);
     return { maxPrice };
+  }
+
+  @Get('authors')
+  async getAllAuthors(
+    @Query() query: BookQueryDto,
+  ): Promise<{ authors: string[] }> {
+    const authors = await this.booksService.getAllAuthors(query);
+    return { authors };
   }
 }

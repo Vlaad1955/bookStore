@@ -53,7 +53,8 @@ async function fetchBooksData(filters: ReturnType<typeof buildFilters>) {
 }
 
 export default async function BookPage({ searchParams }: BookProps) {
-    const filters = buildFilters(await searchParams);
+    const rawSearchParams = await searchParams;
+    const filters = buildFilters(rawSearchParams);
     let books: Book[] = [];
     let allCategoryBooks: Book[] = [];
     let currentPage = 1;
@@ -67,7 +68,6 @@ export default async function BookPage({ searchParams }: BookProps) {
         currentPage = data.page;
         allCategoryBooks = all.entities;
 
-        // Очищаємо пагінацію для отримання максимальної ціни
         const maxPriceFilters = cleanParams({
             ...filters,
             page: undefined,
@@ -79,9 +79,21 @@ export default async function BookPage({ searchParams }: BookProps) {
         throw error;
     }
 
-    const initialAuthors = Array.from(
+    const selectedAuthors = Array.isArray(rawSearchParams.author)
+        ? rawSearchParams.author
+        : typeof rawSearchParams.author === "string"
+            ? [rawSearchParams.author]
+            : [];
+
+    const authorsFromBooks = Array.from(
         new Set(allCategoryBooks.map((book) => book.author))
+    );
+
+    const combinedAuthors = Array.from(
+        new Set([...selectedAuthors, ...authorsFromBooks])
     ).sort((a, b) => a.localeCompare(b));
+
+    const initialAuthors = combinedAuthors;
 
     const urlParams = objectToCleanURLSearchParams(filters);
 
@@ -96,3 +108,4 @@ export default async function BookPage({ searchParams }: BookProps) {
         />
     );
 }
+

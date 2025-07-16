@@ -7,7 +7,7 @@ import { CreateBookDto } from './dto/create-book.dto';
 import { UpdateBookDto, UpdatePublishedDto } from './dto/update-book.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Book } from '../database/entities/book.entity';
-import { In, Repository } from 'typeorm';
+import { Brackets, In, Repository } from 'typeorm';
 import { SupabaseService } from '../database/supabase.service';
 import { ConfigService } from '@nestjs/config';
 import { Category } from '../database/entities/category.entity';
@@ -117,16 +117,13 @@ export class BooksService {
 
     if (query.author?.length) {
       qb.andWhere(
-        query.author
-          .map((_, i) => `book.author ILIKE :author${i}`)
-          .join(' OR '),
-        query.author.reduce(
-          (params, author, i) => {
-            params[`author${i}`] = `%${author}%`;
-            return params;
-          },
-          {} as Record<string, string>,
-        ),
+        new Brackets((qb1) => {
+          (query.author || []).forEach((author, i) => {
+            qb1.orWhere(`book.author ILIKE :author${i}`, {
+              [`author${i}`]: `%${author}%`,
+            });
+          });
+        }),
       );
     }
 
@@ -154,7 +151,6 @@ export class BooksService {
       const categoryIds = Array.isArray(query.categories)
         ? query.categories
         : [query.categories];
-
       qb.andWhere('category.id IN (:...categoryIds)', { categoryIds });
     }
 

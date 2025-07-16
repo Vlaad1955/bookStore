@@ -15,7 +15,7 @@ export default function FavoriteLikesItems() {
 
     return {
       page: Number(get("page")) || 1,
-      limit: Number(get("limit")) || 18,
+      limit: Number(get("limit")) || 30,
       title: get("title"),
       author: get("author"),
       price: get("price"),

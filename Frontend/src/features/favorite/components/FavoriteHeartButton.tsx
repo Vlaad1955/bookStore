@@ -1,3 +1,5 @@
+"use client";
+
 import HeartIcon from "@/assets/icons/heartIcon";
 import styles from "./styles.module.scss";
 import { useFavoriteBooksStore } from "../store/favorite";
@@ -16,6 +18,8 @@ export const FavoriteHeartButton = ({
 }: HeartButtonProps) => {
   const { toggleFavorite, isFavorite } = useFavoriteBooksStore();
 
+  const active = isFavorite(book.id.toString());
+
   const handleClick = () => {
     if (!isAuthenticated) {
       onUnauthenticatedClick?.();
@@ -23,8 +27,6 @@ export const FavoriteHeartButton = ({
     }
     toggleFavorite(book.id.toString());
   };
-
-  const active = isFavorite(book.id.toString());
 
   return (
     <HeartIcon

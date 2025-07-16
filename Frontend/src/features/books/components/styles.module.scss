@@ -429,3 +429,43 @@
 .book_item_description {
   margin-top: 20px;
 }
+
+.price_range {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+}
+
+.price_group_inline {
+  display: flex;
+  gap: 1rem;
+  justify-content: space-between;
+}
+
+.price_field {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+}
+
+.price_text {
+  font-size: 14px;
+  color: #333;
+  white-space: nowrap;
+}
+
+.price_input {
+  padding: 8px 12px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  width: 100%;
+  box-sizing: border-box;
+  transition: border 0.2s ease;
+
+  &:focus {
+    border-color: #4caf50;
+    outline: none;
+  }
+}

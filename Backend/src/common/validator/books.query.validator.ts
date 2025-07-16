@@ -3,13 +3,12 @@ import {
   IsArray,
   IsBoolean,
   IsEnum,
-  IsNumber,
   IsNumberString,
   IsOptional,
   IsString,
   IsUUID,
 } from 'class-validator';
-import { Transform, Type } from 'class-transformer';
+import { Transform } from 'class-transformer';
 
 export class BookQueryDto {
   @ApiProperty({ required: false })
@@ -38,11 +37,18 @@ export class BookQueryDto {
   @IsBoolean()
   published?: boolean;
 
-  @ApiProperty({ required: false })
+  @ApiProperty({ required: false, example: '50-150' })
   @IsOptional()
-  @Type(() => Number)
-  @IsNumber()
-  price?: number;
+  @Transform(({ value }) => {
+    if (typeof value === 'string' && value.includes('-')) {
+      const [min, max] = value.split('-').map(Number);
+      return { min, max };
+    }
+
+    const num = Number(value);
+    return { min: num, max: num };
+  })
+  price?: { min: number; max: number };
 
   @ApiProperty({ required: false })
   @IsOptional()
@@ -93,4 +99,10 @@ export class BookQueryDto {
   @IsArray()
   @IsUUID('all', { each: true })
   categories?: string[];
+
+  @ApiProperty({ required: false, type: Boolean })
+  @IsOptional()
+  @Transform(({ value }) => value === 'true' || value === true)
+  @IsBoolean()
+  noLimit?: boolean;
 }

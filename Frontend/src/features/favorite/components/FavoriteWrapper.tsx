@@ -1,5 +1,4 @@
 import React from "react";
-
 import Pagination from "@/admin/other/components/pagination/Pagination";
 import { Book } from "@/features/books/types/book";
 import styles from "./styles.module.scss";
@@ -12,6 +11,8 @@ type FavoriteWrapperProps = {
   currentPage: number;
   totalPages: number;
   params?: URLSearchParams;
+  totalFilteredBooks: number;
+  maxPrice: number;
 };
 
 const FavoriteWrapper = ({
@@ -20,18 +21,20 @@ const FavoriteWrapper = ({
   currentPage,
   totalPages,
   params,
+  totalFilteredBooks,
+  maxPrice,
 }: FavoriteWrapperProps) => {
   return (
     <main>
       <div className={styles.favorite_header}>
         <span className={styles.favorite_title}>
-          Ваші вподобання ({books?.length})
+          Ваші вподобання ({totalFilteredBooks})
         </span>
       </div>
 
       <div className={styles.wrapper}>
         <aside className={styles.filters}>
-          <BookFilters authors={initialAuthor} />
+          <BookFilters authors={initialAuthor} maxPrice={maxPrice} />
         </aside>
 
         <section className={styles.books_container_right_site}>
@@ -46,6 +49,7 @@ const FavoriteWrapper = ({
                 currentPage={currentPage}
                 totalPages={totalPages}
                 params={params}
+                likesPage="likes"
               />
             </div>
           ) : (

@@ -2,18 +2,31 @@
 
 import Link from "next/link";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
-
+import { useEffect, useState } from "react";
 import { Button } from "../../../components/ui/button/Button";
 import styles from "./styles.module.scss";
 
 type BookFiltersProps = {
   authors: string[];
+  maxPrice: number;
 };
 
-const BookFilters = ({ authors }: BookFiltersProps) => {
+const BookFilters = ({ authors, maxPrice }: BookFiltersProps) => {
   const pathname = usePathname();
   const searchParams = useSearchParams();
   const router = useRouter();
+
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPriceInput, setMaxPriceInput] = useState("");
+
+  useEffect(() => {
+    const price = searchParams.get("price");
+    if (price && price.includes("-")) {
+      const [min, max] = price.split("-");
+      setMinPrice(min);
+      setMaxPriceInput(max);
+    }
+  }, [searchParams]);
 
   const getUpdatedSearch = (
     key: string,
@@ -21,6 +34,8 @@ const BookFilters = ({ authors }: BookFiltersProps) => {
     multi: boolean = false
   ) => {
     const params = new URLSearchParams(searchParams.toString());
+
+    params.delete("page");
 
     if (multi) {
       const all = params.getAll(key);
@@ -57,8 +72,58 @@ const BookFilters = ({ authors }: BookFiltersProps) => {
     router.push(`${pathname}?${params.toString()}`);
   };
 
+  const handleApplyPrice = () => {
+    const min = Number(minPrice) || 0;
+    const max = Number(maxPriceInput) || maxPrice;
+
+    if (min > max) return;
+
+    const params = new URLSearchParams(searchParams.toString());
+    params.delete("page");
+    params.set("price", `${min}-${max}`);
+    router.push(`${pathname}?${params.toString()}`);
+  };
+
   return (
     <div>
+      <section className={styles.filter_container}>
+        <h3 className={styles.filter_books}>Ціна</h3>
+
+        <div className={styles.price_range}>
+          <div className={styles.price_group_inline}>
+            <div className={styles.price_field}>
+              <span className={styles.price_text}>Від</span>
+              <input
+                type="number"
+                min={0}
+                max={maxPrice}
+                value={minPrice}
+                placeholder="0"
+                onChange={(e) => setMinPrice(e.target.value)}
+                className={styles.price_input}
+              />
+            </div>
+
+            <div className={styles.price_field}>
+              <span className={styles.price_text}>До</span>
+              <input
+                type="number"
+                min={0}
+                max={maxPrice}
+                value={maxPriceInput}
+                placeholder={String(maxPrice)}
+                onChange={(e) => setMaxPriceInput(e.target.value)}
+                className={styles.price_input}
+              />
+            </div>
+          </div>
+
+          <Button onClick={handleApplyPrice} className={styles.filter_button}>
+            Застосувати
+          </Button>
+        </div>
+      </section>
+
       <section className={styles.filter_container}>
         <h3 className={styles.filter_books}>Фільтри</h3>
         <Link href={getUpdatedSearch("published", "true")}>

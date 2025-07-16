@@ -14,6 +14,7 @@ type BookWrapperProps = {
   books: Book[];
   currentPage: number;
   totalPages: number;
+  maxPrice: number;
   params?: URLSearchParams;
 };
 
@@ -23,14 +24,15 @@ const BookWrapper = ({
   currentPage,
   totalPages,
   params,
+  maxPrice,
 }: BookWrapperProps) => {
   return (
     <main>
-      <CategoryProps basePath="books" />
+      <CategoryProps basePath="/books" />
 
       <div className={styles.wrapper}>
         <aside className={styles.filters}>
-          <BookFilters authors={initialAuthor} />
+          <BookFilters authors={initialAuthor} maxPrice={maxPrice} />
         </aside>
 
         <section className={styles.books_container_right_site}>

@@ -6,6 +6,7 @@ import { Book } from "@/features/books/types/book";
 interface FavoriteBooksStore {
   favorites: Book[];
   likesCount: Record<string, number>;
+  isSyncing: boolean;
 
   toggleFavorite: (bookId: string) => Promise<void>;
   isFavorite: (bookId: string) => boolean;
@@ -16,37 +17,32 @@ interface FavoriteBooksStore {
 export const useFavoriteBooksStore = create<FavoriteBooksStore>((set, get) => ({
   favorites: [],
   likesCount: {},
+  isSyncing: false,
 
   toggleFavorite: async (bookId: string) => {
     const isAuthenticated = useAuthStore.getState().isAuthenticated;
     if (!isAuthenticated) {
-      console.warn("Користувач не авторизований — запит не відправлено.");
+      console.warn("User not authenticated — toggle aborted.");
       return;
     }
+
+    if (get().isSyncing) return;
+    set({ isSyncing: true });
+
+    const state = get();
+    const isFav = state.favorites.some((b) => String(b.id) === bookId);
+
+    const updatedFavorites = isFav
+      ? state.favorites
+      : [...state.favorites, { id: bookId } as unknown as Book];
+
+    set({ favorites: updatedFavorites });
 
     try {
       await toggleLikeBook(bookId);
 
-      const currentFavorites = get().favorites;
-      const isFav = currentFavorites.some((book) => String(book.id) === bookId);
-
-      let updatedFavorites: Book[] = [];
-
-      if (isFav) {
-        updatedFavorites = currentFavorites.filter(
-          (book) => String(book.id) !== bookId
-        );
-      } else {
-        const updatedList = await getLikedBooks();
-        const newBook = updatedList.find((book) => String(book.id) === bookId);
-        if (newBook) {
-          updatedFavorites = [...currentFavorites, newBook];
-        } else {
-          updatedFavorites = currentFavorites;
-        }
-      }
-
-      set({ favorites: updatedFavorites });
+      const updatedList = await getLikedBooks({ noLimit: true });
+      set({ favorites: updatedList });
 
       const { count } = await getLikesCount(bookId);
       set((state) => ({
@@ -55,8 +51,11 @@ export const useFavoriteBooksStore = create<FavoriteBooksStore>((set, get) => ({
           [bookId]: count,
         },
       }));
-    } catch (e) {
-      console.error("Failed to toggle favorite:", e);
+    } catch (error) {
+      console.error("toggleFavorite error:", error);
+      await get().fetchFavorites();
+    } finally {
+      set({ isSyncing: false });
     }
   },
 
@@ -66,7 +65,7 @@ export const useFavoriteBooksStore = create<FavoriteBooksStore>((set, get) => ({
 
   fetchFavorites: async () => {
     try {
-      const books = await getLikedBooks();
+      const books = await getLikedBooks({ noLimit: true });
       set({ favorites: books });
     } catch (e) {
       console.error("Failed to fetch favorites:", e);

@@ -108,8 +108,11 @@ export class BooksService {
         published: query.published ?? true,
       });
 
-    if (query.price !== undefined) {
-      qb.andWhere('book.price = :price', { price: query.price });
+    if (query.price) {
+      qb.andWhere('book.price BETWEEN :min AND :max', {
+        min: query.price.min,
+        max: query.price.max,
+      });
     }
 
     if (query.author?.length) {
@@ -207,5 +210,50 @@ export class BooksService {
 
     await this.bookRepository.delete(id);
     return 'Book successfully deleted';
+  }
+
+  async getMaxPrice(query: BookQueryDto = {} as BookQueryDto): Promise<number> {
+    const qb = this.bookRepository
+      .createQueryBuilder('book')
+      .select('MAX(book.price)', 'maxPrice')
+      .where('book.published = :published', {
+        published: query.published ?? true,
+      });
+
+    if (query.categories) {
+      const categoryIds = Array.isArray(query.categories)
+        ? query.categories
+        : [query.categories];
+      qb.leftJoin('book.categories', 'category');
+      qb.andWhere('category.id IN (:...categoryIds)', { categoryIds });
+    }
+
+    const result = await qb.getRawOne<{ maxPrice: string }>();
+    return Number(result?.maxPrice) || 0;
+  }
+
+  async getAllAuthors(
+    query: BookQueryDto = {} as BookQueryDto,
+  ): Promise<string[]> {
+    const qb = this.bookRepository
+      .createQueryBuilder('book')
+      .select('DISTINCT book.author', 'author')
+      .where('book.published = :published', {
+        published: query.published ?? true,
+      });
+
+    if (query.categories?.length) {
+      qb.leftJoin('book.categories', 'category');
+      qb.andWhere('category.id IN (:...categoryIds)', {
+        categoryIds: query.categories,
+      });
+    }
+
+    const results = await qb.getRawMany<{ author: string }>();
+
+    return results
+      .map((row) => row.author)
+      .filter(Boolean)
+      .sort((a, b) => a.localeCompare(b));
   }
 }

@@ -18,12 +18,19 @@ const CategoryProps = ({ basePath }: CategoryLinkProps) => {
         Перелік книг
       </Link>
 
-      <div className={styles.category_name}>
-        Категорії:{" "}
-        <Link href={`${basePath}?categories=${selectedCategories[1]}`}>
-          {selectedCategories[0]}
-        </Link>
-      </div>
+      {selectedCategories.length === 0 ||
+      selectedCategories[0] === "Всі книги" ? (
+        <div className={styles.category_name}>
+          <span>Всі книги</span>
+        </div>
+      ) : (
+        <div className={styles.category_name}>
+          Категорії:{" "}
+          <Link href={`${basePath}?categories=${selectedCategories[1]}`}>
+            {selectedCategories[0]}
+          </Link>
+        </div>
+      )}
     </div>
   );
 };

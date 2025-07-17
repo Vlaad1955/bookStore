@@ -29,7 +29,11 @@ export default function CategoryList() {
         throw error;
       })
       .finally(() => {});
-  }, []);
+  }, [error]);
+
+  const handleCategoriesClick = () => {
+    setSelectedCategories(["Всі книги"]);
+  };
 
   const handleClick = (
     name: string,
@@ -58,6 +62,7 @@ export default function CategoryList() {
                 <Link
                   href={"/dashboard/books"}
                   className={styles.book_menu_all_books}
+                  onClick={handleCategoriesClick}
                 >
                   Всі книги
                 </Link>

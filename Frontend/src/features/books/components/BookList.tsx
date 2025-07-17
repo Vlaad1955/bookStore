@@ -8,11 +8,12 @@ import ModalBasket from "../../../components/ui/modal/modal-basket/ModalBasket";
 import { Button } from "../../../components/ui/button/Button";
 import { useUserStore } from "@/features/user/store/UseUserStore";
 import { useBasketStore } from "@/features/basket/store/basket";
-import { Book } from "@/features/books/types/book";
+import { Book, CategoryDto } from "@/features/books/types/book";
 import styles from "./styles.module.scss";
 import { FavoriteHeartButton } from "@/features/favorite/components/FavoriteHeartButton";
 import { FavoriteLikesCounter } from "@/features/favorite/components/FavoriteLikesCounter";
 import { BooksModal } from "../enum/books-modal.enum";
+import { useBookStore } from "../store/book";
 
 type BookListProps = {
   book: Book;
@@ -24,7 +25,9 @@ const BookList = ({ book }: BookListProps) => {
   const router = useRouter();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalMessage, setModalMessage] = useState("");
-
+  const setSelectedCategories = useBookStore(
+    (state) => state.setSelectedCategories
+  );
   const isAuthenticated = Boolean(user);
 
   const handleBuyClick = () => {
@@ -43,6 +46,11 @@ const BookList = ({ book }: BookListProps) => {
     }
   };
 
+  const handleCategoriesClick = (categories: CategoryDto[]) => {
+    const categoryData = categories.map((categories) => categories.name);
+    setSelectedCategories(categoryData);
+  };
+
   return (
     <article className={styles.book_item}>
       <div className={styles.book_card}>
@@ -53,7 +61,10 @@ const BookList = ({ book }: BookListProps) => {
             onUnauthenticatedClick={handleFavoriteClick}
           />
 
-          <Link href={`/dashboard/books/${book.id}`}>
+          <Link
+            onClick={() => handleCategoriesClick(book.categories)}
+            href={`/dashboard/books/${book.id}`}
+          >
             <figure>
               <Image
                 src={book.image}

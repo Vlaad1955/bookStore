@@ -61,8 +61,11 @@ const BookFilters = ({ authors, maxPrice }: BookFiltersProps) => {
   };
 
   const isChecked = (key: string, value: string): boolean => {
-    const values = searchParams.getAll(key);
-    return values.includes(value);
+    const raw = searchParams.getAll(key);
+    const allValues = raw.flatMap((entry) =>
+        entry.split(",").map((val) => val.trim())
+    );
+    return allValues.includes(value);
   };
 
   const resetFilters = () => {

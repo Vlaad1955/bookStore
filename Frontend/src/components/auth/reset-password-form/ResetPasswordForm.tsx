@@ -41,8 +41,9 @@ const ResetPasswordForm = () => {
       await authService.resetPassword(data.email);
       toast.success("Новий пароль відправлено на email.");
       router.push("/auth/sign-in");
-    } catch (e: any) {
-      const message = e?.response?.data?.message || "";
+    } catch (e: unknown) {
+      const error = e as { response?: { data?: { message?: string } } };
+      const message = error?.response?.data?.message || "";
 
       if (message.includes("Забагато спроб")) {
         setFormError("Забагато спроб. Спробуйте через 10 хвилин.");

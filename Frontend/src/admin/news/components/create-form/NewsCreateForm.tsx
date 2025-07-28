@@ -1,12 +1,12 @@
 "use client";
 
-import { useForm } from "react-hook-form";
-import { joiResolver } from "@hookform/resolvers/joi";
-import { useEffect, useState } from "react";
-import { useRouter } from "next/navigation";
+import {useForm} from "react-hook-form";
+import {joiResolver} from "@hookform/resolvers/joi";
+import {useEffect, useState} from "react";
+import {useRouter} from "next/navigation";
 import Image from "next/image";
-import { createNewsSchema } from "@/shared/validation-schemas/create-news.validation-schema";
-import { createNews } from "@/admin/news/api/news";
+import {createNewsSchema} from "@/shared/validation-schemas/create-news.validation-schema";
+import {createNews} from "@/admin/news/api/news";
 import styles from "@/admin/news/components/edit-form/styles.module.scss";
 
 interface FormFields {
@@ -24,7 +24,7 @@ export default function CreateNewsForm() {
     const {
         register,
         handleSubmit,
-        formState: { errors },
+        formState: {errors},
     } = useForm<FormFields>({
         resolver: joiResolver(createNewsSchema),
         defaultValues: {
@@ -57,8 +57,10 @@ export default function CreateNewsForm() {
         try {
             await createNews(data, image);
             router.push("/admin/news/1");
-        } catch (err: any) {
-            setSubmitError(err.response?.data?.message || "Помилка при створенні новини");
+        } catch (err: unknown) {
+            const error = err as { response?: { data?: { message?: string } } };
+
+            setSubmitError(error.response?.data?.message || "Помилка при створенні новини");
         }
     };
 

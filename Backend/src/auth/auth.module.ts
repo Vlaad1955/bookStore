@@ -21,7 +21,7 @@ import { EmailService } from '../email/email.service';
     }),
     JwtModule.registerAsync({
       imports: [ConfigModule],
-      useFactory: async (configService: ConfigService) => {
+      useFactory: (configService: ConfigService) => {
         const secret = configService.get<string>('config.jwt.strategyKey');
         if (!secret) {
           throw new Error('JWT secret key is not defined');

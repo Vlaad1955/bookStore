@@ -46,7 +46,17 @@ export class BooksController {
   @Roles(`Admin`)
   @UseGuards(AuthGuard(), RoleGuard)
   @Patch('/update/:id')
-  update(@Param('id') id: string, @Body() Dto: UpdateBookDto): Promise<string> {
+  @UseInterceptors(FileInterceptor('image'))
+  async update(
+    @Param('id') id: string,
+    @Body() Dto: UpdateBookDto,
+    @UploadedFile() file: Express.Multer.File,
+  ): Promise<string> {
+    if (file) {
+      await this.booksService.deleteFile(id);
+      const uploadResult = await this.booksService.uploadFile(file);
+      Dto.image = uploadResult?.data?.publicUrl;
+    }
     return this.booksService.update(id, Dto);
   }
 

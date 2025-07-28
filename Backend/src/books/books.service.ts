@@ -83,6 +83,7 @@ export class BooksService {
     if (Dto.author) book.author = Dto.author;
     if (Dto.gift !== undefined) book.gift = Dto.gift;
     if (Dto.cover) book.cover = Dto.cover;
+    if (Dto.image) book.image = Dto.image;
 
     await this.bookRepository.save(book);
     return 'Book updated successfully';
@@ -187,6 +188,12 @@ export class BooksService {
   }
 
   async remove(id: string) {
+    await this.deleteFile(id);
+    await this.bookRepository.delete(id);
+    return 'Book successfully deleted';
+  }
+
+  async deleteFile(id: string) {
     const book = await this.findOne(id);
 
     const defaultImageUrl = this.configService.get<string>(
@@ -203,9 +210,6 @@ export class BooksService {
     if (book.image && book.image !== defaultImageUrl) {
       await this.supabaseService.removeFile(book.image, bucketName);
     }
-
-    await this.bookRepository.delete(id);
-    return 'Book successfully deleted';
   }
 
   async getMaxPrice(query: BookQueryDto = {} as BookQueryDto): Promise<number> {

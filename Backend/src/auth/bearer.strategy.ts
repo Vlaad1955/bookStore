@@ -6,7 +6,6 @@ import { JwtService } from '@nestjs/jwt';
 import { RedisService } from '../redis/redis.service';
 import { AuthService } from './auth.service';
 import { ConfigService } from '@nestjs/config';
-import { User } from '../database/entities/user.entity';
 
 @Injectable()
 export class BearerStrategy extends PassportStrategy(Strategy, `bearer`) {

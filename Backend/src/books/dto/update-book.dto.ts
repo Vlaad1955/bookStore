@@ -7,6 +7,7 @@ import {
   IsString,
   IsUUID,
 } from 'class-validator';
+import { Transform } from 'class-transformer';
 
 export class UpdateBookDto {
   @IsString()
@@ -15,6 +16,7 @@ export class UpdateBookDto {
 
   @IsNumber()
   @IsOptional()
+  @Transform(({ value }) => Number(value))
   price?: number;
 
   @IsString()
@@ -31,6 +33,7 @@ export class UpdateBookDto {
 
   @IsBoolean()
   @IsOptional()
+  @Transform(({ value }) => value === 'true' || value === true)
   gift?: boolean;
 
   @IsEnum(['soft', 'firm'])

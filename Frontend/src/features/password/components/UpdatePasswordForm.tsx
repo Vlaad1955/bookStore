@@ -46,6 +46,7 @@ const UpdatePasswordForm = () => {
             toast.success("Пароль успішно оновлено");
             router.push("/");
         } catch (e) {
+            console.error("Помилка оновлення пароля:", e);
             toast.error("Не вдалося оновити пароль. Перевірте старий пароль");
         } finally {
             setIsLoading(false);

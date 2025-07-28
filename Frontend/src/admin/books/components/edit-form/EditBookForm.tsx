@@ -1,16 +1,16 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useForm, Controller } from "react-hook-form";
-import { joiResolver } from "@hookform/resolvers/joi";
-import { useRouter } from "next/navigation";
+import React, {useEffect, useState} from "react";
+import {useForm, Controller} from "react-hook-form";
+import {joiResolver} from "@hookform/resolvers/joi";
+import {useRouter} from "next/navigation";
 import Image from "next/image";
-import { updateBook } from "@/admin/books/api/books";
-import { makeCategoryListRequest } from "@/features/categories/api/category";
+import {updateBook} from "@/admin/books/api/books";
+import {makeCategoryListRequest} from "@/features/categories/api/category";
 import ConfirmModal from "@/components/ui/modal/modal-admin/ConfirmModal";
-import { createBookSchema } from "@/shared/validation-schemas/create-book.validation-schema";
-import { Book, UpdateBookDto } from "@/features/books/types/book";
-import styles from "./styles.module.scss";
+import {createBookSchema} from "@/shared/validation-schemas/create-book.validation-schema";
+import {Book, UpdateBookDto} from "@/features/books/types/book";
+import styles from "./styles.module.scss"
 
 interface Category {
     id: string;
@@ -18,7 +18,9 @@ interface Category {
     parentId: string | null;
 }
 
-export default function EditBookForm({ book }: { book: Book }) {
+type FormFields = UpdateBookDto;
+
+export default function EditBookForm({book}: { book: Book }) {
     const router = useRouter();
     const [allCategories, setAllCategories] = useState<Category[]>([]);
     const [isSubmitting, setIsSubmitting] = useState(false);
@@ -31,8 +33,8 @@ export default function EditBookForm({ book }: { book: Book }) {
         control,
         getValues,
         setValue,
-        formState: { errors },
-    } = useForm<UpdateBookDto>({
+        formState: {errors},
+    } = useForm<FormFields>({
         resolver: joiResolver(createBookSchema),
         defaultValues: {
             title: book.title,
@@ -62,7 +64,7 @@ export default function EditBookForm({ book }: { book: Book }) {
         const updated = current.includes(id)
             ? current.filter((cid) => cid !== id)
             : [...current, id];
-        setValue("categories", updated, { shouldValidate: true });
+        setValue("categories", updated, {shouldValidate: true});
     };
 
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -79,7 +81,7 @@ export default function EditBookForm({ book }: { book: Book }) {
         try {
             setIsSubmitting(true);
             const values = getValues();
-            await updateBook(String(book.id), values);
+            await updateBook(String(book.id), values, imageFile);
             router.push("/admin/books/1");
         } catch (error) {
             console.error("Помилка оновлення:", error);
@@ -108,8 +110,8 @@ export default function EditBookForm({ book }: { book: Book }) {
                         <Controller
                             name="title"
                             control={control}
-                            render={({ field }) => (
-                                <input {...field} className={styles.input} placeholder="Введіть назву книги" />
+                            render={({field}) => (
+                                <input {...field} className={styles.input} placeholder="Введіть назву книги"/>
                             )}
                         />
                         {errors.title && <p className={styles.error}>{errors.title.message}</p>}
@@ -120,8 +122,8 @@ export default function EditBookForm({ book }: { book: Book }) {
                         <Controller
                             name="author"
                             control={control}
-                            render={({ field }) => (
-                                <input {...field} className={styles.input} placeholder="Ім'я автора" />
+                            render={({field}) => (
+                                <input {...field} className={styles.input} placeholder="Ім'я автора"/>
                             )}
                         />
                     </div>
@@ -131,8 +133,8 @@ export default function EditBookForm({ book }: { book: Book }) {
                         <Controller
                             name="price"
                             control={control}
-                            render={({ field }) => (
-                                <input {...field} type="number" className={styles.input} placeholder="Вкажіть ціну" />
+                            render={({field}) => (
+                                <input {...field} type="number" className={styles.input} placeholder="Вкажіть ціну"/>
                             )}
                         />
                         {errors.price && <p className={styles.error}>{errors.price.message}</p>}
@@ -145,7 +147,7 @@ export default function EditBookForm({ book }: { book: Book }) {
                         <Controller
                             name="cover"
                             control={control}
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <select {...field} className={styles.select}>
                                     <option value="soft">М’яка</option>
                                     <option value="firm">Тверда</option>
@@ -158,7 +160,7 @@ export default function EditBookForm({ book }: { book: Book }) {
                         <Controller
                             name="gift"
                             control={control}
-                            render={({ field }) => (
+                            render={({field}) => (
                                 <>
                                     <input
                                         type="checkbox"
@@ -179,8 +181,8 @@ export default function EditBookForm({ book }: { book: Book }) {
                         <Controller
                             name="description"
                             control={control}
-                            render={({ field }) => (
-                                <textarea {...field} className={styles.textarea} placeholder="Опис книги" />
+                            render={({field}) => (
+                                <textarea {...field} className={styles.textarea} placeholder="Опис книги"/>
                             )}
                         />
                     </div>
@@ -215,7 +217,7 @@ export default function EditBookForm({ book }: { book: Book }) {
                         />
                         {preview && (
                             <div className={styles.imagePreview}>
-                                <Image src={preview} alt="Прев’ю" width={750} height={750} />
+                                <Image src={preview} alt="Прев’ю" width={750} height={750}/>
                             </div>
                         )}
                     </div>

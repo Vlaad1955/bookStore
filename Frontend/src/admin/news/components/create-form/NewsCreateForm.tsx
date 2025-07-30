@@ -8,6 +8,7 @@ import Image from "next/image";
 import {createNewsSchema} from "@/shared/validation-schemas/create-news.validation-schema";
 import {createNews} from "@/admin/news/api/news";
 import styles from "@/admin/news/components/edit-form/styles.module.scss";
+import {toast} from "react-toastify";
 
 interface FormFields {
     title: string;
@@ -56,10 +57,11 @@ export default function CreateNewsForm() {
 
         try {
             await createNews(data, image);
+            toast.success("Новину створено.");
             router.push("/admin/news/1");
         } catch (err: unknown) {
             const error = err as { response?: { data?: { message?: string } } };
-
+            toast.error("Помилка при створені новини.");
             setSubmitError(error.response?.data?.message || "Помилка при створенні новини");
         }
     };

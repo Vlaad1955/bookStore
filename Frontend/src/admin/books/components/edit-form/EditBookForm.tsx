@@ -11,6 +11,7 @@ import ConfirmModal from "@/components/ui/modal/modal-admin/ConfirmModal";
 import {createBookSchema} from "@/shared/validation-schemas/create-book.validation-schema";
 import {Book, UpdateBookDto} from "@/features/books/types/book";
 import styles from "./styles.module.scss"
+import {toast} from "react-toastify";
 
 interface Category {
     id: string;
@@ -82,10 +83,11 @@ export default function EditBookForm({book}: { book: Book }) {
             setIsSubmitting(true);
             const values = getValues();
             await updateBook(String(book.id), values, imageFile);
+            toast.success("Книга успішно оновлена.");
             router.push("/admin/books/1");
         } catch (error) {
             console.error("Помилка оновлення:", error);
-            alert("Не вдалося оновити книгу.");
+            toast.error("Не вдалося оновити книгу.");
         } finally {
             setIsSubmitting(false);
             setIsModalOpen(false);

@@ -9,6 +9,7 @@ import {removeBook, updatePublishedStatus,} from "@/admin/books/api/books";
 import ConfirmModal from "@/components/ui/modal/modal-admin/ConfirmModal";
 import {ButtonVariant} from "@/components/ui/button/button-type/button-variant.enum";
 import Image from "next/image";
+import {toast} from "react-toastify";
 
 const BookCard = ({book}: { book: Book }) => {
     const [isDeleting, setIsDeleting] = useState(false);
@@ -33,7 +34,9 @@ const BookCard = ({book}: { book: Book }) => {
             try {
                 await updatePublishedStatus(String(book.id), {published: true});
                 setIsVisible(false);
+                toast.success("Книга опублікована.");
             } catch (error) {
+                toast.error("Книгу не опубліковано!");
                 console.error("Помилка публікації:", error);
             } finally {
                 setIsModalOpen(false);
@@ -45,10 +48,11 @@ const BookCard = ({book}: { book: Book }) => {
             try {
                 setIsDeleting(true);
                 await removeBook(book.id.toString());
+                toast.success("Книга видалена.");
                 setIsVisible(false);
             } catch (error) {
                 console.error("Помилка при видаленні книги:", error);
-                alert("Не вдалося видалити книгу.");
+                toast.error("Не вдалося видалити книгу.");
             } finally {
                 setIsDeleting(false);
                 setIsModalOpen(false);

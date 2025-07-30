@@ -13,6 +13,7 @@ import {
 } from "@/features/categories/types/category";
 import {Button} from "@/components/ui/button/Button";
 import ConfirmModal from "@/components/ui/modal/modal-admin/ConfirmModal";
+import {toast} from "react-toastify";
 
 interface Category {
     id: string;
@@ -68,10 +69,11 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
 
             await updateCategory(category.id, dto);
             onUpdateCategory({...category, name: newName, parentId: dto.parentId});
+            toast.success("Категорія оновлена.");
             setIsEditing(false);
         } catch (error) {
             console.error("Помилка оновлення категорії", error);
-            alert("Помилка оновлення категорії");
+            toast.error("Помилка оновлення категорії");
         } finally {
             setIsModalOpen(false);
         }
@@ -81,9 +83,10 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
         try {
             await deleteCategory(category.id);
             onDeleteCategory(category.id);
+            toast.success("Категорія видалена.");
         } catch (error) {
             console.error("Помилка видалення категорії", error);
-            alert("Помилка видалення категорії");
+            toast.error("Помилка видалення категорії");
         } finally {
             setIsModalOpen(false);
         }
@@ -102,10 +105,11 @@ const CategoryCard: React.FC<CategoryCardProps> = ({
             const newCategory = await createCategory(dto);
             onAddSubCategory(newCategory);
             setSubCatName("");
+            toast.success("Категорія додана.");
             setAddingSubCat(false);
         } catch (error) {
             console.error("Помилка додавання підкатегорії", error);
-            alert("Помилка додавання підкатегорії");
+            toast.error("Помилка додавання підкатегорії");
         } finally {
             setIsModalOpen(false);
         }

@@ -8,6 +8,7 @@ import { updateNewsSchema } from "@/shared/validation-schemas/update-news.valida
 import { News, UpdateNewsDto } from "@/features/news/types/news";
 import { updateNews } from "@/admin/news/api/news";
 import styles from "./styles.module.scss";
+import {toast} from "react-toastify";
 
 export default function EditNewsForm({ news }: { news: News }) {
     const router = useRouter();
@@ -28,11 +29,11 @@ export default function EditNewsForm({ news }: { news: News }) {
     const onSubmit = async (data: UpdateNewsDto) => {
         try {
             await updateNews(news.id, data);
-            alert("Новину оновлено!");
+            toast.success("Новину оновлено!");
             router.push("/admin/news/1");
         } catch (error) {
             console.error("Помилка оновлення:", error);
-            alert("Не вдалося оновити новину.");
+            toast.error("Не вдалося оновити новину.");
         }
     };
 

@@ -8,6 +8,7 @@ import {deleteUserByAdmin, updateUserRole} from "@/admin/users/api/users";
 import {ButtonVariant} from "@/components/ui/button/button-type/button-variant.enum";
 import Image from "next/image";
 import Modal from "@/components/ui/modal/modal-admin/ConfirmModal";
+import {toast} from "react-toastify";
 
 const UserCard = ({user}: { user: User }) => {
     const [role, setRole] = useState(user.role);
@@ -19,10 +20,11 @@ const UserCard = ({user}: { user: User }) => {
         try {
             setLoading(true);
             const updatedUser = await updateUserRole(user.id);
+            toast.success("Роль користувача оновлено.");
             setRole(updatedUser.role);
         } catch (error) {
             console.error("Не вдалося оновити роль користувача:", error);
-            alert("Помилка при оновленні ролі користувача");
+            toast.error("Помилка при оновленні ролі користувача");
         } finally {
             setLoading(false);
         }
@@ -37,10 +39,11 @@ const UserCard = ({user}: { user: User }) => {
         try {
             setLoading(true);
             await deleteUserByAdmin(user.id);
+            toast.success("Користувача видалено.");
             setIsDeleted(true);
         } catch (error) {
             console.error("Не вдалося видалити користувача:", error);
-            alert("Помилка при видаленні користувача");
+            toast.error("Помилка при видаленні користувача");
         } finally {
             setLoading(false);
             setIsModalOpen(false);

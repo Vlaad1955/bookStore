@@ -10,6 +10,7 @@ import styles from "@/admin/books/components/edit-form/styles.module.scss";
 import { createBook } from "@/admin/books/api/books";
 import { CreateBookDto } from "@/features/books/types/book";
 import { createBookSchema } from "@/shared/validation-schemas/create-book.validation-schema";
+import {toast} from "react-toastify";
 
 type FormFields = CreateBookDto;
 
@@ -63,9 +64,11 @@ const CreateBookForm = ({ categories }: { categories: { id: string; name: string
             setIsSubmitting(true);
             const formData = getValues();
             await createBook(formData, imageFile);
+            toast.success("Книга успішно створена.");
             router.push("/admin/books/1");
         } catch (error) {
-            alert("Не вдалося створити книгу. Спробуйте ще раз.");
+            console.error("Помилка оновлення:", error);
+            toast.error("Не вдалося створити книгу. Спробуйте ще раз.");
         } finally {
             setIsSubmitting(false);
         }
